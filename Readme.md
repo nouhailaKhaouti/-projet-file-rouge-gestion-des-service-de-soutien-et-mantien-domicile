@@ -1,78 +1,64 @@
-objectif:
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-The objective of an online platform for booking and managing home cleaning and organization services would be to provide a convenient and easy-to-use platform for people to find and book services to help them clean and organize their home or prepare their homes for sale or improve clean and organize their home's appearance. The platform would allow users to browse and compare different home interior design , cleaning and organization services, and book appointments with service providers online.
-The platform could also offer tools and resources to help users plan and prepare for their home cleaning and organization projects, such as design inspiration,checklists, budgeting tools, and project management tools.
-Overall, the objective of the platform would be to make it easy for people to find and book the home cleaning and organization services they need, and to provide them with the resources and support they need to successfully complete their projects.
-The platform could also provide tips and guidance to help users maintain a clean and organized home over the long term.
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
+## About Laravel
 
-problem:
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-Some potential problems that the platform could help solve include:
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-1-Difficulty finding reliable and trustworthy home cleaning and organization service providers: The platform could provide a curated selection of service providers who have been vetted and reviewed by other users, making it easier for people to find high-quality services.
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-2-Limited availability of home cleaning and organization services: The platform could make it easier for people to find and book services at a time that is convenient for them, including evenings and weekends.
+## Learning Laravel
 
-3-Complexity of coordinating home cleaning and organization projects: The platform could provide tools and resources to help users plan and manage their projects, including scheduling, budgeting, and project management tools.
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-4-Lack of time or energy to tackle home cleaning and organization projects: The platform could make it easier for people to outsource these tasks to professionals, freeing up time and energy for other activities.
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-5-Difficulty maintaining a clean and organized home over the long term: The platform could provide tips and guidance to help users develop habits and routines for keeping their homes clean and organized on an ongoing basis.
+## Laravel Sponsors
 
-6-Difficulty achieving the desired look or feel for their home: The platform could provide access to design inspiration and guidance from experienced professionals, helping users create a home that meets their aesthetic and functional needs.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
+### Premium Partners
 
-backlog:
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[Many](https://www.many.co.uk)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
+- **[OP.GG](https://op.gg)**
+- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+- **[Lendio](https://lendio.com)**
 
-1-User visits the platform and creates an account.
+## Contributing
 
-2-User browses available home sercices filters results based on location, price, and other criteria.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-3-User selects a service provider and reviews their profile, including their ratings and reviews from other users.
+## Code of Conduct
 
-4-User selects a specific service and schedules an appointment with the service provider.
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-5-User receives confirmation of the appointment and any relevant details, such as the cost of the service and the location of the service provider.
+## Security Vulnerabilities
 
-6-User meets with the service provider and receives the service.
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-7-User leaves a review of the service provider on the platform.
+## License
 
-8-Design and build the platform's user interface and user experience.
-
-9-Implement user authentication and account creation functionality.
-
-10-Develop a database including profiles, ratings, and reviews.
-
-11-Implement search and filtering functionality to allow users to browse and compare service providers.
-
-12-Implement booking and scheduling functionality, including appointment confirmation and reminders.
-
-13-Develop tools and resources to help users plan and manage their home staging , interior design ,cleaning and organization projects, including budgeting and project management tools.
-
-14-Implement payment processing functionality for users to pay for services online.
-
-15-Integrate the platform with relevant third-party systems, such as calendars and messaging apps.
-
-16-Develop marketing and outreach strategies to promote the platform to potential users and service providers.
-
-17-Implement customer support and feedback mechanisms to allow users to report issues or ask questions.
-
-
-Technical specifications:
- This project will be built using the following technologies:
-
-•    HTML 
-
-•    CSS
-
-•    BOOTSRAP
-
-•    vue js
-
-•    PHP(laravel)
-
-•    JAVASCRIPT
-
-•    MYSQL
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
