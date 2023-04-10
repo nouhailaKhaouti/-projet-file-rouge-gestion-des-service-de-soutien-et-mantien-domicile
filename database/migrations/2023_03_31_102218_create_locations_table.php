@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('country');
-            $table->string('ville');
-            $table->string('rue');
+            $table->string('city');
+            $table->string('street');
             $table->string('appartement');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')

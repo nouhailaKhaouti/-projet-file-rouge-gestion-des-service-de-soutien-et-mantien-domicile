@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('country');
             $table->string('age');
-            $table->integer('access')->default(0);
+            $table->integer('access')->default("approved");
             $table->integer('warning')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

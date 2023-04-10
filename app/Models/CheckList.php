@@ -17,4 +17,9 @@ class CheckList extends Model
     {
         return $this->hasOne(User::class);
     }
+    public function Demandes()
+    {
+        return $this->belongsToMany(Demande::class,'checkLists_demandes', 'checkList_id', 'demande_id');
+    }
+    
 }

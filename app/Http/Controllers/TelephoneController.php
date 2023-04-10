@@ -50,16 +50,19 @@ class TelephoneController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Telephone $telephone)
+    public function update(Request $request,$id)
     {
         //
+        $Telephone_update = Telephone::find($id);
+        $Telephone_update->update($request->all());
+        return $Telephone_update;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Telephone $telephone)
+    public function destroy(string $id)
     {
-        //
+        return Telephone::destroy($id);
     }
 }

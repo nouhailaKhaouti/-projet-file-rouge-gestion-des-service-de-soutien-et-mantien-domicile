@@ -27,11 +27,7 @@ class Company extends Model
     }
     public function telephones()
     {
-        return $this->hasOne(Telephone::class);
-    }
-    public function tailles()
-    {
-        return $this->hasMany(taille::class);
+        return $this->hasMany(Telephone::class);
     }
     public function service()
     {

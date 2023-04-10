@@ -16,14 +16,22 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('jourdemander');
+            $table->float('price',10,2);
+            $table->string('type');
+            $table->string('adresse');
+            $table->string('city');
             $table->string('status')->default('InProgress');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')
-            ->references('id')->on('posts')
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')
+            ->references('id')->on('services')
+            ->onDelete('cascade');
+            $table->unsignedBigInteger('provider_id');
+            $table->foreign('provider_id')
+            ->references('id')->on('users')
             ->onDelete('cascade');
             $table->timestamps();
         });

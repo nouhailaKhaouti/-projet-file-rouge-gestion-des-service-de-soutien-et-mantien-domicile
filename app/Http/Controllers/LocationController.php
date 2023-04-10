@@ -50,16 +50,19 @@ class LocationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, location $location)
+    public function update(Request $request,$id)
     {
         //
+        $location_update = location::find($id);
+        $location_update->update($request->all());
+        return $location_update;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(location $location)
+    public function destroy(string $id)
     {
-        //
+        return location::destroy($id);
     }
 }
