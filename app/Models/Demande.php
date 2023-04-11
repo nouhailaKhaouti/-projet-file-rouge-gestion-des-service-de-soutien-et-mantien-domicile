@@ -23,15 +23,15 @@ class Demande extends Model
     ];
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
     public function provider()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
     public function service()
     {
-        return $this->hasOne(Service::class);
+        return $this->belongsTo(Service::class);
     }
     public function CheckLists()
     {

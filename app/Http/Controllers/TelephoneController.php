@@ -55,7 +55,7 @@ class TelephoneController extends Controller
         //
         $Telephone_update = Telephone::find($id);
         $Telephone_update->update($request->all());
-        return $Telephone_update;
+        return redirect()->back()->with('message' , 'Your Company telephone is updated successfully');
     }
 
     /**
@@ -63,6 +63,7 @@ class TelephoneController extends Controller
      */
     public function destroy(string $id)
     {
-        return Telephone::destroy($id);
+        Telephone::destroy($id);
+        return redirect()->back()->with('message' , 'this company telephone is deleted successfully');
     }
 }

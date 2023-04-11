@@ -7,6 +7,7 @@ use App\Models\location;
 use App\Models\Telephone;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -16,6 +17,9 @@ class CompanyController extends Controller
     public function index()
     {
         //
+        $user=Auth::user()->id;
+        $company=$user->company;
+        return view('User.company.company',compact('company'));
     }
 
     /**

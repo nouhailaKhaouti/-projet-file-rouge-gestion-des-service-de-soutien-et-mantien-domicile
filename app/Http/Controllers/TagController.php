@@ -15,8 +15,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $Tag = Tag::all();
-        return response()->json(['response'=>'success','categories'=>$Tag]);
+        $tags = Tag::all();
+        return view('Admin.Tags.tag', compact('tags'));
     }
 
     /* Show the form for creating a new resource.
@@ -30,19 +30,9 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $data = Tag::create($request->all());
-        return response()->json(['created'=>'Tag created successfuly','Tag'=>$data],201);
+        return redirect()->back();
     }
 
-    /* Display the specified resource.
-     */
-    public function show($id)
-    {
-        if(!Tag::find($id)){
-            return response()->json(['response'=>'not found'],404);
-        }
-        // return response()->json(['response'=>'not found'],404);
-        return Tag::find($id);
-    }
 
     /* Show the form for editing the specified resource.
      */
@@ -57,7 +47,7 @@ class TagController extends Controller
     {
         $Tag_update = Tag::find($id);
         $Tag_update->update($request->all());
-        return $Tag_update;
+        return redirect()->back();
     }
 
     /**
@@ -65,6 +55,7 @@ class TagController extends Controller
      */
     public function destroy(string $id)
     {
-        return Tag::destroy($id);
+         Tag::destroy($id);
+         return redirect()->back();
     }
 }

@@ -1,14 +1,14 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        animal Category DataTable
+         type DataTable
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
             <thead>
                 <tr>
                     <th>N°</th>
-                    <th>category name</th>
+                    <th>type name</th>
                     <th>delete</th>
                     <th>edit</th>
                 </tr>
@@ -16,18 +16,18 @@
             <tfoot>
                 <tr>
                     <th>N°</th>
-                    <th>category name</th>
+                    <th>type name</th>
                     <th>delete</th>
                     <th>edit</th>
                 </tr>
             </tfoot>
             <tbody>
-                @foreach($categorys as $category)
+                @foreach($types as $type)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{$category->libelle}}</td>
-                    <td><a class="btn btn-sm  btn-outline-danger" onclick="return confirm('are you sure ,you want to delete this category ')" href="{{url('category_delete',$category->id)}}">delete</a></td>
-                    <td>@include('admin.category_update')</td>
+                    <td>{{$type->label}}</td>
+                    <td><a class="btn btn-sm  btn-outline-danger" onclick="return confirm('are you sure ,you want to delete this type ')" href="{{url('type_delete',$type->id)}}">delete</a></td>
+                    <td>@include('admin.type_update')</td>
                 </tr>
                 @endforeach
             </tbody>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookRequest;
+use App\Http\Requests\postRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Image;
 use App\Models\Post;
@@ -11,7 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class BookController extends Controller
+class postController extends Controller
 {
     public function __construct()
     {
@@ -25,12 +25,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $Books = Post::with('tags')->get();
+        $posts = Post::with('tags')->get();
 
-        return response()->json([
-            'status' => 'success',
-            'Books' => $Books
-        ]);
+        return view('posts.post', compact('posts'));
     }
 
     /**
@@ -67,32 +64,12 @@ class BookController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => "Failed to attache tags to Post: " . $e->getMessage()
-            ], 500);
+            return redirect()->back()->with('message','somthing went wrong while creating this post');
         }
-        return response()->json([
-            'status' => true,
-            'message' => "Post created successfully!",
-            'Post' => $Post
-        ], 201);
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Post  $Post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $Post)
-    {
-        $Post->find($Post->id);
-        if (!$Post) {
-            return response()->json(['message' => 'Post not found'], 404);
-        }
-        return response()->json($Post, 200);
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -127,14 +104,10 @@ class BookController extends Controller
                 }
             }
         } catch (\Exception) {
-            return response()->json(['message' => 'Failed to update Post'], 405);
+            return redirect()->back()->with('message' , 'Failed to update Post');
         }
 
-        return response()->json([
-            'status' => true,
-            'message' => "Post Updated successfully!",
-            'Post' => $Post
-        ], 200);
+        return redirect()->back()->with('message' , 'the post updated successfully');
     }
 
     /**
@@ -151,14 +124,9 @@ class BookController extends Controller
         $Post->delete();
 
         if (!$Post) {
-            return response()->json([
-                'message' => 'Post not found'
-            ], 404);
+            return redirect()->back()->with('message' , 'Post not found');
         }
         
-        return response()->json([
-            'status' => true,
-            'message' => 'Post deleted successfully'
-        ], 200);
+         return redirect()->back()->with('message' , 'Post deleted successfully');
     }
 }

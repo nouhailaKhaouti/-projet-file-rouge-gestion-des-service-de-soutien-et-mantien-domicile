@@ -15,6 +15,8 @@ class UpgradeController extends Controller
     public function index()
     {
         //
+        $upgrades=Upgrade::all();
+        return view('Admin.Upgrade.request',compact('upgrades'));
     }
 
     /**

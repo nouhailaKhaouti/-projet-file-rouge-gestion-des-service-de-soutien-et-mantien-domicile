@@ -1,7 +1,7 @@
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-        sitter requests DataTable
+        Provider requests DataTable
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
@@ -17,7 +17,7 @@
             </thead>
             <tfoot>
                 <tr>
-                    <th>user Name</th>
+                    <th>User Name</th>
                     <th>Email</th>
                     <th>CIN</th>
                     <th>N° warning</th>
@@ -28,7 +28,7 @@
             <tbody>
                 @foreach($upgrades as $upgrade)
                 <tr>
-                    <td>{{$upgrade->user->username}}</td>
+                    <td>{{$upgrade->user->name}} {{$upgrade->user->Prenom}}</td>
                     <td>{{$upgrade->user->email}}</td>
                     <td>{{$upgrade->cin}}</td>
                     <td>{{$upgrade->user->warning}}</td>

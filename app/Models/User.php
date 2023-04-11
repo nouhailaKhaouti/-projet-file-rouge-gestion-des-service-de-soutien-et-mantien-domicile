@@ -44,11 +44,11 @@ class User extends Authenticatable
     ];
     public function service()
     {
-        return $this->hasOne(Service::class);
+        return $this->belongsTo(Service::class);
     }
     public function upgrade()
     {
-        return $this->hasOne(Upgrade::class);
+        return $this->belongsTo(Upgrade::class);
     }
     public function demande()
     {
@@ -58,9 +58,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Disponibility::class);
     }
-    public function checklist()
+    public function checkLists()
     {
-        return $this->hasOne(CheckList::class);
+        return $this->hasMany(CheckList::class);
     }
     public function rating()
     {
@@ -76,6 +76,6 @@ class User extends Authenticatable
     }
     public function company()
     {
-        return $this->hasOne(Company::class);
+        return $this->belongsTo(Company::class);
     }
 }

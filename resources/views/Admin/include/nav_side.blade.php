@@ -15,15 +15,15 @@
                             Dashboard
                         </a>
                         
-                        <a class="nav-link" href="{{url('sitter')}}">
+                        <a class="nav-link" href="{{url('provider')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Manage sitters users
+                            Manage providers users
                         </a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseanimale" aria-expanded="false" aria-controls="collapseanimale">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Manage animals service
+                    Manage services
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseanimale" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -32,21 +32,21 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Manage Categories
                         </a>
-                        <a class="nav-link" href="{{url('breed')}}">
+                        <a class="nav-link" href="{{url('service')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Manage breeds
+                            Manage services
                         </a>
                         <a class="nav-link" href="{{url('type')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Manage type of sitting
+                            Manage type 
                         </a>
-                        <a class="nav-link" href="{{url('task')}}">
+                        <a class="nav-link" href="{{url('tag')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Manage task 
+                            Manage tag 
                         </a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseblogs" aria-expanded="false" aria-controls="collapseblogs">
+                <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseblogs" aria-expanded="false" aria-controls="collapseblogs">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Manage blog
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -58,7 +58,7 @@
                             show blog
                         </a>
                     </nav>
-                </div>
+                </div> -->
                 <div class="sb-sidenav-menu-heading">layouts</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>

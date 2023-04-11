@@ -19,10 +19,10 @@ class Commenter extends Model
     }
     public function user()
     {
-        return $this->hasOne(user::class);
+        return $this->belongsTo(user::class);
     }
     public function post()
     {
-        return $this->hasOne(Post::class);
+        return $this->belongsTo(Post::class);
     }
 }

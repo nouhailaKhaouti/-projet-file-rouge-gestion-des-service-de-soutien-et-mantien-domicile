@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\CheckListRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CheckListController extends Controller
 {
@@ -15,8 +16,8 @@ class CheckListController extends Controller
      */
     public function index()
     {
-        $CheckList = CheckList::all();
-        return response()->json(['response'=>'success','checkLists'=>$CheckList]);
+        $CheckLists = Auth::user()->checkLists;
+        return view('User.ckeckList',compact('CheckLists'));
     }
 
     /* Show the form for creating a new resource.
@@ -30,18 +31,8 @@ class CheckListController extends Controller
     public function store(Request $request)
     {
         $data = CheckList::create($request->all());
-        return response()->json(['created'=>'CheckList created successfuly','CheckList'=>$data],201);
-    }
+        return redirect()->back()->with('message' , 'Your checkList is created successfully');
 
-    /* Display the specified resource.
-     */
-    public function show($id)
-    {
-        if(!CheckList::find($id)){
-            return response()->json(['response'=>'not found'],404);
-        }
-        // return response()->json(['response'=>'not found'],404);
-        return CheckList::find($id);
     }
 
     /* Show the form for editing the specified resource.
@@ -57,7 +48,7 @@ class CheckListController extends Controller
     {
         $CheckList_update = CheckList::find($id);
         $CheckList_update->update($request->all());
-        return $CheckList_update;
+        return redirect()->back()->with('message' , 'Your checkList is updated successfully');
     }
 
     /**
@@ -65,6 +56,8 @@ class CheckListController extends Controller
      */
     public function destroy(string $id)
     {
-        return CheckList::destroy($id);
+        CheckList::destroy($id);
+        return redirect()->back()->with('message' , 'Your checkList is deleted successfully');
+
     }
 }

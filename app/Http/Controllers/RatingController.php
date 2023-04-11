@@ -30,18 +30,7 @@ class RatingController extends Controller
     public function store(Request $request)
     {
         $data = Rating::create($request->all());
-        return response()->json(['created'=>'Rating created successfuly','Rating'=>$data],201);
-    }
-
-    /* Display the specified resource.
-     */
-    public function show($id)
-    {
-        if(!Rating::find($id)){
-            return response()->json(['response'=>'not found'],404);
-        }
-        // return response()->json(['response'=>'not found'],404);
-        return Rating::find($id);
+        return redirect()->back()->with('message' , 'You added your review successfully');
     }
 
     /* Show the form for editing the specified resource.
@@ -57,7 +46,7 @@ class RatingController extends Controller
     {
         $Rating_update = Rating::find($id);
         $Rating_update->update($request->all());
-        return $Rating_update;
+        return redirect()->back()->with('message' , 'your review is updated successfully');
     }
 
     /**
@@ -65,6 +54,7 @@ class RatingController extends Controller
      */
     public function destroy(string $id)
     {
-        return Rating::destroy($id);
+        Rating::destroy($id);
+        return redirect()->back()->with('message' , 'Your review is deleted successfully');
     }
 }

@@ -29,7 +29,7 @@ class DisponibilityController extends Controller
     public function store(Request $request)
     {
         $data = Disponibility::create($request->all());
-        return response()->json(['created'=>'Disponibility created successfuly','Disponibility'=>$data],201);
+        return redirect()->back()->with('message' , 'working day list is created successfully');
     }
 
     /* Display the specified resource.
@@ -56,7 +56,7 @@ class DisponibilityController extends Controller
     {
         $Disponibility_update = Disponibility::find($id);
         $Disponibility_update->update($request->all());
-        return $Disponibility_update;
+        return redirect()->back()->with('message' , 'your working day list is updated successfully');
     }
 
     /**
@@ -64,6 +64,7 @@ class DisponibilityController extends Controller
      */
     public function destroy(string $id)
     {
-        return Disponibility::destroy($id);
+         Disponibility::destroy($id);
+         return redirect()->back()->with('message' , 'working day list is deleted successfully');
     }
 }

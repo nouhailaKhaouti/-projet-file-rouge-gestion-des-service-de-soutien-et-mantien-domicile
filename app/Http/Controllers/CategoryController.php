@@ -15,8 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
-        return response()->json(['response'=>'success','categories'=>$category]);
+        $categories = Category::all();
+        return view('Admin.category.category', compact('categories'));
     }
 
     /* Show the form for creating a new resource.
@@ -30,18 +30,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = Category::create($request->all());
-        return response()->json(['created'=>'category created successfuly','category'=>$data],201);
-    }
-
-    /* Display the specified resource.
-     */
-    public function show($id)
-    {
-        if(!Category::find($id)){
-            return response()->json(['response'=>'not found'],404);
-        }
-        // return response()->json(['response'=>'not found'],404);
-        return Category::find($id);
+        return redirect()->back();
     }
 
     /* Show the form for editing the specified resource.
@@ -57,7 +46,7 @@ class CategoryController extends Controller
     {
         $category_update = Category::find($id);
         $category_update->update($request->all());
-        return $category_update;
+        return redirect()->back();
     }
 
     /**
@@ -65,6 +54,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        return Category::destroy($id);
+         Category::destroy($id);
+         return redirect()->back();
     }
 }

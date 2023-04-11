@@ -32,10 +32,17 @@ class DemandeController extends Controller
     public function store(Request $request)
     {
         //
+        $price=0;
+        $checkLists = $request->input('checkLists', []);
+        foreach($checkLists as $checkList){
+            $value=CheckList::find($checkList);
+            $price+=$value->price;
+        }
         $demande=new Demande();
         $demande->title=$request->title;
         $demande->description=$request->description;
-        $demande->price=$request->price;
+        $demande->price=$price;
+        $demande->jour=$request->jour;
         $demande->type=$request->type;
         $demande->city=$request->city;
         $demande->adresse=$request->adresse;
@@ -43,6 +50,9 @@ class DemandeController extends Controller
         $demande->provider_id=$request->provider;
         $demande->user_id=$request->user;
         $demande->save();
+        $demande->checkLists()->attach($checkLists);
+        return redirect()->back()->with('message' , 'Your demande has been send successfully');
+
     }
 
     /**
@@ -109,11 +119,12 @@ class DemandeController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        return Demande::destroy($id);
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  */
+    // public function destroy(string $id)
+    // {
+    //      Demande::destroy($id);
+    //      return redirect()->back()->with('message' , 'Your  is deleted successfully');
+    // }
 }

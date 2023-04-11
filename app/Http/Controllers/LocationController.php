@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\location;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LocationController extends Controller
 {
@@ -37,6 +39,7 @@ class LocationController extends Controller
     public function show(location $location)
     {
         //
+
     }
 
     /**
@@ -55,7 +58,7 @@ class LocationController extends Controller
         //
         $location_update = location::find($id);
         $location_update->update($request->all());
-        return $location_update;
+        return redirect()->back()->with('message' , 'this company location is updated successfully');
     }
 
     /**
@@ -63,6 +66,7 @@ class LocationController extends Controller
      */
     public function destroy(string $id)
     {
-        return location::destroy($id);
+        location::destroy($id);
+        return redirect()->back()->with('message' , 'this company location is deleted successfully');
     }
 }

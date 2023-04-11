@@ -15,8 +15,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $Service = Service::all();
-        return response()->json(['response'=>'success','categories'=>$Service]);
+        $services = Service::all();
+        return view('Admin.Services.service', compact('services'));
     }
 
     /* Show the form for creating a new resource.
@@ -29,19 +29,8 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Service::create($request->all());
-        return response()->json(['created'=>'Service created successfuly','Service'=>$data],201);
-    }
-
-    /* Display the specified resource.
-     */
-    public function show($id)
-    {
-        if(!Service::find($id)){
-            return response()->json(['response'=>'not found'],404);
-        }
-        // return response()->json(['response'=>'not found'],404);
-        return Service::find($id);
+        Service::create($request->all());
+        return redirect()->back();
     }
 
     /* Show the form for editing the specified resource.
@@ -57,7 +46,7 @@ class ServiceController extends Controller
     {
         $Service_update = Service::find($id);
         $Service_update->update($request->all());
-        return $Service_update;
+        return redirect()->back();
     }
 
     /**
@@ -65,6 +54,7 @@ class ServiceController extends Controller
      */
     public function destroy(string $id)
     {
-        return Service::destroy($id);
+         Service::destroy($id);
+         return redirect()->back();
     }
 }

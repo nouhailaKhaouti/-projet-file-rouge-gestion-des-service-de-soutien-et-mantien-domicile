@@ -43,7 +43,7 @@
                     <td>{{$user->role}}</td>
                     <td>{{$user->warning}}</td>
                     <td>
-                    @if($user->acces=='approved')
+                    @if($user->access=='approved')
                     <a class="btn btn-sm  btn-outline-danger" onclick="return confirm('are you sure ,you want to band this user ')" href="{{url('acces_denied',$user->id)}}">denied</a>
                     @else
                     <a class="btn btn-sm  btn-outline-primary" href="{{url('acces_approved',$user->id)}}">approved</a>

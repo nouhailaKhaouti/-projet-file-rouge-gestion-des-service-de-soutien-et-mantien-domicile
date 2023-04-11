@@ -18,13 +18,13 @@ class AdminController extends Controller
     {  
         $acces='approved';
         $users = user::where('access', 'LIKE', '%' . $acces . '%')->get();
-        return view('admin.approved', compact('users'));
+        return view('admin.tables.approved', compact('users'));
     }
     public function warning()
     {
         $warning='0';
         $users = user::where('warning', '>', '%' . $warning . '%')->get();
-        return view('admin.warning', compact('users'));
+        return view('admin.tables.warning', compact('users'));
     }
     public function acces_approved($id)
     {

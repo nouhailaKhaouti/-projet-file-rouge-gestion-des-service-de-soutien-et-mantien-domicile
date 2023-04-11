@@ -8,13 +8,13 @@
                 <div class="container-fluid px-4">
                     <br>
                     <br>
-                   <h3><strong>Add tag</strong></h3>
+                   <h3><strong>Add service</strong></h3>
                    <br>
-                   @include('admin.Tags.add_tag')
+                   @include('admin.services.add_service')
                    <br>
                    <br>
                    <br>
-                    @include('admin.Tags.tag_table')
+                    @include('admin.services.service_table')
                 </div>
             </main>
             @include('admin.include.footer')

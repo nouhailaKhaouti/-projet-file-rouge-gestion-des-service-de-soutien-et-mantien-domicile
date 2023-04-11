@@ -53,6 +53,6 @@
                                 </div>
                             </div>
                         </div>
-                        @include('admin.user_table')
+                        @include('admin.tables.user_table')
                     </div>
                 </main>
