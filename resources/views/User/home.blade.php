@@ -20,28 +20,34 @@
 </head>
 
 <body>
-    <header>
-    <nav>
-        <div class="d-flex p-2 justify-content-between">
-            <img src="user/assets/img/icon.png" alt="logo" id="logo" width="80" height="80">
-            <ul class=" d-flex  ">
-                <li class="text-black" style="margin-bottom:20px;">
+
+    <nav class="d-flex justify-content-between bg-tranparent my-5 mx-5">
+            <img src="user/assets/img/icon.png" alt="logo" id="logo" width="50" height="100">
+            <ul class=" d-flex ">
+                <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
                        Home 
                 </li>
-                <li class="text-black" style="margin-bottom:20px;">
+                <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative " style="margin-bottom:20px;">
                       Services
                 </li>
-                <li class="text-black" style="margin-bottom:20px;">
+                <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
                       Posts
                 </li>
-                <li class="text-black" style="margin-bottom:20px;">
+                <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
                       About
                 </li>
-                <li class="text-black" style="margin-bottom:20px;">
-                      <img src="user/assets/img/p.jpg" alt="" width="50" height="50" class="full-rounded" id="profile">
-                </li>
+                      <img src="user/assets/img/p.jpg" class="text-black me-5 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;" alt="" width="50" height="50" class="full-rounded" id="profile">
             </ul>
-        </div>
     </nav>
-</header> 
+
+<section class="mx-5 d-flex justify-content-around">
+<!-- <div class=".section-2">
+<img src="user/assets/img/p.jpg" class="text-black me-5 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;" alt="" width="150" height="150" class="full-rounded" id="profile">
+</div>
+<div class=".section-2">
+<img src="user/assets/img/p.jpg" class="text-black me-5 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;" alt="" width="150" height="150" class="full-rounded" id="profile"></div>
+<div class=".section-2">
+<img src="user/assets/img/p.jpg" class="text-black me-5 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;" alt="" width="150" height="150" class="full-rounded" id="profile">
+</div> -->
+</section>
 </body>

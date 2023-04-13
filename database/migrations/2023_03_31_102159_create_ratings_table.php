@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('publisher_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

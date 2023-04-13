@@ -26,6 +26,7 @@ return new class extends Migration
             $table->foreign('commenter_id')
             ->references('id')->on('commenters')
             ->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

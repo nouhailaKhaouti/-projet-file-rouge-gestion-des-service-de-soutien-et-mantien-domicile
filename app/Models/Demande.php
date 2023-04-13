@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Demande extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = [
         'title',
         'price',
@@ -27,7 +29,7 @@ class Demande extends Model
     }
     public function provider()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'provider_id');
     }
     public function service()
     {
