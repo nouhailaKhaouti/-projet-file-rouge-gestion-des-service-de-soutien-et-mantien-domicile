@@ -31,6 +31,7 @@ class CommenterController extends Controller
                 'id' => $comment->id,
                 'description' => $comment->description,
                 'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+                'parent'=>$comment->commenter_id,
                 'auth' => Auth::user()->id,
                 'state' => 0,
                 'post' => [

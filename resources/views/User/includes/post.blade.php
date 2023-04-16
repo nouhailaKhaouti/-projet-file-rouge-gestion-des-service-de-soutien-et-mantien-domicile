@@ -399,9 +399,9 @@
 
     <section class="profile-feed">
         <div class="container">
-            
+
             <div class="row">
-@foreach($posts as $post)
+                @foreach($posts as $post)
                 <div class="col-lg-6 offset-lg-3">
                     <div class="cardbox shadow-lg rounded-2" style="background-color:#E1EFE8">
                         <div class="cardbox-heading">
@@ -448,7 +448,7 @@
                         <div class="cardbox-base">
                             <ul class="float-right">
                                 <li>
-                                    <button onclick="search('comment')" class="btn"> <a><i class="fa fa-comments"></i></a> <a><em class="mr-5">{{count($post->comments)}}</em></a></button>
+                                    <button onclick="search('comment{{$post->id}}')" class="btn"> <a><i class="fa fa-comments"></i></a> <a><em class="mr-5">{{count($post->comments)}}</em></a></button>
                                 </li>
                                 <!-- <li><a><i class="fa fa-share-alt"></i></a></li>
                             <li><a><em class="mr-3">05</em></a></li> -->
@@ -460,7 +460,7 @@
                                 <span id="post-{{ $post->id }}-like-count" class="text-muted">{{ $post->likePosts()->count() }}</span>
                             </button> -->
                             <ul>
-                                <li> <a class="like-btn" data-post-id="{{ $post->id }}"> <i class="fa-regular fa-thumbs-up" id="like-icon"></i></a></li>
+                                <li> <a class="like-btn" data-post-id="{{ $post->id }}"> <i class="fa-regular fa-thumbs-up" id="like-icon{{ $post->id }}"></i></a></li>
                                 <li><a href="#"><img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
                                 <li><a href="#"><img src="https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
                                 <li><a href="#"><img src="https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg" class="img-fluid rounded-circle" alt="User"></a></li>
@@ -473,7 +473,7 @@
                                 <a href=""><img class="rounded-circle" src="https://images.pexels.com/photos/2811087/pexels-photo-2811087.jpeg" alt="..."></a>
                             </span>
                             <div class="search rounded-3" style="background-color:#F0F4F2">
-                                <form action="{{url('comment_create')}}" method="post" id="comment-form">
+                                <form action="{{url('comment_create')}}" method="post" class="comment-form">
                                     @csrf
                                     <input placeholder="Write a comment" type="text" name="description" class="rounded-3" style="background-color:#F0F4F2">
                                     <input type="hidden" value='{{$post->id}}' name="post_id">
@@ -483,10 +483,10 @@
                             </div>
 
                         </div><!-- cardbox-like -->
-                        <div class="container d-none" id="comment">
+                        <div class="container d-none" id="comment{{$post->id}}">
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-12 col-lg-12">
-                                    <div class="text-dark" id="comment-section">
+                                    <div class="text-dark" id="comment-section{{$post->id}}">
                                         @foreach($post->comments as $comment)
                                         @if($comment->commenter_id == null)
                                         <div class="card-body p-4">
@@ -529,8 +529,10 @@
                                                         <button class="btn" onclick="search('reply{{$comment->id}}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->
                                                         @if(count($comment->replies)>0)
-                                                        <button class="btn" onclick="search('showreply{{$comment->id}}')"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
-                                                            @endif
+                                                        <button class="btn " onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
+                                                            @else
+                                                            <button class="btn d-none" onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
+                                                                @endif
                                                     </div>
                                                     <p class="mb-0">
                                                         {{$comment->description}}
@@ -540,7 +542,7 @@
                                             <br>
                                             <br>
                                             <div class="search d-none  rounded-3" style="background-color:#F0F4F2" id="reply{{$comment->id}}">
-                                                <form action="{{url('comment_create')}}" method="post" id="comment-form">
+                                                <form action="{{url('comment_create')}}" method="post" class="comment-form">
                                                     @csrf
                                                     <input placeholder="Write a comment" type="text" style="background-color:#F0F4F2" name="description">
                                                     <input type="hidden" value='{{$post->id}}' name="post_id">
@@ -549,7 +551,7 @@
                                                     <button type="submit"><i class="fa-duotone fa-paper-plane-top"></i></button>
                                                 </form>
                                             </div>
-                                            <div id="reply-section">
+                                            <div id="reply-section{{$comment->id}}">
                                                 @foreach($comment->replies as $reply)
                                                 <div class="card-body p-4 d-none" id="showreply{{$comment->id}}">
                                                     <div class="d-flex flex-start">
@@ -608,8 +610,8 @@
                             </div>
                         </div>
                     </div><!-- cardbox -->
-                </div> 
-                   @endforeach
+                </div>
+                @endforeach
             </div><!-- row -->
         </div><!-- container -->
     </section>
@@ -738,7 +740,7 @@
                         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                             let likeCount = JSON.parse(this.responseText).like_count;
                             document.querySelector(`#post-${postId}-like-count`).textContent = likeCount;
-                            let heartIcon = document.getElementById("like-icon");
+                            let heartIcon = document.getElementById(`like-icon${postId}`);
                             // console.log(JSON.parse(this.responseText).fill);
                             if (JSON.parse(this.responseText).fill == 1) {
                                 heartIcon.classList.remove('fa-regular');
@@ -757,27 +759,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the comment form element
-            var commentForm = document.getElementById('comment-form');
+            var Form = document.querySelectorAll('.comment-form');
             // Listen for the form's submit event
-            commentForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+            Form.forEach(function(commentForm) {
+                commentForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); // Prevent the form from submitting normally
 
-                // Serialize the form data
-                var formData = new FormData(commentForm);
+                    // Serialize the form data
+                    var formData = new FormData(commentForm);
 
-                // Send the AJAX request
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', commentForm.action);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        console.log(xhr.responseText); // Log the response to the console
-                        // Clear the input field
-                        commentForm.querySelector('input[name="description"]').value = '';
-                        // Parse the JSON data
-                        var comment = JSON.parse(xhr.responseText);
-                        //   // Create the HTML for the new comment
-                        if (comment.state == 1) {
-                            var html = `
+                    // Send the AJAX request
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', commentForm.action);
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            console.log(xhr.responseText); // Log the response to the console
+                            // Clear the input field
+                            commentForm.querySelector('input[name="description"]').value = '';
+                            // Parse the JSON data
+                            var comment = JSON.parse(xhr.responseText);
+                            //   // Create the HTML for the new comment
+                            if (comment.state == 1) {
+                                var html = `
                                          <div class="card-body p-4">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
@@ -818,12 +821,14 @@
 
                                                         <button class="btn" onclick="search('reply${comment.id}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->`;
-                            if (comment.count > 0) {
-                                html += `
+                                if (comment.count > 0) {
+                                    html += `
                                                         
-                                                        <button class="btn" onclick="search('showreply${comment.id}')"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>`
-                            }
-                            html += `   
+                                                        <button class="btn" onclick="search('showreply${comment.id}')" id="show${comment.id}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>`
+                                } else {
+                                    html += ` <button class="btn d-none" onclick="search("showreply${comment.id}")" id="show${comment.id}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>`
+                                }
+                                html += `   
                                                     </div>
                                                     <p class="mb-0">
                                                     ${comment.description}
@@ -832,8 +837,8 @@
                                             </div>
                                             <br>
                                             <br>
-                                            <div class="search d-none rounded-3" style="background-color:#F0F4F2" id="comment${comment.id}">
-                                                <form action="{{url('comment_create')}}" method="post" id="comment-form">
+                                            <div class="search d-none rounded-3" style="background-color:#F0F4F2" id="reply${comment.id}">
+                                                <form action="{{url('comment_create')}}" method="post" class="comment-form">
                                                     @csrf
                                                     <input placeholder="Write a comment" type="text" class="rounded-3" style="background-color:#F0F4F2" name="description">
                                                     <input type="hidden" value='${comment.post.id}' name="post_id">
@@ -844,10 +849,10 @@
                                             </div>                                         
                                         </div>
                                         <hr class="my-0" />`;
-                            var commentsSection = document.getElementById('comment-section');
-                            commentsSection.insertAdjacentHTML('beforeend', html);
-                        } else if (comment.state == 0) {
-                            html += `<div class="card-body p-4 d-none" id="showreply${comment.id}">
+                                var commentsSection = document.getElementById(`comment-section${comment.post.id}`);
+                                commentsSection.insertAdjacentHTML('beforeend', html);
+                            } else if (comment.state == 0) {
+                                html += `<div class="card-body p-4 d-none" id="showreply${comment.parent}">
                                                 <div class="d-flex flex-start">
                                                     <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                     <div>
@@ -893,16 +898,23 @@
                                                 <!-- Search -->
                                             </div>
                                      `;
-                            var commentsSection = document.getElementById('reply-section');
-                            commentsSection.insertAdjacentHTML('beforeend', html);
-                        }
-                        // Append the new comment to the comments section
+                                var commentsSection = document.getElementById(`reply-section${comment.parent}`);
+                                commentsSection.insertAdjacentHTML('beforeend', html);
+                                var input = document.getElementById(`show${comment.parent}`);
 
-                    } else {
-                        console.log(xhr.responseText); // Log the error message to the console
-                    }
-                };
-                xhr.send(formData);
+                                input.classList.remove('d-none');
+                                var reply = document.getElementById(`reply${comment.parent}`);
+                                reply.classList.remove('d-none');
+                                console.log(reply);
+                            }
+                            // Append the new comment to the comments section
+
+                        } else {
+                            console.log(xhr.responseText); // Log the error message to the console
+                        }
+                    };
+                    xhr.send(formData);
+                });
             });
         });
     </script>
