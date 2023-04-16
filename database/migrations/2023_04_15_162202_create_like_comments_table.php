@@ -8,34 +8,33 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('commenters', function (Blueprint $table) {
+        Schema::create('like_comments', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->integer('like')->default(1);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            $table->unsignedBigInteger('post_id');
-            $table->foreign('post_id')
-            ->references('id')->on('posts')
-            ->onDelete('cascade');
-            $table->unsignedBigInteger('commenter_id')->nullable();
+            $table->unsignedBigInteger('commenter_id');
             $table->foreign('commenter_id')
             ->references('id')->on('commenters')
             ->onDelete('cascade');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('commenters');
+        Schema::dropIfExists('like_comments');
     }
 };

@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\postRequest;
 use App\Http\Requests\TagRequest;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class postController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
 
     /**
      * Display a listing of the resource.
@@ -25,9 +27,11 @@ class postController extends Controller
      */
     public function index()
     {
+        
+        $tags=Tag::all();
+        $categorys=Category::all();
         $posts = Post::with('tags')->get();
-
-        return view('posts.post', compact('posts'));
+        return view('User.includes.post', compact('posts','tags','categorys'));
     }
 
     /**
@@ -42,31 +46,33 @@ class postController extends Controller
         // $this->authorize('create',Post::class);
         $tags = $request->input('tags', []); // get the tags from the request;
         $Post = new Post();
-        $Post->user_id =auth()->user()->id;
+        $Post->user_id = optional(Auth::user())->id;;
         $Post->category_id = $request->category_id;
         $Post->description =$request->description;
-        $Post->title =$request->title;
         $Post->save();
         try {
 
             $Post->tags()->attach($tags);
             if ($request->hasFile('image')){
+                
                 foreach ($request->file('image') as $image) {
                 //we create a new name for the image 
                 $path = time(). uniqid() . '.' . $image->getClientOriginalExtension();
                 //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
                 $image->move('Postimage', $path);
                     // dd($path);
-                    Image::create([
-                        'post_id' => $Post->id,
-                        'path' => $path
-                    ]);
+                    $img=new Image();
+                    $img->path=$path;
+                    $img->post_id=$Post->id;
+                    $img->save();
+                    // dd($img);
                 }
             }
+            return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with('message','somthing went wrong while creating this post');
         }
-        return redirect()->back();
+
     }
 
 

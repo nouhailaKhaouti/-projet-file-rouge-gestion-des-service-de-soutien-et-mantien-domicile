@@ -14,10 +14,11 @@ class Commenter extends Model
         'description',
         'user_id',
         'post_id',
+        'commenter_id',
     ];
     public function replies()
     {
-        return $this->hasMany(Commenter::class);
+        return $this->hasMany(Commenter::class,'commenter_id');
     }
     public function user()
     {

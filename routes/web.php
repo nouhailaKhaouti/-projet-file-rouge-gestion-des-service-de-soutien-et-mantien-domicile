@@ -1,8 +1,15 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommenterController;
+use App\Http\Controllers\postController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UpgradeController;
 use App\Models\Demande;
+use App\Models\LikePost;
+use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-  return view('User.includes.table');
+  return view('User.includes.post');
 });
 Route::get('/calendar', function () {
   return view('User.Provider-company.calander');
@@ -26,46 +33,44 @@ Route::get('/calendar', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-// home controller  
-Route::get("/search", [HomeController::class, 'search']);
-Route::post('/sendmail', [HomeController::class, 'sendmail']);
+// // home controller  
+// Route::get("/search", [HomeController::class, 'search']);
+// Route::post('/sendmail', [HomeController::class, 'sendmail']);
 
 
 //profile controller
 
-Route::get('/profile', [ProfileController::class, 'profile']);
-Route::get('/user_profile/{id}', [ProfileController::class, 'user_profile']);
-Route::get('/update/{id}', [ProfileController::class, 'update']);
-Route::post('/editprofile/{id}', [ProfileController::class, 'editprofile']);
+// Route::get('/profile', [ProfileController::class, 'profile']);
+// Route::get('/user_profile/{id}', [ProfileController::class, 'user_profile']);
+// Route::get('/update/{id}', [ProfileController::class, 'update']);
+// Route::post('/editprofile/{id}', [ProfileController::class, 'editprofile']);
 
 //post controller
-
-Route::post('/post', [PostController::class, 'post']);
-Route::get('/delete_post/{id}', [PostController::class, 'delete']);
-Route::get('/createpost', [PostController::class, 'createpost']);
-Route::post('/update_post/{id}', [PostController::class, 'update_post']);
-Route::get('/post_display', [PostController::class, 'post_display']);
+Route::get('/Posts', [postController::class, 'index']);
+Route::get('/delete_post/{id}', [postController::class, 'destroy']);
+Route::post('/post_create', [postController::class, 'store']);
+Route::post('/update_post/{id}', [postController::class, 'update']);
 
 
 ////comment controller
 
-Route::post('comment', [commentController::class, 'comment'])->name('comments.store');
-Route::get('/delete_comment/{id}', [commentController::class, 'delete']);
-Route::post('update_comment/{id}', [commentController::class, 'update_comment']);
+Route::post('/comment_create', [CommenterController::class, 'store']);
+Route::get('/delete_comment/{id}', [CommenterController::class, 'destroy']);
+Route::post('/comment_update/{id}', [CommenterController::class, 'update']);
 
 ////like controller
 
-Route::post('save-likedislike', 'likeController@save_likedislike');
-Route::get('/post/{post}/like/', [likeController::class, 'likepl']);
-Route::get('/post/{post}/dislike/', [likeController::class, 'dislikepl']);
-Route::post('/post/{id}/act', [likeController::class, 'actOnPost']);
+// Route::post('save-likedislike', 'likeController@save_likedislike');
+// Route::get('/post/{post}/like/', [likeController::class, 'likepl']);
+// Route::get('/post/{post}/dislike/', [likeController::class, 'dislikepl']);
+// Route::post('/post/{id}/act', [likeController::class, 'actOnPost']);
 
 //provider Controller
 
-Route::post('/create_request', [UpgradeController::class, 'store']);
+// Route::post('/create_request', [UpgradeController::class, 'store']);
 // Route::post('/demande', [UpgradeController::class,'demande']);
 // Route::post('/create_provider', [UpgradeController::class,'create_provider'])->middleware(['provider']);
 // Route::post('/update_provider/{id}', [UpgradeController::class,'update_provider'])->middleware(['provider']);
@@ -85,10 +90,10 @@ Route::post('/category_create', [CategoryController::class, 'store']);
 Route::post('/category_update/{id}', [CategoryController::class, 'update']);
 Route::get('/category_delete/{id}', [CategoryController::class, 'destroy']);
 
-// add comment
-Route::post('comment/add', [CommentController::class, 'store']);
-// delete comment
-Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
+// // add comment
+// Route::post('comment/add', [CommentController::class, 'store']);
+// // delete comment
+// Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
 
 
 #Manage Review
@@ -111,15 +116,15 @@ Route::get('/warned_user', [AdminController::class, 'warning']);
 
 //provider controller
 
-Route::get('/provider', [providerController::class, 'provider']);
-Route::get('/download_cin/{id}', [UpgradeController::class, 'download_cin']);
-Route::get('/download_certificat/{id}', [UpgradeController::class, 'download_certificat']);
-Route::get('/request', [UpgradeController::class, 'request']);
-// Route::get('/change_role/{id}',[UpgradeController::class,'change_role']);
-Route::get('/request_demande/{id}', [UpgradeController::class, 'request_demande']);
-Route::get('/approved_provider/{id}', [providerController::class, 'approved_provider']);
-Route::get('/refused_provider/{id}', [providerController::class, 'refused_provider']);
-// Route::get('/approved_demande/{id}', [providerController::class,'approved_demande']);
+// Route::get('/provider', [providerController::class, 'provider']);
+// Route::get('/download_cin/{id}', [UpgradeController::class, 'download_cin']);
+// Route::get('/download_certificat/{id}', [UpgradeController::class, 'download_certificat']);
+// Route::get('/request', [UpgradeController::class, 'request']);
+// // Route::get('/change_role/{id}',[UpgradeController::class,'change_role']);
+// Route::get('/request_demande/{id}', [UpgradeController::class, 'request_demande']);
+// Route::get('/approved_provider/{id}', [providerController::class, 'approved_provider']);
+// Route::get('/refused_provider/{id}', [providerController::class, 'refused_provider']);
+// // Route::get('/approved_demande/{id}', [providerController::class,'approved_demande']);
 // Route::get('/refused_demande/{id}', [providerController::class,'refused_demande']);
 
 Route::get('/events', function () {
@@ -137,4 +142,32 @@ Route::get('/events', function () {
 
   return response()->json($events);
 });
+
+
+Route::post('/like-post', function(Request $request) {
+  $postId = $request->post_id;
+  $post = Post::findOrFail($postId);
+  $user = auth()->user();
+  if ($user) {
+      $likePost = $post->likePosts()->where('user_id', $user->id)->first();
+      if ($likePost) {
+          $likePost->delete();
+          $likeCount = $post->likePosts()->count();
+          return response()->json(['like_count' => $likeCount,
+          'fill'=> 0,]);
+      } else {
+          $likePost = new LikePost([
+              'user_id' => $user->id,
+          ]);
+          $post->likePosts()->save($likePost);
+          $likeCount = $post->likePosts()->count();
+          return response()->json(['like_count' => $likeCount,
+          'fill'=> 1,
+        ]);
+      }
+
+  } else {
+      return response()->json(['error' => 'Unauthorized'], 401);
+  }
+})->middleware('auth')->name('like-post');
 

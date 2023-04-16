@@ -14,22 +14,21 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('Prenom');
-            $table->string('Description');
-            $table->string('icon');
-            $table->string('phone');
-            $table->string('adresse');
-            $table->string('postal_code');
-            $table->string('city');
-            $table->string('country');
-            $table->string('age');
-            $table->integer('access')->default("approved");
+            $table->string('Description')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('age')->nullable();
+            $table->string('access')->default('approved');
             $table->integer('warning')->default(0);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('service_id')->nullable();
             $table->foreign('service_id')
             ->references('id')->on('services')
             ->onDelete('cascade');

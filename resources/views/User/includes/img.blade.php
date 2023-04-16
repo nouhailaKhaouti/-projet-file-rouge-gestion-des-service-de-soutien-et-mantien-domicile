@@ -146,3 +146,106 @@ ol li .descr { font-size: 0.8rem; font-weight: 300 }
 <div class="credits">
     <a target="_blank" href="https://www.freepik.com/premium-vector/vector-infographic-design-template-with-icons-8-options-steps_10571883.htm">inspired by</a>
 </div>
+
+
+<!-- 
+  <div class="lightbox">
+  <div class="row">
+    <div class="col-lg-4">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/Photos/Thumbnails/Slides/1.webp"
+        data-mdb-img="https://mdbcdn.b-cdn.net/img/Photos/Slides/1.webp"
+        alt="Table Full of Spices"
+        class="w-100"
+      />
+    </div>
+    <div class="col-lg-4">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/Photos/Thumbnails/Slides/2.webp"
+        data-mdb-img="https://mdbcdn.b-cdn.net/img/Photos/Slides/2.webp"
+        alt="Winter Landscape"
+        class="w-100"
+      />
+    </div>
+    <div class="col-lg-4">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/Photos/Thumbnails/Slides/3.webp"
+        data-mdb-img="https://mdbcdn.b-cdn.net/img/Photos/Slides/3.webp"
+        alt="View of the City in the Mountains"
+        class="w-100"
+      />
+    </div>
+  </div>
+</div>
+ -->
+
+
+ <!-- message
+
+<button type="button" class="btn btn-success" id="basic-success-trigger">Success</button>
+<button type="button" class="btn btn-danger" id="basic-danger-trigger">Danger</button>
+
+
+<div
+  class="toast fade mx-auto"
+  id="basic-success-example"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-mdb-autohide="true"
+  data-mdb-delay="2000"
+  data-mdb-position="top-right"
+  data-mdb-append-to-body="true"
+  data-mdb-stacking="true"
+  data-mdb-width="350px"
+  data-mdb-color="success"
+>
+  <div class="toast-header text-white">
+    <strong class="me-auto">MDBootstrap</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body text-white">Success Basic Example</div>
+</div>
+
+<div
+  class="toast fade mx-auto"
+  id="basic-danger-example"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  data-mdb-autohide="true"
+  data-mdb-delay="2000"
+  data-mdb-position="top-right"
+  data-mdb-append-to-body="true"
+  data-mdb-stacking="true"
+  data-mdb-width="350px"
+  data-mdb-color="danger"
+>
+  <div class="toast-header text-white">
+    <strong class="me-auto">MDBootstrap</strong>
+    <small>11 mins ago</small>
+    <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body text-white">Danger Basic Example</div>
+</div>
+
+<script> 
+  const toasts = [
+  'basic-success-example',
+  'basic-danger-example',
+];
+
+const triggers = [
+  'basic-success-trigger',
+  'basic-danger-trigger',
+];
+
+triggers.forEach((trigger, index) => {
+  let basicInstance = mdb.Toast.getInstance(document.getElementById(toasts[index]));
+  document.getElementById(trigger).addEventListener('click', () => {
+    basicInstance.show();
+  });
+});
+</script>
+-->
