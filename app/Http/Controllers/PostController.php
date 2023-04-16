@@ -44,14 +44,18 @@ class postController extends Controller
     {
         
         // $this->authorize('create',Post::class);
-        $tags = $request->input('tags', []); // get the tags from the request;
+        
+        $tags = array(); 
+        foreach ($request->input('tags') as $tag) {
+            $data=Tag::firstOrCreate(['label' =>  strtolower($tag)]);
+            array_push($tags, $data->id);
+        }// get the tags from the request;
         $Post = new Post();
         $Post->user_id = optional(Auth::user())->id;;
         $Post->category_id = $request->category_id;
         $Post->description =$request->description;
         $Post->save();
         try {
-
             $Post->tags()->attach($tags);
             if ($request->hasFile('image')){
                 

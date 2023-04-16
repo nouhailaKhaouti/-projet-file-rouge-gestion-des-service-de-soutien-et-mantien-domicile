@@ -301,6 +301,10 @@
             color: #ff0000;
         }
 
+        .bg_green{
+            background-color: #559974;
+        }
+
         /* end post */
     </style>
 
@@ -330,49 +334,57 @@
             {{session()->get('message')}}
         </div>
         @endif
-        <button type="button" data-bs-toggle="modal" data-bs-target="#Post">Add Post</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#Post" class="btn rounded-2 bg_green fw-bold text-white">Add Post <a><i class="fa-solid fa-plus"></i></a></button>
 
         <div class="modal fade" id="Post" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="PostLabel">add post</h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <div class="modal-header  bg_green">
+                        <h5 class="modal-title text-white" id="PostLabel">Add New Post</h5>
+                        <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="{{url('post_create')}}" class="panel-activity__status" method="post" enctype="multipart/form-data">
+                    <div class="modal-body" style="background-color:#E1EFE8">
+                        <form action="{{url('post_create')}}" class="panel-activity__status" method="post" enctype="multipart/form-data" id="post-form">
                             @csrf
-                            <label> <strong>Post </strong></label>
-                            <textarea type="descriptin" class="form-control" id="description" name="description"></textarea>
-                            <select name="tag[]" id="tag" class=" form-control" multiple require>
-                                <option value="">---tag---</option>
-                                @foreach($tags as $tag)
-                                <option value="{{$tag->id}}">{{$tag->label}}</option>
-                                @endforeach
-                            </select>
-                            <select name="category_id" id="category" class="form-control" require>
-                                <option value="">---category---</option>
-                                @foreach($categorys as $category)
-                                <option value="{{$category->id}}">{{$category->label}}</option>
-                                @endforeach
-                            </select>
-                            <div class="actions">
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Post Description</label>
+                                <textarea placeholder="add you oun description" id="description" class="form-control" name="description"></textarea>
+                            </div>
+                            <div class="d-flex justify-content-start flex-wrap" id="tags-container"></div>
+                            <div class="mb-3">
+                                <label class="form-label" for="tags">Tags</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" placeholder="add tags  to your post" id="tags-input" class="form-control rounder-2" name="tags" aria-describedby="add" />
+                                    <button type="button" class="btn text-end" id="add-tag-btn" id="add">Add</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="Category">Category</label>
+                                <select name="category_id" id="category" class="form-select rounder-2" require>
+                                    <option value="">---category---</option>
+                                    @foreach($categorys as $category)
+                                    <option value="{{$category->id}}">{{$category->label}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <div id="show_item">
-                                    <div class="d-flex flex-column pe-5 mt-2 mb-2 bg-light ">
-                                        <div class="ps-5" id="remove">
-                                            <label for="exampleInputEmail1" class="form-label">icon</label>
-                                            <input type="file" class="form-control" id="icon" name="image[]">
+                                    <div class="d-flex flex-column">
+                                        <div id="remove">
+                                            <label class="form-label" for="customFile">Add images to your Post</label>
+                                            <div class="input-group mb-3">
+                                            <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
+                                            <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
                                         </div>
                                         </br>
-                                        <div class="ps-5 pb-3">
-                                            <button type="button" class="btn btn-success add_item_btn">Add More</button>
+                                        <!-- <div class="d-flex justify-content-end"> -->
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="type" value="1">
-                                <button type="submit" class="btn btn-sm btn-rounded btn-info ">
+                                <button type="submit" class="btn rounded-2 bg_green text-white">
                                     Post
                                 </button>
                             </div>
@@ -391,7 +403,7 @@
                 @foreach($posts as $post)
                 <div class="col-lg-6 offset-lg-3">
 
-                    <div class="cardbox shadow-lg bg-white">
+                    <div class="cardbox shadow-lg rounded-2" style="background-color:#E1EFE8">
 
                         <div class="cardbox-heading">
                             <!-- START dropdown-->
@@ -473,10 +485,10 @@
                             <span class="comment-avatar float-left">
                                 <a href=""><img class="rounded-circle" src="https://images.pexels.com/photos/2811087/pexels-photo-2811087.jpeg" alt="..."></a>
                             </span>
-                            <div class="search">
+                            <div class="search rounded-3" style="background-color:#F0F4F2">
                                 <form action="{{url('comment_create')}}" method="post" id="comment-form">
                                     @csrf
-                                    <input placeholder="Write a comment" type="text" name="description">
+                                    <input placeholder="Write a comment" type="text" name="description" class="rounded-3" style="background-color:#F0F4F2">
                                     <input type="hidden" value='{{$post->id}}' name="post_id">
                                     <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
                                     <button type="submit"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
@@ -541,10 +553,10 @@
                                             </div>
                                             <br>
                                             <br>
-                                            <div class="search d-none" id="reply{{$comment->id}}">
+                                            <div class="search d-none  rounded-3" style="background-color:#F0F4F2" id="reply{{$comment->id}}">
                                                 <form action="{{url('comment_create')}}" method="post" id="comment-form">
                                                     @csrf
-                                                    <input placeholder="Write a comment" type="text" name="description">
+                                                    <input placeholder="Write a comment" type="text" style="background-color:#F0F4F2" name="description">
                                                     <input type="hidden" value='{{$post->id}}' name="post_id">
                                                     <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
                                                     <input type="hidden" value='{{$comment->id}}' name="commenter_id">
@@ -605,6 +617,8 @@
                                         <hr class="my-0" />
                                         @endif
                                         @endforeach
+                                        <br>
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -623,6 +637,67 @@
     <script type="text/javascript" src="node_modules/mdbootstrap/js/popper.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/mdb.min.js"></script> -->
+    <script>
+        var postForm = document.getElementById('post-form');
+        var tagsInput = document.getElementById('tags-input');
+        var addTagBtn = document.getElementById('add-tag-btn');
+        var tagsContainer = document.getElementById('tags-container');
+
+        // Keep track of the added tags
+        var tags = [];
+
+        // Add event listeners
+        addTagBtn.addEventListener('click', function() {
+            var tag = tagsInput.value.trim();
+            if (tag !== '') {
+                tags.push(tag);
+                addTagElement(tag);
+                tagsInput.value = '';
+            }
+        });
+
+        postForm.addEventListener('submit', function(event) {
+            // Add the tags as hidden input fields to the form
+            tags.forEach(function(tag) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'tags[]';
+                input.value = tag;
+                postForm.appendChild(input);
+            });
+        });
+
+        // Function to add a tag element to the DOM
+        function addTagElement(tag) {
+            var tagElement = document.createElement('div');
+            tagElement.classList.add('tag');
+            tagElement.classList.add('text-white');
+            tagElement.classList.add('bg_green');
+            tagElement.classList.add('rounded-3');
+            tagElement.classList.add('px-1');
+            tagElement.classList.add('mx-1');
+            tagElement.textContent = tag;
+            var removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-btn');
+            removeBtn.classList.add('btn');
+            removeBtn.classList.add('text-white');
+            removeBtn.textContent = 'x';
+            removeBtn.addEventListener('click', function() {
+                removeTagElement(tagElement, tag);
+            });
+            tagElement.appendChild(removeBtn);
+            tagsContainer.appendChild(tagElement);
+        }
+
+        // Function to remove a tag element from the DOM and the tags array
+        function removeTagElement(tagElement, tag) {
+            var index = tags.indexOf(tag);
+            if (index !== -1) {
+                tags.splice(index, 1);
+            }
+            tagElement.remove();
+        }
+    </script>
     <script>
         function search(name) {
 
@@ -643,17 +718,16 @@
                 e.preventDefault();
                 let showItem = document.querySelector("#show_item");
                 let newDiv = document.createElement("div");
-                newDiv.classList.add("d-flex", "flex-column", "mt-2", "mb-2", "pe-5", "bg-light", "append_item");
+                newDiv.classList.add("d-flex", "flex-column", "append_item");
                 newDiv.innerHTML = `
-            <div class="ps-5" id="remove">
-                <label for="exampleInputEmail1" class="form-label">icon</label>
-                <input type="file" class="form-control" id="icon" name="image[]">
-            </div>
-            <br>
-            <div class="ps-5 pb-3">
-                <button class="btn btn-danger remove_item_btn">Remove</button>
-            </div>
-        `;
+                        <div id="remove">
+                        <label class="form-label" for="customFile">select your image</label>
+                        <div class="input-group mb-3">
+                        <input type="file" class="form-control" id="customFile" name="image[]" aria-describedby="img" />
+                        <button class="btn remove_item_btn" id="img">x</button>
+                        </div>
+                        </div>
+                    `;
                 showItem.insertBefore(newDiv, showItem.firstChild);
             });
 
@@ -758,12 +832,12 @@
                                                             </div>
                                                         </div>
 
-                                                        <button class="btn" onclick="search('comment${comment.id}')"><i class="fas fa-redo-alt ms-2"></i></button>
+                                                        <button class="btn" onclick="search('reply${comment.id}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->`;
                             if (comment.count > 0) {
                                 html += `
                                                         
-                                                        <button class="btn" onclick="search('showcomment${comment.id}')"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>`
+                                                        <button class="btn" onclick="search('showreply${comment.id}')"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>`
                             }
                             html += `   
                                                     </div>
@@ -774,10 +848,10 @@
                                             </div>
                                             <br>
                                             <br>
-                                            <div class="search d-none" id="comment${comment.id}">
+                                            <div class="search d-none rounded-3" style="background-color:#F0F4F2" id="comment${comment.id}">
                                                 <form action="{{url('comment_create')}}" method="post" id="comment-form">
                                                     @csrf
-                                                    <input placeholder="Write a comment" type="text" name="description">
+                                                    <input placeholder="Write a comment" type="text" class="rounded-3" style="background-color:#F0F4F2" name="description">
                                                     <input type="hidden" value='${comment.post.id}' name="post_id">
                                                     <input type="hidden" value='${comment.auth}' name="user_id">
                                                     <input type="hidden" value='${comment.id}' name="commenter_id">
