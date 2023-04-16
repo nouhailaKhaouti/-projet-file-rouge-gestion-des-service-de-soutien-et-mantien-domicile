@@ -301,7 +301,7 @@
             color: #ff0000;
         }
 
-        .bg_green{
+        .bg_green {
             background-color: #559974;
         }
 
@@ -375,11 +375,11 @@
                                         <div id="remove">
                                             <label class="form-label" for="customFile">Add images to your Post</label>
                                             <div class="input-group mb-3">
-                                            <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
-                                            <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
-                                        </div>
-                                        </br>
-                                        <!-- <div class="d-flex justify-content-end"> -->
+                                                <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
+                                                <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
+                                            </div>
+                                            </br>
+                                            <!-- <div class="d-flex justify-content-end"> -->
                                         </div>
                                     </div>
                                 </div>
@@ -399,25 +399,12 @@
 
     <section class="profile-feed">
         <div class="container">
+            
             <div class="row">
-                @foreach($posts as $post)
+@foreach($posts as $post)
                 <div class="col-lg-6 offset-lg-3">
-
                     <div class="cardbox shadow-lg rounded-2" style="background-color:#E1EFE8">
-
                         <div class="cardbox-heading">
-                            <!-- START dropdown-->
-                            <!-- <div class="dropdown float-right">
-                            <button class="btn btn-flat btn-flat-icon" type="button" data-toggle="dropdown" aria-expanded="false">
-                                <em class="fa fa-ellipsis-h"></em>
-                            </button>
-                            <div class="dropdown-menu dropdown-scale dropdown-menu-right" role="menu" style="position: absolute; transform: translate3d(-136px, 28px, 0px); top: 0px; left: 0px; will-change: transform;">
-                                <a class="dropdown-item" href="#">Hide post</a>
-                                <a class="dropdown-item" href="#">Stop following</a>
-                                <a class="dropdown-item" href="#">Report</a>
-                            </div>
-                        </div> -->
-                            <!-- dropdown -->
                             <div class="media m-0">
                                 <div class="d-flex mr-3">
                                     <a href=""><img class="img-fluid rounded-circle" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="User"></a>
@@ -515,7 +502,6 @@
                                                         <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal{{$comment->id}}">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
-
                                                         <!-- Modal -->
                                                         <div class="modal fade" id="exampleModal{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -610,22 +596,20 @@
                                                     </div>
                                                     <!-- Search -->
                                                 </div>
+                                                @endforeach
                                             </div>
-                                            @endforeach
                                             <!-- Search -->
                                         </div>
                                         <hr class="my-0" />
                                         @endif
                                         @endforeach
-                                        <br>
-                                        <br>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div><!-- cardbox -->
-                </div>
-                @endforeach
+                </div> 
+                   @endforeach
             </div><!-- row -->
         </div><!-- container -->
     </section>
