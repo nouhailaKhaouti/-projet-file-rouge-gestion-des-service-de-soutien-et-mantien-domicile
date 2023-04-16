@@ -143,6 +143,12 @@ Route::get('/events', function () {
   return response()->json($events);
 });
 
+Route::get('/posts/{post}/tags', function ($post) {
+  $posts = Post::findOrFail($post);
+  $tags = $posts->tags;
+  return response()->json($tags->toArray());
+});
+
 
 Route::post('/like-post', function(Request $request) {
   $postId = $request->post_id;

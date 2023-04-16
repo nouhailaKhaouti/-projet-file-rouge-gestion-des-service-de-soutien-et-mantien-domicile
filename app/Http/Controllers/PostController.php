@@ -96,7 +96,11 @@ class postController extends Controller
         if (!$Post) {
             return response()->json(['message' => 'Post not found'], 404);
         }
-        $tags = $request->input('tags', []);
+        $tags = array(); 
+        foreach ($request->input('tags') as $tag) {
+            $data=Tag::firstOrCreate(['label' =>  strtolower($tag)]);
+            array_push($tags, $data->id);
+        }
         try {
             $Post->update($request->all());
             $Post->tags()->sync($tags);

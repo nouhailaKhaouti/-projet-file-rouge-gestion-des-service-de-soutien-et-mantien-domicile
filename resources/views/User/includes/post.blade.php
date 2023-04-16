@@ -406,12 +406,71 @@
                     <div class="cardbox shadow-lg rounded-2" style="background-color:#E1EFE8">
                         <div class="cardbox-heading">
                             <div class="media m-0">
-                                <div class="d-flex mr-3">
+                                <div class="d-flex justify-content-around mr-3">
                                     <a href=""><img class="img-fluid rounded-circle" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="User"></a>
                                 </div>
                                 <div class="media-body">
                                     <h6 class=" fw-bold m-0 ">{{$post->user->name}}</h6>
-                                    <small><span><i class="icon ion-md-pin"></i> {{$post->category->label}}</span></small>
+                                    <button type="button" post_id="{{$post->id}}" data-bs-toggle="modal" data-bs-target="#PostUpdate" class="btn rounded-2 bg_green fw-bold text-white update">edit <a><i class="fa-solid fa-plus"></i></a></button>
+                                    <div class="modal fade" id="PostUpdate" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg_green">
+                                                    <h5 class="modal-title text-white" id="PostLabel">Update Your Post</h5>
+                                                    <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="background-color:#E1EFE8">
+                                                    <form action="{{url('post_update',$post->id)}}" class="panel-activity__status" method="post" enctype="multipart/form-data" id="post-form-{{$post->id}}">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="description">Post Description</label>
+                                                            <textarea placeholder="add you oun description" id="description" class="form-control" name="description">{{$post->description}}</textarea>
+                                                        </div>
+                                                        <div class="d-flex justify-content-start flex-wrap" id="tags-container{{$post->id}}">
+
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="tags">Tags</label>
+                                                            <div class="input-group mb-3">
+                                                                <input type="text" placeholder="add tags  to your post" id="tags-input{{$post->id}}" class="form-control rounder-2" name="tags" aria-describedby="add" />
+                                                                <button type="button" class="btn text-end" id="add-tag-btn{{$post->id}}" id="add">Add</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="Category">Category</label>
+                                                            <select name="category_id" id="category" class="form-select rounder-2" require>
+                                                                <option value="">---category---</option>
+                                                                @foreach($categorys as $category)
+                                                                <option value="{{$category->id}}">{{$category->label}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div id="show_item">
+                                                                <div class="d-flex flex-column">
+                                                                    <div id="remove">
+                                                                        <label class="form-label" for="customFile">Add images to your Post</label>
+                                                                        <div class="input-group mb-3">
+                                                                            <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
+                                                                            <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
+                                                                        </div>
+                                                                        </br>
+                                                                        <!-- <div class="d-flex justify-content-end"> -->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <input type="hidden" name="type" value="1">
+                                                            <button type="submit" class="btn rounded-2 bg_green text-white">
+                                                                Post
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <small><span><i class="icon ion-md-pin"></i> {{$post->category->label}}</span></small>
                                     <small><span><i class="icon ion-md-time"></i>{{optional($post->created_at)->format('d/m/Y')}} </span></small>
                                 </div>
                             </div><!-- media -->
@@ -503,24 +562,26 @@
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade rounded-3 " id="exampleModal{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header">
+                                                                    <div class="modal-header text-white bg_green">
                                                                         <h5 class="modal-title" id="exampleModalLabel">Update your Comment</h5>
                                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body" style="background-color:#E1EFE8">
                                                                         <form action="{{url('comment_update',$comment->id)}}" method="post">
                                                                             @csrf
-                                                                            <input placeholder="Write a comment" type="text" value="{{$comment->description}}" name="description">
-                                                                            <input type="hidden" value='{{$post->id}}' name="post_id">
-                                                                            <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
-                                                                            <button type="submit" class="btn btn-primary"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label" for="description">Comment</label>
+                                                                                <div class="input-group">
+                                                                                    <input type="text" value="{{$comment->description}}" placeholder="Write a comment" id="description" class="form-control" name="description" />
+                                                                                    <input type="hidden" value='{{$post->id}}' name="post_id">
+                                                                                    <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
+                                                                                    <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
+                                                                                </div>
+                                                                            </div>
                                                                         </form><!-- Search -->
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -568,24 +629,26 @@
                                                                 </button>
 
                                                                 <!-- Modal -->
-                                                                <div class="modal fade" id="reply{{$reply->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal fade rounded-3" id="reply{{$reply->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
-                                                                            <div class="modal-header">
+                                                                            <div class="modal-header bg_green text-white">
                                                                                 <h5 class="modal-title" id="exampleModalLabel">Update your reply</h5>
                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                             </div>
-                                                                            <div class="modal-body">
+                                                                            <div class="modal-body" style="background-color:#E1EFE8">
                                                                                 <form action="{{url('comment_update',$reply->id)}}" method="post">
                                                                                     @csrf
-                                                                                    <input placeholder="Write a reply" type="text" value="{{$reply->description}}" name="description">
-                                                                                    <input type="hidden" value='{{$post->id}}' name="post_id">
-                                                                                    <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
-                                                                                    <button type="submit" class="btn btn-primary"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
+                                                                                    <div class="mb-3">
+                                                                                        <label class="form-label" for="description">Comment</label>
+                                                                                        <div class="input-group">
+                                                                                            <input type="text" value="{{$reply->description}}" placeholder="Write a comment" id="description" class="form-control" name="description" />
+                                                                                            <input type="hidden" value='{{$post->id}}' name="post_id">
+                                                                                            <input type="hidden" value='{{Auth::user()->id}}' name="user_id">
+                                                                                            <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </form><!-- Search -->
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -623,6 +686,88 @@
     <script type="text/javascript" src="node_modules/mdbootstrap/js/popper.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/mdb.min.js"></script> -->
+    <script>
+        const postButtons = document.querySelectorAll('.update');
+        postButtons.forEach(button => {
+            button.addEventListener('click', event => {
+                const postId = button.getAttribute('post_id');
+                console.log(`Button ${postId} clicked`);
+                var updateForm = document.getElementById(`post-form-${postId}`);
+                var tagsInputupdate = document.getElementById(`tags-input${postId}`);
+                var addTagBtnupdate = document.getElementById(`add-tag-btn${postId}`);
+                var tagsContainers = document.getElementById(`tags-container${postId}`);
+                var tagsUpdate = [];
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/posts/' + postId + '/tags');
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        console.log(response);
+                        console.log(typeof response);
+                        response.tags.forEach(function(tag) {
+                            tagsUpdate.push(tag.label);
+                            addTagsElement(tag.label);
+                        });
+                    } else {
+                        console.log(xhr.responseText); // Log the error message to the console
+                    }
+                };
+                xhr.send();
+                addTagBtnupdate.addEventListener('click', function() {
+                    console.log('dkhal');
+                    var tag = tagsInputupdate.value.trim();
+                    if (tag !== '') {
+                        tagsUpdate.push(tag);
+                        addTagsElement(tag);
+                        tagsInputupdate.value = '';
+                    }
+                });
+                updateForm.addEventListener('submit', function(event) {
+                    // Add the tags as hidden input fields to the form
+                    updateForm.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
+                    tagsUpdate.forEach(function(tag) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'tags[]';
+                        input.value = tag;
+                        updateForm.appendChild(input);
+                    });
+                });
+
+                function addTagsElement(tag) {
+                    console.log('hiii');
+                    var tagElement = document.createElement('div');
+                    tagElement.classList.add('tag');
+                    tagElement.classList.add('text-white');
+                    tagElement.classList.add('bg_green');
+                    tagElement.classList.add('rounded-3');
+                    tagElement.classList.add('px-1');
+                    tagElement.classList.add('mx-1');
+                    tagElement.textContent = tag;
+                    console.log(tagElement);
+                    var removeBtn = document.createElement('button');
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.classList.add('btn');
+                    removeBtn.classList.add('text-white');
+                    removeBtn.textContent = 'x';
+                    removeBtn.addEventListener('click', function() {
+                        removeTagsElement(tagElement, tag);
+                    });
+                    tagElement.appendChild(removeBtn);
+                    tagsContainers.appendChild(tagElement);
+                }
+
+                function removeTagsElement(tagElement, tag) {
+                    var index = tagsUpdate.indexOf(tag);
+                    if (index !== -1) {
+                        tagsUpdate.splice(index, 1);
+                    }
+                    tagElement.remove();
+                }
+            });
+        });
+    </script>
+    </script>
     <script>
         var postForm = document.getElementById('post-form');
         var tagsInput = document.getElementById('tags-input');
@@ -764,10 +909,8 @@
             Form.forEach(function(commentForm) {
                 commentForm.addEventListener('submit', function(event) {
                     event.preventDefault(); // Prevent the form from submitting normally
-
                     // Serialize the form data
                     var formData = new FormData(commentForm);
-
                     // Send the AJAX request
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', commentForm.action);
@@ -796,24 +939,32 @@
                                                         </button>
 
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="exampleModal${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade rounded-3" id="exampleModal${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
-                                                                    <div class="modal-header">
+                                                                    <div class="modal-header bg_green text-white">
                                                                         <h5 class="modal-title" id="exampleModalLabel">Update your Comment</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
-                                                                    <div class="modal-body">
+                                                                    <div class="modal-body" style="background-color:#E1EFE8">
                                                                         <form action="{{url('comment_update',` + comment.id + `)}}" method="post">
                                                                             @csrf
-                                                                            <input placeholder="Write a comment" type="text" value="${comment.description}" name="description">
+                                                                            <div class="mb-3">
+                                                                                        <label class="form-label" for="description">Comment</label>
+                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>
+                                                                            </div>         
                                                                             <input type="hidden" value='${comment.post.id}' name="post_id">
                                                                             <input type="hidden" value='${comment.auth}' name="user_id">
-                                                                            <button type="submit" class="btn btn-primary"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
+                                                                            <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
+                                                                            <div class="mb-3">
+                                                                                        <label class="form-label" for="description">Comment</label>
+                                                                                        <div class="input-group">
+                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>                                                                                        <input type="hidden" value='${comment.post.id}' name="post_id">
+                                                                                        <input type="hidden" value='${comment.auth}' name="user_id">
+                                                                                        <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
+                                                                                        </div>
+                                                                            </div>   
                                                                         </form><!-- Search -->
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -867,24 +1018,25 @@
                                                             </button>
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="reply${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal fade rounded-3" id="reply${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
-                                                                        <div class="modal-header">
+                                                                        <div class="modal-header bg_green text-white">
                                                                             <h5 class="modal-title" id="exampleModalLabel">Update your Reply</h5>
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                         </div>
-                                                                        <div class="modal-body">
+                                                                        <div class="modal-body" style="background-color:#E1EFE8">
                                                                             <form action="{{url('comment_update',` + comment.id + `)}}" method="post">
                                                                                 @csrf
-                                                                                <input placeholder="Write a comment" type="text" value="${comment.description}" name="description">
-                                                                                <input type="hidden" value='${comment.post.id}' name="post_id">
-                                                                                <input type="hidden" value='${comment.auth}' name="user_id">
-                                                                                <button type="submit" class="btn btn-primary"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
+                                                                                <div class="mb-3">
+                                                                                        <label class="form-label" for="description">Comment</label>
+                                                                                        <div class="input-group">
+                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>                                                                                        <input type="hidden" value='${comment.post.id}' name="post_id">
+                                                                                        <input type="hidden" value='${comment.auth}' name="user_id">
+                                                                                        <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
+                                                                                        </div>
+                                                                            </div>  
                                                                             </form><!-- Search -->
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
