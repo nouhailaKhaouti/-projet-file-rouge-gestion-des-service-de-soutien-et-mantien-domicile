@@ -334,7 +334,7 @@
             {{session()->get('message')}}
         </div>
         @endif
-        <button type="button" data-bs-toggle="modal" data-bs-target="#Post" class="btn rounded-2 bg_green fw-bold text-white">Add Post <a><i class="fa-solid fa-plus"></i></a></button>
+        <button type="button" class="btn rounded-2 bg_green fw-bold text-white" onclick="createpost(`{{url('post_create')}}`)">Add Post <a><i class="fa-solid fa-plus"></i></a></button>
 
         <div class="modal fade" id="Post" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -395,11 +395,8 @@
         </div>
         </div>
     </section>
-
-
     <section class="profile-feed">
         <div class="container">
-
             <div class="row">
                 @foreach($posts as $post)
                 <div class="col-lg-6 offset-lg-3">
@@ -411,8 +408,8 @@
                                 </div>
                                 <div class="media-body">
                                     <h6 class=" fw-bold m-0 ">{{$post->user->name}}</h6>
-                                    <button type="button" post_id="{{$post->id}}" data-bs-toggle="modal" data-bs-target="#PostUpdate" class="btn rounded-2 bg_green fw-bold text-white update">edit <a><i class="fa-solid fa-plus"></i></a></button>
-                                    <div class="modal fade" id="PostUpdate" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
+                                    <button type="button" class="btn rounded-2 bg_green fw-bold text-white update" onclick="editpost(`{{$post->description}}`,`{{$post->tags}}`,`{{$post->category_id}}`,`{{url('post_update',$post->id)}}`)"><i class="bi bi-pencil"> Edit</i></button>
+                                    <!-- <div class="modal fade" id="Modalpost" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header bg_green">
@@ -426,16 +423,14 @@
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label class="form-label" for="description">Post Description</label>
-                                                            <textarea placeholder="add you oun description" id="description" class="form-control" name="description">{{$post->description}}</textarea>
+                                                            <textarea placeholder="add you oun description" id="description" class="form-control" name="description"></textarea>
                                                         </div>
-                                                        <div class="d-flex justify-content-start flex-wrap" id="tags-container{{$post->id}}">
-
-                                                        </div>
+                                                        <div class="d-flex justify-content-start flex-wrap" id="tags-container"></div>
                                                         <div class="mb-3">
                                                             <label class="form-label" for="tags">Tags</label>
                                                             <div class="input-group mb-3">
-                                                                <input type="text" placeholder="add tags  to your post" id="tags-input{{$post->id}}" class="form-control rounder-2" name="tags" aria-describedby="add" />
-                                                                <button type="button" class="btn text-end" id="add-tag-btn{{$post->id}}" id="add">Add</button>
+                                                                <input type="text" placeholder="add tags  to your post" id="tags-input" class="form-control rounder-2" name="tags" aria-describedby="add" />
+                                                                <button type="button" class="btn text-end" id="add-tag-btn" id="add">Add</button>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3">
@@ -457,7 +452,7 @@
                                                                             <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
                                                                         </div>
                                                                         </br>
-                                                                        <!-- <div class="d-flex justify-content-end"> -->
+                                                                        <div class="d-flex justify-content-end">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -470,12 +465,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> <small><span><i class="icon ion-md-pin"></i> {{$post->category->label}}</span></small>
+                                    </div> -->
+                                    <small><span><i class="icon ion-md-pin"></i> {{$post->category->label}}</span></small>
                                     <small><span><i class="icon ion-md-time"></i>{{optional($post->created_at)->format('d/m/Y')}} </span></small>
                                 </div>
                             </div><!-- media -->
                         </div><!-- cardbox-heading -->
-
                         <div class="cardbox-item">
                             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-indicators">
@@ -512,7 +507,6 @@
                                 <!-- <li><a><i class="fa fa-share-alt"></i></a></li>
                             <li><a><em class="mr-3">05</em></a></li> -->
                             </ul>
-
                             <!-- <button class="btn like-btn mt-2" data-post-id="{{ $post->id }}">
                                 <a> <i class="fa-regular fa-thumbs-up" id="like-icon"></i></a>
                                 <a><em class="mr-5 text-muted">Like</em></a>
@@ -540,7 +534,6 @@
                                     <button type="submit"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
                                 </form><!-- Search -->
                             </div>
-
                         </div><!-- cardbox-like -->
                         <div class="container d-none" id="comment{{$post->id}}">
                             <div class="row d-flex justify-content-center">
@@ -586,7 +579,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <button class="btn" onclick="search('reply{{$comment->id}}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->
                                                         @if(count($comment->replies)>0)
@@ -627,7 +619,6 @@
                                                                 <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#reply {{$reply->id}}">
                                                                     <i class="fas fa-pencil-alt ms-2"></i>
                                                                 </button>
-
                                                                 <!-- Modal -->
                                                                 <div class="modal fade rounded-3" id="reply{{$reply->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog">
@@ -678,6 +669,7 @@
             </div><!-- row -->
         </div><!-- container -->
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -686,8 +678,9 @@
     <script type="text/javascript" src="node_modules/mdbootstrap/js/popper.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="node_modules/mdbootstrap/js/mdb.min.js"></script> -->
-    <script>
+    <!-- <script>
         const postButtons = document.querySelectorAll('.update');
+
         postButtons.forEach(button => {
             button.addEventListener('click', event => {
                 const postId = button.getAttribute('post_id');
@@ -696,14 +689,13 @@
                 var tagsInputupdate = document.getElementById(`tags-input${postId}`);
                 var addTagBtnupdate = document.getElementById(`add-tag-btn${postId}`);
                 var tagsContainers = document.getElementById(`tags-container${postId}`);
-                var tagsUpdate = [];
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', '/posts/' + postId + '/tags');
+                const tagsUpdate = [];
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', `/posts/${postId}/tags`);
                 xhr.onload = function() {
                     if (xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        console.log(response);
-                        console.log(typeof response);
+                        const response = JSON.parse(xhr.responseText);
                         response.tags.forEach(function(tag) {
                             tagsUpdate.push(tag.label);
                             addTagsElement(tag.label);
@@ -713,61 +705,54 @@
                     }
                 };
                 xhr.send();
-                addTagBtnupdate.addEventListener('click', function() {
-                    console.log('dkhal');
-                    var tag = tagsInputupdate.value.trim();
-                    if (tag !== '') {
-                        tagsUpdate.push(tag);
-                        addTagsElement(tag);
-                        tagsInputupdate.value = '';
-                    }
-                });
-                updateForm.addEventListener('submit', function(event) {
-                    // Add the tags as hidden input fields to the form
-                    updateForm.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
-                    tagsUpdate.forEach(function(tag) {
-                        var input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'tags[]';
-                        input.value = tag;
-                        updateForm.appendChild(input);
-                    });
-                });
 
                 function addTagsElement(tag) {
-                    console.log('hiii');
-                    var tagElement = document.createElement('div');
-                    tagElement.classList.add('tag');
-                    tagElement.classList.add('text-white');
-                    tagElement.classList.add('bg_green');
-                    tagElement.classList.add('rounded-3');
-                    tagElement.classList.add('px-1');
-                    tagElement.classList.add('mx-1');
+                    const tagElement = document.createElement('div');
+                    tagElement.classList.add('tag', 'text-white', 'bg_green', 'rounded-3', 'px-1', 'mx-1');
                     tagElement.textContent = tag;
-                    console.log(tagElement);
-                    var removeBtn = document.createElement('button');
-                    removeBtn.classList.add('remove-btn');
-                    removeBtn.classList.add('btn');
-                    removeBtn.classList.add('text-white');
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.classList.add('remove-btn', 'btn', 'text-white');
                     removeBtn.textContent = 'x';
                     removeBtn.addEventListener('click', function() {
                         removeTagsElement(tagElement, tag);
                     });
                     tagElement.appendChild(removeBtn);
                     tagsContainers.appendChild(tagElement);
+                    console.log(tagsContainers);
                 }
 
                 function removeTagsElement(tagElement, tag) {
-                    var index = tagsUpdate.indexOf(tag);
+                    const index = tagsUpdate.indexOf(tag);
                     if (index !== -1) {
                         tagsUpdate.splice(index, 1);
                     }
                     tagElement.remove();
                 }
+
+                addTagBtnupdate.addEventListener('click', function() {
+                    const tag = tagsInputUpdate.value.trim();
+                    if (tag !== '') {
+                        tagsUpdate.push(tag);
+                        addTagsElement(tag);
+                        tagsInputUpdate.value = '';
+                    }
+                });
+
+                updateForm.addEventListener('submit', function(event) {
+                    // Add the tags as hidden input fields to the form
+                    updateForm.querySelectorAll('input[name="tags[]"]').forEach(input => input.remove());
+                    tagsUpdate.forEach(function(tag) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'tags[]';
+                        input.value = tag;
+                        updateForm.appendChild(input);
+                    });
+                });
             });
         });
-    </script>
-    </script>
+    </script> -->
     <script>
         var postForm = document.getElementById('post-form');
         var tagsInput = document.getElementById('tags-input');
@@ -775,13 +760,41 @@
         var tagsContainer = document.getElementById('tags-container');
 
         // Keep track of the added tags
-        var tags = [];
+        var tagsP = [];
 
+        function editpost(description, tags, category,action) {
+            document.getElementById("description").value = description;
+            document.getElementById("category").value = category;
+            const tagsArray = JSON.parse(tags);
+            console.log(tagsArray);
+            console.log(typeof tagsArray);
+            tagsArray.forEach(function(tag) {
+                tagsP.push(tag.label);
+                addTagElement(tag.label);
+            });
+            postForm.action = action;
+            document.getElementById('PostLabel').innerHTML = `Update Your Post`;
+            // Ouvrir Modal form
+            $("#Post").modal("show");
+        }
+        function createpost(action) {
+    console.log("is in product");
+    // initialiser task form
+    //   initTaskForm();
+    postForm.action = action;
+    postForm.reset();
+    // Afficher le boutton save
+    document.getElementById('PostLabel').innerHTML = `Create new Post`;
+    // Ouvrir modal form
+    $("#Post").modal("show");
+}
         // Add event listeners
         addTagBtn.addEventListener('click', function() {
+            event.preventDefault(); 
+            console.log('dkhal');
             var tag = tagsInput.value.trim();
             if (tag !== '') {
-                tags.push(tag);
+                tagsP.push(tag);
                 addTagElement(tag);
                 tagsInput.value = '';
             }
@@ -789,7 +802,7 @@
 
         postForm.addEventListener('submit', function(event) {
             // Add the tags as hidden input fields to the form
-            tags.forEach(function(tag) {
+            tagsP.forEach(function(tag) {
                 var input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = 'tags[]';
@@ -814,6 +827,7 @@
             removeBtn.classList.add('text-white');
             removeBtn.textContent = 'x';
             removeBtn.addEventListener('click', function() {
+                event.preventDefault(); 
                 removeTagElement(tagElement, tag);
             });
             tagElement.appendChild(removeBtn);
@@ -822,9 +836,9 @@
 
         // Function to remove a tag element from the DOM and the tags array
         function removeTagElement(tagElement, tag) {
-            var index = tags.indexOf(tag);
+            var index = tagsP.indexOf(tag);
             if (index !== -1) {
-                tags.splice(index, 1);
+                tagsP.splice(index, 1);
             }
             tagElement.remove();
         }
@@ -937,7 +951,6 @@
                                                         <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal${comment.id}">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
-
                                                         <!-- Modal -->
                                                         <div class="modal fade rounded-3" id="exampleModal${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -1053,7 +1066,6 @@
                                 var commentsSection = document.getElementById(`reply-section${comment.parent}`);
                                 commentsSection.insertAdjacentHTML('beforeend', html);
                                 var input = document.getElementById(`show${comment.parent}`);
-
                                 input.classList.remove('d-none');
                                 var reply = document.getElementById(`reply${comment.parent}`);
                                 reply.classList.remove('d-none');
