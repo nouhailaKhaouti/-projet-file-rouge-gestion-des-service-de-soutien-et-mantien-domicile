@@ -305,12 +305,20 @@
             background-color: #559974;
         }
 
+        .post-body {
+
+            background-image: url('user/assets/img/bg-3.png');
+            background-position: bottom right;
+            background-repeat: no-repeat;
+            background-color: #F0F4F2;
+        }
+
         /* end post */
     </style>
 
 </head>
 
-<body>
+<body class="post-body">
     @if (Route::has('login'))
     <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
         @auth
@@ -336,57 +344,61 @@
         @endif
         <button type="button" class="btn rounded-2 bg_green fw-bold text-white" onclick="createpost(`{{url('post_create')}}`)">Add Post <a><i class="fa-solid fa-plus"></i></a></button>
 
-        <div class="modal fade" id="Post" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+        <div class="modal fade bd-example-modal-lg shadow-sm" id="Post" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content rounded-3">
                     <div class="modal-header  bg_green">
                         <h5 class="modal-title text-white" id="PostLabel">Add New Post</h5>
                         <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" style="background-color:#E1EFE8">
-                        <form action="{{url('post_create')}}" class="panel-activity__status" method="post" enctype="multipart/form-data" id="post-form">
+                    <div class="modal-body " style="background-color:#E1EFE8">
+                        <form action="{{url('post_create')}}" class="panel-activity__status d-flex justify-content-between" method="post" enctype="multipart/form-data" id="post-form">
                             @csrf
-                            <div class="mb-3">
-                                <label class="form-label" for="description">Post Description</label>
-                                <textarea placeholder="add you oun description" id="description" class="form-control" name="description"></textarea>
-                            </div>
-                            <div class="d-flex justify-content-start flex-wrap" id="tags-container"></div>
-                            <div class="mb-3">
-                                <label class="form-label" for="tags">Tags</label>
-                                <div class="input-group mb-3">
-                                    <input type="text" placeholder="add tags  to your post" id="tags-input" class="form-control rounder-2" name="tags" aria-describedby="add" />
-                                    <button type="button" class="btn text-end" id="add-tag-btn" id="add">Add</button>
+                            <img src="user/assets/img/post-modal.png" alt="" height="400" width="400">
+                            <div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="description">Post Description</label>
+                                    <textarea placeholder="add you oun description" id="description" class="form-control" name="description"></textarea>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="Category">Category</label>
-                                <select name="category_id" id="category" class="form-select rounder-2" require>
-                                    <option value="">---category---</option>
-                                    @foreach($categorys as $category)
-                                    <option value="{{$category->id}}">{{$category->label}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <div id="show_item">
-                                    <div class="d-flex flex-column">
-                                        <div id="remove">
-                                            <label class="form-label" for="customFile">Add images to your Post</label>
-                                            <div class="input-group mb-3">
-                                                <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
-                                                <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
-                                            </div>
-                                            </br>
-                                            <!-- <div class="d-flex justify-content-end"> -->
-                                        </div>
+                                <div class="d-flex justify-content-start flex-wrap" id="tags-container"></div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="tags">Tags</label>
+                                    <div class="input-group mb-3">
+                                        <input type="text" placeholder="add tags  to your post" id="tags-input" class="form-control rounder-2" name="tags" aria-describedby="add" />
+                                        <button type="button" class="btn text-end" id="add-tag-btn" id="add">Add</button>
                                     </div>
                                 </div>
-                                <input type="hidden" name="type" value="1">
-                                <button type="submit" class="btn rounded-2 bg_green text-white">
-                                    Post
-                                </button>
+                                <div class="mb-3">
+                                    <label class="form-label" for="Category">Category</label>
+                                    <select name="category_id" id="category" class="form-select rounder-2" require>
+                                        <option value="">---category---</option>
+                                        @foreach($categorys as $category)
+                                        <option value="{{$category->id}}">{{$category->label}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="d-flex justify-content-start flex-wrap" id="images-container"></div>
+                                <div class="mb-3">
+                                    <div id="show_item">
+                                        <div class="d-flex flex-column">
+                                            <div id="remove">
+                                                <label class="form-label" for="customFile">Add images to your Post</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
+                                                    <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
+                                                </div>
+                                                </br>
+                                                <!-- <div class="d-flex justify-content-end"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="type" value="1">
+                                    <button type="submit" class="btn rounded-2 bg_green text-white">
+                                        Post
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -408,64 +420,7 @@
                                 </div>
                                 <div class="media-body">
                                     <h6 class=" fw-bold m-0 ">{{$post->user->name}}</h6>
-                                    <button type="button" class="btn rounded-2 bg_green fw-bold text-white update" onclick="editpost(`{{$post->description}}`,`{{$post->tags}}`,`{{$post->category_id}}`,`{{url('post_update',$post->id)}}`)"><i class="bi bi-pencil"> Edit</i></button>
-                                    <!-- <div class="modal fade" id="Modalpost" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header bg_green">
-                                                    <h5 class="modal-title text-white" id="PostLabel">Update Your Post</h5>
-                                                    <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body" style="background-color:#E1EFE8">
-                                                    <form action="{{url('post_update',$post->id)}}" class="panel-activity__status" method="post" enctype="multipart/form-data" id="post-form-{{$post->id}}">
-                                                        @csrf
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="description">Post Description</label>
-                                                            <textarea placeholder="add you oun description" id="description" class="form-control" name="description"></textarea>
-                                                        </div>
-                                                        <div class="d-flex justify-content-start flex-wrap" id="tags-container"></div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="tags">Tags</label>
-                                                            <div class="input-group mb-3">
-                                                                <input type="text" placeholder="add tags  to your post" id="tags-input" class="form-control rounder-2" name="tags" aria-describedby="add" />
-                                                                <button type="button" class="btn text-end" id="add-tag-btn" id="add">Add</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label" for="Category">Category</label>
-                                                            <select name="category_id" id="category" class="form-select rounder-2" require>
-                                                                <option value="">---category---</option>
-                                                                @foreach($categorys as $category)
-                                                                <option value="{{$category->id}}">{{$category->label}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <div id="show_item">
-                                                                <div class="d-flex flex-column">
-                                                                    <div id="remove">
-                                                                        <label class="form-label" for="customFile">Add images to your Post</label>
-                                                                        <div class="input-group mb-3">
-                                                                            <input type="file" class="form-control rounder-2 me-1" id="customFile" name="image[]" />
-                                                                            <button type="button" class="btn rounded-circle add_item_btn bg_green"><a><i class="fa-solid fa-plus"></i></a></button>
-                                                                        </div>
-                                                                        </br>
-                                                                        <div class="d-flex justify-content-end">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <input type="hidden" name="type" value="1">
-                                                            <button type="submit" class="btn rounded-2 bg_green text-white">
-                                                                Post
-                                                            </button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> -->
+                                    <button type="button" class="btn rounded-2 update" onclick="editpost(`{{$post->description}}`,`{{$post->tags}}`,`{{$post->category_id}}`,`{{url('post_update',$post->id)}}`,`{{$post->images}}`)"><a><i class="fa-duotone fa-pen-to-square"></i></a></button>
                                     <small><span><i class="icon ion-md-pin"></i> {{$post->category->label}}</span></small>
                                     <small><span><i class="icon ion-md-time"></i>{{optional($post->created_at)->format('d/m/Y')}} </span></small>
                                 </div>
@@ -605,9 +560,9 @@
                                                 </form>
                                             </div>
                                             <div id="reply-section{{$comment->id}}">
-                                                @foreach($comment->replies as $reply)
                                                 <div class="card-body p-4 d-none" id="showreply{{$comment->id}}">
-                                                    <div class="d-flex flex-start">
+                                                    @foreach($comment->replies as $reply)
+                                                    <div class="d-flex flex-start mt-1 mb-1">
                                                         <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                         <div>
                                                             <h6 class="fw-bold mb-1 "><small>
@@ -651,8 +606,9 @@
                                                         </div>
                                                     </div>
                                                     <!-- Search -->
+                                                    <hr class="my-0" />
+                                                    @endforeach
                                                 </div>
-                                                @endforeach
                                             </div>
                                             <!-- Search -->
                                         </div>
@@ -758,39 +714,47 @@
         var tagsInput = document.getElementById('tags-input');
         var addTagBtn = document.getElementById('add-tag-btn');
         var tagsContainer = document.getElementById('tags-container');
+        var imagesContainer = document.getElementById('images-container');
 
         // Keep track of the added tags
         var tagsP = [];
+        var images = [];
 
-        function editpost(description, tags, category,action) {
+        function editpost(description, tags, category, action, imagesp) {
             document.getElementById("description").value = description;
             document.getElementById("category").value = category;
             const tagsArray = JSON.parse(tags);
+            const imagesArray = JSON.parse(imagesp);
             console.log(tagsArray);
             console.log(typeof tagsArray);
             tagsArray.forEach(function(tag) {
                 tagsP.push(tag.label);
                 addTagElement(tag.label);
             });
+            imagesArray.forEach(function(image) {
+                images.push(image.path);
+                addImageElement(image.path);
+            });
             postForm.action = action;
             document.getElementById('PostLabel').innerHTML = `Update Your Post`;
             // Ouvrir Modal form
             $("#Post").modal("show");
         }
+
         function createpost(action) {
-    console.log("is in product");
-    // initialiser task form
-    //   initTaskForm();
-    postForm.action = action;
-    postForm.reset();
-    // Afficher le boutton save
-    document.getElementById('PostLabel').innerHTML = `Create new Post`;
-    // Ouvrir modal form
-    $("#Post").modal("show");
-}
+            console.log("is in product");
+            // initialiser task form
+            //   initTaskForm();
+            postForm.action = action;
+            postForm.reset();
+            // Afficher le boutton save
+            document.getElementById('PostLabel').innerHTML = `Create new Post`;
+            // Ouvrir modal form
+            $("#Post").modal("show");
+        }
         // Add event listeners
         addTagBtn.addEventListener('click', function() {
-            event.preventDefault(); 
+            event.preventDefault();
             console.log('dkhal');
             var tag = tagsInput.value.trim();
             if (tag !== '') {
@@ -813,34 +777,61 @@
 
         // Function to add a tag element to the DOM
         function addTagElement(tag) {
-            var tagElement = document.createElement('div');
-            tagElement.classList.add('tag');
-            tagElement.classList.add('text-white');
-            tagElement.classList.add('bg_green');
-            tagElement.classList.add('rounded-3');
-            tagElement.classList.add('px-1');
-            tagElement.classList.add('mx-1');
+            const tagElement = document.createElement('div');
+            tagElement.classList.add('tag', 'text-white', 'bg_green', 'rounded-3', 'px-1', 'mx-1');
             tagElement.textContent = tag;
-            var removeBtn = document.createElement('button');
-            removeBtn.classList.add('remove-btn');
-            removeBtn.classList.add('btn');
-            removeBtn.classList.add('text-white');
+            console.log(tagElement);
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-btn', 'btn', 'text-white');
             removeBtn.textContent = 'x';
             removeBtn.addEventListener('click', function() {
-                event.preventDefault(); 
+                event.preventDefault();
                 removeTagElement(tagElement, tag);
             });
             tagElement.appendChild(removeBtn);
             tagsContainer.appendChild(tagElement);
         }
 
-        // Function to remove a tag element from the DOM and the tags array
+        function addImageElement(image) {
+            const imageElement = document.createElement('div');
+            const imageHTML = `<img src="Postimage/${image}" class="img-thumbnail" width=100 height=100 alt="post">`;
+            const imageWrapper = document.createElement('div');
+            imageWrapper.innerHTML = imageHTML;
+            const imageImg = imageWrapper.firstChild;
+            imageElement.classList.add('image', 'position-relative', 'text-white', 'bg_green', 'rounded-3', 'px-1', 'mx-1');
+            imageElement.style.width = 'mainimagewidth'
+            console.log(imageElement);
+            const removeBtn = document.createElement('button');
+            removeBtn.classList.add('remove-btn', 'top-0', 'position-absolute', 'end-0', 'btn', 'text-white');
+            removeBtn.textContent = 'x';
+            removeBtn.addEventListener('click', function() {
+                event.preventDefault();
+                removeImageElement(imageElement, image);
+            });
+            imageElement.appendChild(imageImg);
+            imageElement.appendChild(removeBtn);
+            imagesContainer.appendChild(imageElement);
+        }
+
         function removeTagElement(tagElement, tag) {
             var index = tagsP.indexOf(tag);
             if (index !== -1) {
                 tagsP.splice(index, 1);
             }
             tagElement.remove();
+        }
+        // Function to remove a tag element from the DOM and the tags array
+        function removeImageElement(imageElement, image) {
+            var index = images.indexOf(image);
+            if (index !== -1) {
+                images.splice(index, 1);
+            }
+            imageElement.remove();
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'remove[]';
+            input.value = image;
+            postForm.appendChild(input);
         }
     </script>
     <script>
@@ -1016,8 +1007,8 @@
                                 var commentsSection = document.getElementById(`comment-section${comment.post.id}`);
                                 commentsSection.insertAdjacentHTML('beforeend', html);
                             } else if (comment.state == 0) {
-                                html += `<div class="card-body p-4 d-none" id="showreply${comment.parent}">
-                                                <div class="d-flex flex-start">
+                                console.log('dkhal');
+                                html = `        <div class="d-flex flex-start mt-1 mb-1">
                                                     <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                     <div>
                                                         <h6 class="fw-bold mb-1 "><small>
@@ -1048,7 +1039,7 @@
                                                                                         <input type="hidden" value='${comment.auth}' name="user_id">
                                                                                         <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
                                                                                         </div>
-                                                                            </div>  
+                                                                                </div>  
                                                                             </form><!-- Search -->
                                                                         </div>
                                                                     </div>
@@ -1061,15 +1052,17 @@
                                                     </div>
                                                 </div>
                                                 <!-- Search -->
-                                            </div>
+                                            <hr class="my-0" />
                                      `;
-                                var commentsSection = document.getElementById(`reply-section${comment.parent}`);
+                                var commentsSection = document.getElementById(`showreply${comment.parent}`);
+                                console.log(commentsSection);
                                 commentsSection.insertAdjacentHTML('beforeend', html);
                                 var input = document.getElementById(`show${comment.parent}`);
                                 input.classList.remove('d-none');
-                                var reply = document.getElementById(`reply${comment.parent}`);
+                                var reply = document.getElementById(`showreply${comment.parent}`);
                                 reply.classList.remove('d-none');
-                                console.log(reply);
+                                var form = document.getElementById(`reply${comment.parent}`);
+                                reply.classList.remove('d-none');
                             }
                             // Append the new comment to the comments section
 

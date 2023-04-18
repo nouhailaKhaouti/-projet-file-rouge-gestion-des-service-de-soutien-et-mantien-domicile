@@ -29,3 +29,4 @@ class Commenter extends Model
         return $this->belongsTo(Post::class);
     }
 }
+

@@ -249,3 +249,27 @@ triggers.forEach((trigger, index) => {
 });
 </script>
 -->
+
+<!-- function removeImageElement(imageElement, image) {
+            // let xhr = new XMLHttpRequest();
+            // xhr.open("POST", "/remove_image/" + id+"/"+image);
+            // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            // xhr.setRequestHeader("X-CSRF-TOKEN", csrfToken);
+            // xhr.onreadystatechange = function() {
+            //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var index = images.indexOf(image);
+                    if (index !== -1) {
+                        images.splice(index, 1);
+                    }
+                    imageElement.remove();
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'remove[]';
+                    input.value = image;
+                    postForm.appendChild(input);
+            //         // console.log(JSON.parse(this.responseText).fill);   
+            //     }
+            // };
+            // xhr.send();
+        } -->

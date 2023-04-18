@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
   return view('User.includes.post');
 });
+Route::get('/service', function () {
+  return view('User.includes.service');
+});
 Route::get('/calendar', function () {
   return view('User.Provider-company.calander');
 });
@@ -52,7 +55,8 @@ Auth::routes();
 Route::get('/Posts', [postController::class, 'index']);
 Route::get('/delete_post/{id}', [postController::class, 'destroy']);
 Route::post('/post_create', [postController::class, 'store']);
-Route::post('/update_post/{id}', [postController::class, 'update']);
+Route::post('/post_update/{id}', [postController::class, 'update']);
+Route::post('/remove_image/{id}/{path}', [postController::class, 'remove_image']);
 
 
 ////comment controller

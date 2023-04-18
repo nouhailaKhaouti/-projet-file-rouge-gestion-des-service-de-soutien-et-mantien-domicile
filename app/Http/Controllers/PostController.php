@@ -27,11 +27,11 @@ class postController extends Controller
      */
     public function index()
     {
-        
-        $tags=Tag::all();
-        $categorys=Category::all();
+
+        $tags = Tag::all();
+        $categorys = Category::all();
         $posts = Post::with('tags')->get();
-        return view('User.includes.post', compact('posts','tags','categorys'));
+        return view('User.includes.post', compact('posts', 'tags', 'categorys'));
     }
 
     /**
@@ -42,41 +42,39 @@ class postController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         // $this->authorize('create',Post::class);
-        
-        $tags = array(); 
+
+        $tags = array();
         foreach ($request->input('tags') as $tag) {
-            $data=Tag::firstOrCreate(['label' =>  strtolower($tag)]);
+            $data = Tag::firstOrCreate(['label' =>  strtolower($tag)]);
             array_push($tags, $data->id);
-        }// get the tags from the request;
+        } // get the tags from the request;
         $Post = new Post();
         $Post->user_id = optional(Auth::user())->id;;
         $Post->category_id = $request->category_id;
-        $Post->description =$request->description;
+        $Post->description = $request->description;
         $Post->save();
         try {
             $Post->tags()->attach($tags);
-            if ($request->hasFile('image')){
-                
+            if ($request->hasFile('image')) {
                 foreach ($request->file('image') as $image) {
-                //we create a new name for the image 
-                $path = time(). uniqid() . '.' . $image->getClientOriginalExtension();
-                //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
-                $image->move('Postimage', $path);
+                    //we create a new name for the image 
+                    $path = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+                    //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
+                    $image->move('Postimage', $path);
                     // dd($path);
-                    $img=new Image();
-                    $img->path=$path;
-                    $img->post_id=$Post->id;
+                    $img = new Image();
+                    $img->path = $path;
+                    $img->post_id = $Post->id;
                     $img->save();
                     // dd($img);
                 }
             }
             return redirect()->back();
         } catch (\Exception $e) {
-            return redirect()->back()->with('message','somthing went wrong while creating this post');
+            return redirect()->back()->with('message', 'somthing went wrong while creating this post');
         }
-
     }
 
 
@@ -88,40 +86,49 @@ class postController extends Controller
      * @param  \App\Models\Post  $Post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-       
-        $Post=Post::find($id);
+
+        $Post = Post::find($id);
         // $this->authorize('update',$Post);
         if (!$Post) {
-            return response()->json(['message' => 'Post not found'], 404);
+            return redirect()->back()->with('message', 'Post not found');
         }
-        $tags = array(); 
+        $tags = array();
         foreach ($request->input('tags') as $tag) {
-            $data=Tag::firstOrCreate(['label' =>  strtolower($tag)]);
+            $data = Tag::firstOrCreate(['label' =>  strtolower($tag)]);
             array_push($tags, $data->id);
         }
+        if ($request->input('remove')) {
+            foreach ($request->input('remove') as $image) {
+                $data = Image::where('path', $image)->first();
+                $data->delete();
+            }
+        }
+        $Post->category_id = $request->category_id;
+        $Post->description = $request->description;
+        $Post->update();
         try {
-            $Post->update($request->all());
+            // $Post->update($request->all());
             $Post->tags()->sync($tags);
-            if ($request->hasFile('image')){
+            if ($request->hasFile('image')) {
                 foreach ($request->file('image') as $image) {
-                //we create a new name for the image 
-                $path = time(). uniqid() . '.' . $image->getClientOriginalExtension();
-                //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
-                $image->move('Postimage', $path);
+                    //we create a new name for the image 
+                    $path = time() . uniqid() . '.' . $image->getClientOriginalExtension();
+                    //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
+                    $image->move('Postimage', $path);
                     // dd($path);
-                    Image::create([
-                        'post_id' => $Post->id,
-                        'path' => $path
-                    ]);
+                    $img = new Image();
+                    $img->path = $path;
+                    $img->post_id = $Post->id;
+                    $img->save();
+                    // dd($img);
                 }
             }
         } catch (\Exception) {
-            return redirect()->back()->with('message' , 'Failed to update Post');
+            return redirect()->back()->with('message', 'Failed to update Post');
         }
-
-        return redirect()->back()->with('message' , 'the post updated successfully');
+        return redirect()->back()->with('message', 'the post updated successfully');
     }
 
     /**
@@ -132,15 +139,27 @@ class postController extends Controller
      */
     public function destroy($id)
     {
-        $Post=Post::find($id);
+        $Post = Post::find($id);
         // $this->authorize('delete',$Post);
         $Post->tags()->detach();
         $Post->delete();
 
         if (!$Post) {
-            return redirect()->back()->with('message' , 'Post not found');
+            return redirect()->back()->with('message', 'Post not found');
         }
-        
-         return redirect()->back()->with('message' , 'Post deleted successfully');
+        return redirect()->back()->with('message', 'Post deleted successfully');
+    }
+
+
+    public function remove_image($id, $path)
+    {
+        $post = Post::find($id);
+        $image = $post->images->where('path', $path)->first();
+        if ($image) {
+            $image->delete();
+            return response()->json(['success' => 'removed successfully'], 200);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
     }
 }
