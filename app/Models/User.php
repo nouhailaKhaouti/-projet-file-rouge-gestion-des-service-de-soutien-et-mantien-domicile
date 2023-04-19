@@ -66,7 +66,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
-    public function posts()
+    public function users()
     {
         return $this->hasMany(Service::class);
     }
@@ -77,5 +77,9 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+    public function cities()
+    {
+        return $this->belongsToMany(City::class,'cities_users', 'user_id', 'city_id');
     }
 }

@@ -22,8 +22,8 @@
 <body>
 
     <nav class="d-flex justify-content-between bg-tranparent my-5 mx-5">
-            <img src="user/assets/img/icon.png" alt="logo" id="logo" width="50" height="100">
-            <ul class=" d-flex ">
+            <img src="user/assets/img/icon.png" alt="logo" id="logo" width="50" height="100" style="z-index: 1;">
+            <ul class="ul d-flex ">
                 <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
                        Home 
                 </li>

@@ -79,9 +79,23 @@ class CommenterController extends Controller
     public function update(Request $request, $id)
     {
         // dd($id);
-        $Commenter_update = Commenter::find($id);
-        $Commenter_update->update($request->all());
-        return redirect()->back()->with('message', 'Your commente is updated successfully');
+        $comment = Commenter::find($id);
+        $comment->update($request->all());
+        $post = $comment->post;
+        $user = $comment->user;
+            return response()->json([
+                'id' => $comment->id,
+                'description' => $comment->description,
+                'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+                'auth' => Auth::user()->id,
+                'post' => [
+                    'id' => $post->id,
+                ],
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                ],
+            ]);
     }
 
     /**

@@ -506,10 +506,10 @@
                                                         <p class="m-0 text-muted"><small>
                                                                 {{optional($comment->created_at)->format('d/m/Y')}}</small>
                                                         </p>
-                                                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal{{$comment->id}}">
+                                                        <button type="button" class="btn " id="btn-{{$comment->id}}" onclick="editComment(`{{$comment->description}}`,`{{$post->id}}`,`{{Auth::user()->id}}`,`{{url('comment_update',$comment->id)}}`)">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
-                                                        <!-- Modal -->
+                                                        <!-- Modal
                                                         <div class="modal fade rounded-3 " id="exampleModal{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
@@ -529,11 +529,12 @@
                                                                                     <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
                                                                                 </div>
                                                                             </div>
-                                                                        </form><!-- Search -->
-                                                                    </div>
+                                                                        </form>-->
+                                                        <!-- Search -->
+                                                        <!-- </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <button class="btn" onclick="search('reply{{$comment->id}}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->
                                                         @if(count($comment->replies)>0)
@@ -542,7 +543,7 @@
                                                             <button class="btn d-none" onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
                                                                 @endif
                                                     </div>
-                                                    <p class="mb-0">
+                                                    <p class="mb-0" id="{{$comment->id}}">
                                                         {{$comment->description}}
                                                     </p>
                                                 </div>
@@ -625,6 +626,31 @@
             </div><!-- row -->
         </div><!-- container -->
     </section>
+    <!-- Modal -->
+    <div class="modal fade rounded-3" id="Comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg_green text-white">
+                    <h5 class="modal-title" id="exampleModalLabel">Update your Comment</h5>
+                    <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color:#E1EFE8">
+                    <form action="" method="post" id="comment-update">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Comment</label>
+                            <div class="input-group">
+                                <input type="text" value='' placeholder="Write a comment" id="description-update" class="form-control" name="description" />
+                                <input type="hidden" value='' name="user_id" id="user_id">
+                                <input type="hidden" value='' name="post_id" id="post_id">
+                                <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
+                            </div>
+                        </div>
+                    </form><!-- Search -->
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
@@ -751,6 +777,17 @@
             document.getElementById('PostLabel').innerHTML = `Create new Post`;
             // Ouvrir modal form
             $("#Post").modal("show");
+        }
+
+        function editComment(description, post, auth, action) {
+            console.log(description);
+            document.getElementById("description-update").value = description;
+            console.log(document.getElementById("description-update").value);
+            document.getElementById("post_id").value = post;
+            document.getElementById("user_id").value = auth;
+            document.getElementById("comment-update").action = action
+            // Ouvrir Modal form
+            $("#Comment").modal("show");
         }
         // Add event listeners
         addTagBtn.addEventListener('click', function() {
@@ -939,41 +976,9 @@
                                                         <p class="m-0 text-muted"><small>
                                                         ${comment.created_at}</small>
                                                         </p>
-                                                        <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal${comment.id}">
+                                                        <button type="button" class="btn " id="btn-`+comment.id+`" onclick="editComment('${comment.description}','${comment.post.id}','${comment.auth}','{{url('comment_update',` + comment.id + `)}}')">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
-                                                        <!-- Modal -->
-                                                        <div class="modal fade rounded-3" id="exampleModal${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header bg_green text-white">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Update your Comment</h5>
-                                                                        <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body" style="background-color:#E1EFE8">
-                                                                        <form action="{{url('comment_update',` + comment.id + `)}}" method="post">
-                                                                            @csrf
-                                                                            <div class="mb-3">
-                                                                                        <label class="form-label" for="description">Comment</label>
-                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>
-                                                                            </div>         
-                                                                            <input type="hidden" value='${comment.post.id}' name="post_id">
-                                                                            <input type="hidden" value='${comment.auth}' name="user_id">
-                                                                            <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-duotone fa-paper-plane-top"></i></a></button>
-                                                                            <div class="mb-3">
-                                                                                        <label class="form-label" for="description">Comment</label>
-                                                                                        <div class="input-group">
-                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>                                                                                        <input type="hidden" value='${comment.post.id}' name="post_id">
-                                                                                        <input type="hidden" value='${comment.auth}' name="user_id">
-                                                                                        <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
-                                                                                        </div>
-                                                                            </div>   
-                                                                        </form><!-- Search -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
                                                         <button class="btn" onclick="search('reply${comment.id}')"><i class="fas fa-redo-alt ms-2"></i></button>
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->`;
                                 if (comment.count > 0) {
@@ -985,7 +990,7 @@
                                 }
                                 html += `   
                                                     </div>
-                                                    <p class="mb-0">
+                                                    <p class="mb-0" id="${comment.id}">
                                                     ${comment.description}
                                                     </p>
                                                 </div>
@@ -1082,5 +1087,40 @@
         likeBtns.forEach(function(btn) {
             btn.setAttribute("data-csrf-token", csrfToken);
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+    // Listen for the form's submit event
+    $('#comment-update').on('submit', function(event) {
+      // Prevent the form from submitting normally
+      event.preventDefault();
+      // Serialize the form data
+      var formData = $(this).serialize();
+      // Send the AJAX request
+      $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          // Log the response to the console
+          console.log(response);
+          // Parse the JSON data
+          var comment = response;
+          $('#' + comment.id).text(comment.description);
+          $('#btn-comment.' + comment.id).on('click', function() {
+            editComment(comment.description, comment.post.id, comment.auth, `{{url('comment_update',` + comment.id + `)}}`);
+           // Find the modal element
+            var modal = $('#Comment');
+            // Hide the modal
+            modal.modal('hide');
+          });
+        },
+        error: function(xhr, status, error) {
+          // Log the error message to the console
+          console.log(xhr.responseText);
+        }
+      });
+    });
+  });
     </script>
 </body>

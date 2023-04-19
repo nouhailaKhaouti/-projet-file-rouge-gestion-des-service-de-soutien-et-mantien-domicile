@@ -30,6 +30,12 @@ Route::get('/', function () {
 Route::get('/service', function () {
   return view('User.includes.service');
 });
+Route::get('/profile', function () {
+  return view('User.includes.profile');
+});
+Route::get('/home', function () {
+  return view('User.home');
+});
 Route::get('/calendar', function () {
   return view('User.Provider-company.calander');
 });
