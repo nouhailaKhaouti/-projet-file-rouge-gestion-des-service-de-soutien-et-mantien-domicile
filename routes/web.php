@@ -68,7 +68,7 @@ Route::post('/remove_image/{id}/{path}', [postController::class, 'remove_image']
 ////comment controller
 
 Route::post('/comment_create', [CommenterController::class, 'store']);
-Route::get('/delete_comment/{id}', [CommenterController::class, 'destroy']);
+Route::delete('/delete_comments/{id}', [CommenterController::class, 'destroy']);
 Route::post('/comment_update/{id}', [CommenterController::class, 'update']);
 
 ////like controller

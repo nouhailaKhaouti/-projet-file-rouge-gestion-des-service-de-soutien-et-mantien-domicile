@@ -496,7 +496,7 @@
                                     <div class="text-dark" id="comment-section{{$post->id}}">
                                         @foreach($post->comments as $comment)
                                         @if($comment->commenter_id == null)
-                                        <div class="card-body p-4">
+                                        <div class="card-body p-4" id="comment-{{$comment->id}}">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                 <div>
@@ -506,9 +506,14 @@
                                                         <p class="m-0 text-muted"><small>
                                                                 {{optional($comment->created_at)->format('d/m/Y')}}</small>
                                                         </p>
+                                                        @if(Auth::user()->id==$comment->user->id)
                                                         <button type="button" class="btn " id="btn-{{$comment->id}}" onclick="editComment(`{{$comment->description}}`,`{{$post->id}}`,`{{Auth::user()->id}}`,`{{url('comment_update',$comment->id)}}`)">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
+                                                        <button type="button" class="btn delete-comment" data-id="{{$comment->id}}">
+                                                            <i class="fas fa-pencil-alt ms-2"></i>
+                                                        </button>
+                                                        @endif
                                                         <!-- Modal
                                                         <div class="modal fade rounded-3 " id="exampleModal{{$comment->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -539,9 +544,9 @@
                                                         <!-- <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a> -->
                                                         @if(count($comment->replies)>0)
                                                         <button class="btn " onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
-                                                            @else
-                                                            <button class="btn d-none" onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
-                                                                @endif
+                                                        @else
+                                                        <button class="btn d-none" onclick="search('showreply{{$comment->id}}')" id="show{{$comment->id}}"><i class="fas fa-comment fa-xs"></i><span class="small"> comment</span></a>
+                                                        @endif
                                                     </div>
                                                     <p class="mb-0" id="{{$comment->id}}">
                                                         {{$comment->description}}
@@ -563,7 +568,7 @@
                                             <div id="reply-section{{$comment->id}}">
                                                 <div class="card-body p-4 d-none" id="showreply{{$comment->id}}">
                                                     @foreach($comment->replies as $reply)
-                                                    <div class="d-flex flex-start mt-1 mb-1">
+                                                    <div class="d-flex flex-start mt-1 mb-1" id="comment-{{$reply->id}}">
                                                         <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                         <div>
                                                             <h6 class="fw-bold mb-1 "><small>
@@ -572,7 +577,10 @@
                                                                 <p class="m-0 text-muted"><small>
                                                                         {{optional($reply->created_at)->format('d/m/Y')}}</small>
                                                                 </p>
-                                                                <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#reply {{$reply->id}}">
+                                                                <button type="button" class="btn " id="btn-{{$reply->id}}" onclick="editReply(`{{$reply->description}}`,`{{$post->id}}`,`{{Auth::user()->id}}`,`{{url('comment_update',$reply->id)}}`)">
+                                                            <i class="fas fa-pencil-alt ms-2"></i>
+                                                        </button>
+                                                                <button type="button" class="btn delete-comment" data-id="{{$reply->id}}">
                                                                     <i class="fas fa-pencil-alt ms-2"></i>
                                                                 </button>
                                                                 <!-- Modal -->
@@ -643,6 +651,7 @@
                                 <input type="text" value='' placeholder="Write a comment" id="description-update" class="form-control" name="description" />
                                 <input type="hidden" value='' name="user_id" id="user_id">
                                 <input type="hidden" value='' name="post_id" id="post_id">
+                                <input type="hidden" value='' name="commenter_id" id="parent">
                                 <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
                             </div>
                         </div>
@@ -785,6 +794,17 @@
             console.log(document.getElementById("description-update").value);
             document.getElementById("post_id").value = post;
             document.getElementById("user_id").value = auth;
+            document.getElementById("comment-update").action = action
+            // Ouvrir Modal form
+            $("#Comment").modal("show");
+        }
+        function editreply(description, post, auth, action,parent) {
+            console.log(description);
+            document.getElementById("description-update").value = description;
+            console.log(document.getElementById("description-update").value);
+            document.getElementById("post_id").value = post;
+            document.getElementById("user_id").value = auth;
+            document.getElementById("parent").value = parent;
             document.getElementById("comment-update").action = action
             // Ouvrir Modal form
             $("#Comment").modal("show");
@@ -966,7 +986,7 @@
                             //   // Create the HTML for the new comment
                             if (comment.state == 1) {
                                 var html = `
-                                         <div class="card-body p-4">
+                                         <div class="card-body p-4" id="comment-`+comment.id+`">
                                             <div class="d-flex flex-start">
                                                 <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                 <div>
@@ -976,7 +996,10 @@
                                                         <p class="m-0 text-muted"><small>
                                                         ${comment.created_at}</small>
                                                         </p>
-                                                        <button type="button" class="btn " id="btn-`+comment.id+`" onclick="editComment('${comment.description}','${comment.post.id}','${comment.auth}','{{url('comment_update',` + comment.id + `)}}')">
+                                                        <button type="button" class="btn " id="btn-` + comment.id + `" onclick="editComment('${comment.description}','${comment.post.id}','${comment.auth}','{{url('comment_update',` + comment.id + `)}}')">
+                                                            <i class="fas fa-pencil-alt ms-2"></i>
+                                                        </button>
+                                                        <button type="button" class="btn delete-comment" data-id="${comment.id}">
                                                             <i class="fas fa-pencil-alt ms-2"></i>
                                                         </button>
                                                         <button class="btn" onclick="search('reply${comment.id}')"><i class="fas fa-redo-alt ms-2"></i></button>
@@ -1013,7 +1036,7 @@
                                 commentsSection.insertAdjacentHTML('beforeend', html);
                             } else if (comment.state == 0) {
                                 console.log('dkhal');
-                                html = `        <div class="d-flex flex-start mt-1 mb-1">
+                                html = `        <div class="d-flex flex-start mt-1 mb-1" id="comment-`+comment.id+`">
                                                     <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="40" height="40" />
                                                     <div>
                                                         <h6 class="fw-bold mb-1 "><small>
@@ -1022,34 +1045,12 @@
                                                             <p class="m-0 text-muted"><small>
                                                             ${comment.created_at}</small>
                                                             </p>
-                                                            <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#reply${comment.id}">
-                                                                <i class="fas fa-pencil-alt ms-2"></i>
+                                                            <button type="button" class="btn " id="btn-` + comment.id + `" onclick="editReply('${comment.description}','${comment.post.id}','${comment.auth}','{{url('comment_update',` + comment.id + `)}}','${comment.parent}')">
+                                                              <i class="fas fa-pencil-alt ms-2"></i>
                                                             </button>
-
-                                                            <!-- Modal -->
-                                                            <div class="modal fade rounded-3" id="reply${comment.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header bg_green text-white">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">Update your Reply</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body" style="background-color:#E1EFE8">
-                                                                            <form action="{{url('comment_update',` + comment.id + `)}}" method="post">
-                                                                                @csrf
-                                                                                <div class="mb-3">
-                                                                                        <label class="form-label" for="description">Comment</label>
-                                                                                        <div class="input-group">
-                                                                                        <input type="text" value="${comment.description}" placeholder="Write a comment" id="description" class="form-control" name="description"/>                                                                                        <input type="hidden" value='${comment.post.id}' name="post_id">
-                                                                                        <input type="hidden" value='${comment.auth}' name="user_id">
-                                                                                        <button type="submit" class="btn text-white rounded-2 bg_green"><a><i class="fa-solid fa-paper-plane-top"></i></a></button>
-                                                                                        </div>
-                                                                                </div>  
-                                                                            </form><!-- Search -->
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <button type="button" class="btn delete-comment" data-id="${comment.id}">
+                                                            <i class="fas fa-pencil-alt ms-2"></i>
+                                                        </button>
                                                         </div>
                                                         <p class="mb-0">
                                                         ${comment.description}
@@ -1090,37 +1091,63 @@
     </script>
     <script>
         $(document).ready(function() {
-    // Listen for the form's submit event
-    $('#comment-update').on('submit', function(event) {
-      // Prevent the form from submitting normally
-      event.preventDefault();
-      // Serialize the form data
-      var formData = $(this).serialize();
-      // Send the AJAX request
-      $.ajax({
-        url: $(this).attr('action'),
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-          // Log the response to the console
-          console.log(response);
-          // Parse the JSON data
-          var comment = response;
-          $('#' + comment.id).text(comment.description);
-          $('#btn-comment.' + comment.id).on('click', function() {
-            editComment(comment.description, comment.post.id, comment.auth, `{{url('comment_update',` + comment.id + `)}}`);
-           // Find the modal element
-            var modal = $('#Comment');
-            // Hide the modal
-            modal.modal('hide');
-          });
-        },
-        error: function(xhr, status, error) {
-          // Log the error message to the console
-          console.log(xhr.responseText);
-        }
-      });
-    });
-  });
+            // Listen for the form's submit event
+            $('#comment-update').on('submit', function(event) {
+                // Prevent the form from submitting normally
+                event.preventDefault();
+                // Serialize the form data
+                var formData = $(this).serialize();
+                // Send the AJAX request
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Log the response to the console
+                        console.log(response);
+                        // Parse the JSON data
+                        var comment = response;
+                        $('#' + comment.id).text(comment.description);
+                        $('#btn-comment.' + comment.id).on('click', function() {
+                            editComment(comment.description, comment.post.id, comment.auth, `{{url('comment_update',` + comment.id + `)}}`);
+                            // Find the modal element
+                            var modal = $('#Comment');
+                            // Hide the modal
+                            modal.modal('hide');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Log the error message to the console
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $('.delete-comment').on('click', function(event) {
+            // Prevent the button from submitting the form
+            event.preventDefault();
+            // Get the comment ID from the data-id attribute
+            var commentId = $(this).data('id');
+            // Send the DELETE request
+            $.ajax({
+                url: '/delete_comments/' + commentId,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Log the response to the console
+                    console.log(response);
+                    // Remove the comment from the DOM
+                    $('#comment-' + commentId).remove();
+                },
+                error: function(xhr, status, error) {
+                    // Log the error message to the console
+                    console.log(xhr.responseText);
+                }
+            });
+        });
     </script>
 </body>

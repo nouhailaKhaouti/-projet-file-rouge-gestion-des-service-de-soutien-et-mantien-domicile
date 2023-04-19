@@ -104,6 +104,6 @@ class CommenterController extends Controller
     public function destroy(string $id)
     {
         Commenter::destroy($id);
-        return redirect()->back()->with('message', 'Your commente is deleted successfully');
+        return response()->json(['success' => 'removed successfully'], 200);
     }
 }
