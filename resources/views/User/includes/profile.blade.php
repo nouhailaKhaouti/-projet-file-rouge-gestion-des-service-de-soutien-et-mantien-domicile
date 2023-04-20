@@ -84,6 +84,72 @@
         header {
             background: url("user/asset/img/bg-1.png");
         }
+
+        @media (max-width:3920px) {
+            .btn-sq-responsive {
+                width: 350px !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+                height: 200px !important;
+                font-size: 24px;
+            }
+        }
+
+        /* Style for Large Screen */
+        @media (max-width:991px) {
+            .btn-sq-responsive {
+                width: 300px !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+                height: 150px !important;
+                font-size: 18px;
+            }
+        }
+
+        /* Style for Medium Screen */
+        @media (max-width:767px) {
+            .btn-sq-responsive {
+                width: 250px !important;
+                /* whatever width you want for medium screen */
+                max-width: 100% !important;
+                max-height: 100% !important;
+                height: 100px !important;
+                /* whatever height you want for medium screen */
+                font-size: 12px;
+            }
+        }
+
+        /* Style for Small Screen */
+        @media (max-width:575px) {
+            .btn-sq-responsive {
+                width: 200px !important;
+                /* whatever width you want for mobile screen */
+                max-width: 100% !important;
+                max-height: 100% !important;
+                height: 50px !important;
+                /* whatever height you want for mobile screen */
+                font-size: 5px;
+                padding: 0px;
+                font-size: 7px;
+            }
+        }
+        .btn-bg-first{
+           background-color: #DDFFBB;
+        }
+        .btn-bg-second{
+            background-color: #C7E9B0;
+        }
+        .bg_green {
+            background-color: #559974;
+        }
+
+        .bg-light-green{
+            background-color: #E1EFE8;
+        }
+
+        .bg-1{
+            background-color: #559974;
+        }
     </style>
 </head>
 
@@ -119,10 +185,11 @@
                                 </button>
                             </div>
                             <div class="ms-3" style="margin-top:80px;">
-                                 <div class="d-flex "><ul class="rating list-unstyled d-flex" count="43" rating="20">
-                                </ul>
-                                <p class="ms-1" style="margin-top:2px">3.0</p>
-                                 </div>
+                                <div class="d-flex ">
+                                    <ul class="rating list-unstyled d-flex" count="43" rating="20">
+                                    </ul>
+                                    <p class="ms-1" style="margin-top:2px">3.0</p>
+                                </div>
                                 <h5>Andy Horwitz</h5>
                                 <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
                             </div>
@@ -137,6 +204,30 @@
                                     <p class="mb-1 h5">1026</p>
                                     <button class="btn bg_green btn-block rating-submit text-white">Book now</button>
                                 </div>
+                                <div class="px-3">
+                                    <button class="btn btn-block rating-submit btn-outline-success " data-bs-toggle="modal" data-bs-target="#upgrade">upgrade</button>
+                                    <div class="modal modal-lg fade" id="upgrade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg_green">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Upgrade Your title</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body bg-light-green">
+                                                    <div class="d-flex flex-wrap justify-content-around align-item-around">
+                                                       <a href="{{url('company')}}"> <button class="btn btn-sq-responsive btn-bg-first rounded-pill mb-3 ">
+                                                            As Company
+                                                        </button></a>
+
+                                                        <a href="{{url('freelancer')}}"><button class="btn btn-sq-responsive btn-bg-second rounded-pill">
+                                                            As a Freelancer
+                                                        </button></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body p-4 text-black">
@@ -144,10 +235,10 @@
 
                                 <div class="row">
                                     <div class="col-sm-11 ms-5 mt-5">
-                                    <div class="bg_green text-white rounded-3 text-center w-25 outline-success position-absolute " data-mdb-ripple-color="success" style="z-index: 1;">
-                                                About
-                                            </div>
-                                        <div class="z-index-0 card rounded-5 bg-secondary" >
+                                        <div class="bg_green text-white rounded-3 text-center w-25 outline-success position-absolute " data-mdb-ripple-color="success" style="z-index: 1;">
+                                            About
+                                        </div>
+                                        <div class="z-index-0 card rounded-5 bg-secondary">
                                             <div class="card-body ">
                                                 <h5 class="card-title">Special title treatment</h5>
                                                 <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -183,6 +274,11 @@
             </div>
         </div>
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <script>
         const divs = document.querySelectorAll('.rating');
         divs.forEach(function(div) {

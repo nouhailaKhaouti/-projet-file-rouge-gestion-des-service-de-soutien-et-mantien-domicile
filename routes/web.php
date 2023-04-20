@@ -40,6 +40,14 @@ Route::get('/calendar', function () {
   return view('User.Provider-company.calander');
 });
 
+Route::get('/company', function () {
+  return view('User.upgrade.company');
+});
+
+Route::get('/freelancer', function () {
+  return view('User.upgrade.freelancer');
+});
+
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

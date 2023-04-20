@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Upgrade;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +51,11 @@ class UpgradeController extends Controller
     public function store(Request $request)
     {
         //
+
         $userid = Auth::user()->id;
+        $user=User::find($userid);
+
+
         $Upgrade = Upgrade::where('user_id', $userid)->get();
         if (is_countable($Upgrade) && count($Upgrade) == '0') {
             if ($request->has('cin_file')) {
@@ -65,8 +70,20 @@ class UpgradeController extends Controller
             $provider->cin = $request->cin;
             $provider->cin_file = $cin_file;
             $provider->certificat = $certificat;
+            $provider->service = $request->input('service');
             $provider->user_id=$userid;
             $provider->save();
+            $user->adresse=$request->input('adresse');
+            $user->city=$request->input('city');
+            $user->country=$request->input('country');
+            $user->postal_code=$request->input('postal_code');
+            $user->update();
+            $cities = array();
+            foreach ($request->input('cities') as $city) {
+                $data = City::firstOrCreate(['label' =>  strtolower($city)]);
+                array_push($cities, $data->id);
+            }
+            $user->cities()->attach($cities);
             return redirect()->back()->with('message', 'your request is successfuly send wait patiently for the reply');
         }
     }

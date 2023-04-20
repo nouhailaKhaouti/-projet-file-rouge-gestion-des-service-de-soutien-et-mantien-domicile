@@ -506,7 +506,7 @@
             $('.js-example-basic-multiple').select2();
         });
     </script>
-    <!-- serach script -->
+    <!-- search script -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the search form element
