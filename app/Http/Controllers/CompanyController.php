@@ -36,8 +36,11 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         //
+        $userid = Auth::user()->id;
+        $user=User::find($userid);
          $company=new Company();
          $company->name=$request('name');
+         $company->user_id=$userid;
          $company->website=$request('website');
          $company->commercialRegisterN=$request('commercialRegisterN');
          $company->nemploi=$request('nemploi');
@@ -48,6 +51,7 @@ class CompanyController extends Controller
             $request->file('icon')->move('Companyimage', $path);
                 // dd($path);
         $company->icon=$path;
+        $user->icon=$path;
         }
          $company->save();
         //  locations:
@@ -59,15 +63,22 @@ class CompanyController extends Controller
             $location->country=$request[$key]->street;
             $location->country=$request[$key]->appartement;
             $location->country=$company->id;
-             $location->save();
+            $location->save();
         }
         // telephone:
-        foreach ($request->telephone as $value) {      
+        foreach ($request->phone as $value) {      
             $Telephone=new Telephone();
             $Telephone->label=$value;
             $Telephone->country=$company->id;
             $Telephone->save();
         }
+        $user->update();
+        $cities = array();
+        foreach ($request->input('cities') as $city) {
+            $data = City::firstOrCreate(['label' =>  strtolower($city)]);
+            array_push($cities, $data->id);
+        }
+        $user->cities()->attach($cities);
 
     }
 
@@ -95,18 +106,8 @@ class CompanyController extends Controller
     {
         //
         $company=Company::find($id);
-        $company->name=$request('name');
         $company->website=$request('website');
-        $company->commercialRegisterN=$request('commercialRegisterN');
         $company->nemploi=$request('nemploi');
-        if ($request->hasFile('icon')){
-           //we create a new name for the image 
-           $path = time(). uniqid() . '.' . $request->file('icon')->getClientOriginalExtension();
-           //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
-           $request->file('icon')->move('Companyimage', $path);
-               // dd($path);
-       $company->icon=$path;
-       }
         $company->update();
     }
     public function approved_Company($id)

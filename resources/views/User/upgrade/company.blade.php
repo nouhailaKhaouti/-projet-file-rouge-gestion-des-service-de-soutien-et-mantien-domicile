@@ -12,6 +12,7 @@
     </title>
     <link rel="stylesheet" href="https://colorlib.com/etc/bwiz/colorlib-wizard-6/fonts/material-design-iconic-font/css/material-design-iconic-font.css">
     <link rel="stylesheet" href="https://colorlib.com/etc/bwiz/colorlib-wizard-6/css/style.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> -->
     <style>
         .pill-btn {
             border: none;
@@ -54,9 +55,8 @@
 </head>
 
 <body>
-
     <div class="wrapper">
-        <form action="">
+        <form action="{{url('Company_create')}}">
             <div id="wizard">
                 <h4></h4>
                 <section>
@@ -75,8 +75,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-holder active">
-                                <select name="category_id" id="category" class="form-control" require>
+                                <select name="service" id="service" class="form-control" require>
                                     <option value="">---Services---</option>
+                                    @foreach($services as $service)
+                                    <option value="{{$service->id}}">{{$service->label}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-holder">
@@ -104,8 +107,8 @@
                 </section>
                 <h4></h4>
                 <section>
-                    <div class="form-header" id="adresse_item">
-                        <div class="group" style="margin-left: 4px;">
+                    <div class="form-header " id="adresse_item">
+                        <div class="group " style="margin-left: 4px;">
                                 <button class="btn remove_item_btn pill-btn left" style="background-color: #acc4f4;">x</button>
                             <div class="form-row">
                                 <div class="form-holder">
@@ -128,17 +131,66 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                     <button type="button" class="pill-btn" id="add_adresse_btn" onclick="hi()" style="  background-color: #f4c4ec;">Add new Location</button>
                 </section>
                 <h4></h4>
                 <section>
-                    <div class="form-row" id="phone_item">
-                        <div class="form-holder flex">
+                    <div class="form-row " id="phone_item">
+                        <div class="form-holder">
                             <input type="text" class="form-control" name="label[]" placeholder="phone number" />
                             <button class="btn remove_item_btn pill-btn" style="  background-color: #f4c4ec;">x</button>
                         </div>
                     </div>
                     <button type="button" class="pill-btn" id="add_phone_btn" style="background-color: #acc4f4;">Add telephone contact</button>
+                </section>
+                <h4></h4>
+                <section>
+                    <div class="form-row ">
+                        <div class="form-holder">
+                        <select class="js-example-basic-multiple form-control" name="cities[]" multiple="multiple" placeholder="Select cities">
+                            <option value="Agadir">Agadir</option>
+                            <option value="Al Hoceima">Al Hoceima</option>
+                            <option value="Azilal">Azilal</option>
+                            <option value="Beni Mellal">Beni Mellal</option>
+                            <option value="Ben Slimane">Ben Slimane</option>
+                            <option value="Boulemane">Boulemane</option>
+                            <option value="Casablanca">Casablanca</option>
+                            <option value="Chaouen">Chaouen</option>
+                            <option value="El Jadida">El Jadida</option>
+                            <option value="El Kelaa des Sraghna">El Kelaa des Sraghna</option>
+                            <option value="Er Rachidia">Er Rachidia</option>
+                            <option value="Essaouira">Essaouira</option>
+                            <option value="Fes">Fes</option>
+                            <option value="Figuig">Figuig</option>
+                            <option value="Guelmim">Guelmim</option>
+                            <option value="Ifrane">Ifrane</option>
+                            <option value="Kenitra">Kenitra</option>
+                            <option value="Khemisset">Khemisset</option>
+                            <option value="Khenifra">Khenifra</option>
+                            <option value="Khouribga">Khouribga</option>
+                            <option value="Laayoune">Laayoune</option>
+                            <option value="Larache">Larache</option>
+                            <option value="Marrakech">Marrakech</option>
+                            <option value="Meknes">Meknes</option>
+                            <option value="Nador">Nador</option>
+                            <option value="Ouarzazate">Ouarzazate</option>
+                            <option value="Oujda">Oujda</option>
+                            <option value="Rabat-Sale">Rabat-Sale</option>
+                            <option value="Safi">Safi</option>
+                            <option value="Settat">Settat</option>
+                            <option value="Sidi Kacem">Sidi Kacem</option>
+                            <option value="Tangier">Tangier</option>
+                            <option value="Tan-Tan">Tan-Tan</option>
+                            <option value="Taounate">Taounate</option>
+                            <option value="Taroudannt">Taroudannt</option>
+                            <option value="Tata">Tata</option>
+                            <option value="Taza">Taza</option>
+                            <option value="Tetouan">Tetouan</option>
+                            <option value="Tiznit">Tiznit</option>
+                        </select>
+                        </div>
+                    </div>
                 </section>
             </div>
         </form>
@@ -147,19 +199,17 @@
     <script src="https://colorlib.com/etc/bwiz/colorlib-wizard-6/js/jquery.steps.js"></script>
     <script src="https://colorlib.com/etc/bwiz/colorlib-wizard-6/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let addItemBtn = document.querySelector("#add_adresse_btn");
-            console.log(addItemBtn);
-            function hi(){
-                console.log('hi');
-            }
-            addItemBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                
-                let showItem = document.querySelector("#adresse_item");
-                showItem.innerHTML += `
-                        <div class="group" style="margin-left: 4px;">
+
+    <!-- add adresses and phone numbers  -->
+<script>
+$( document ).ready(function() {
+    let addItemBtn = $("#add_adresse_btn");
+    
+    addItemBtn.on("click", function(e) {
+        e.preventDefault();
+        let showItem = $("#adresse_item");
+        showItem.append(`
+                        <div class="group " style="margin-left: 4px;">
                                 <button class="btn remove_item_btn pill-btn left" style="background-color: #acc4f4;">x</button>
                             <div class="form-row">
                                 <div class="form-holder">
@@ -181,29 +231,26 @@
                                 <input type="text" class="form-control" name="appartement[]" placeholder="appartement" />
                             </div>
                         </div>
-                        `;
-                // showItem.insertBefore(newDiv, showItem.firstChild);
-            });
-            let addPhoneBtn = document.querySelector("#add_phone_btn");
-            addPhoneBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                let showItem = document.querySelector("#adresse_item");
-                showItem.innerHTML += `
-                <div class="form-holder flex">
+                        `);
+    });
+    let addPhoneBtn = $("#add_phone_btn");
+    console.log(addPhoneBtn);
+    addPhoneBtn.on("click", function(e) {
+        e.preventDefault();
+        let showItem = $("#phone_item");
+        showItem.append(`
+                <div class="form-holder ">
                         <input type="text" class="form-control" name="label[]" placeholder="phone number" />
                         <button class="btn remove_item_btn pill-btn" style="  background-color: #f4c4ec;" >x</button>
                 </div>
-                    `;
-                // showItem.insertBefore(newDiv, showItem.firstChild);
-            });
-            document.addEventListener("click", function(e) {
-                if (e.target.classList.contains("remove_item_btn")) {
-                    e.preventDefault();
-                    let rowItem = e.target.parentNode;
-                    rowItem.parentNode.removeChild(rowItem);
-                }
-            });
-        });
-    </script>
+                    `);
+    });
+    $(document).on("click", ".remove_item_btn", function(e) {
+                e.preventDefault();
+                let rowItem = $(this).parent();
+                rowItem.remove();
+    });
+});
+</script>
 
 </body>

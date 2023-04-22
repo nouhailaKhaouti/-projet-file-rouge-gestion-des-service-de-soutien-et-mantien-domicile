@@ -3,12 +3,14 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommenterController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\postController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UpgradeController;
 use App\Models\Demande;
 use App\Models\LikePost;
 use App\Models\Post;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,11 +43,17 @@ Route::get('/calendar', function () {
 });
 
 Route::get('/company', function () {
-  return view('User.upgrade.company');
+  $services=Service::all();
+  return view('User.upgrade.company',compact('services'));
 });
 
 Route::get('/freelancer', function () {
-  return view('User.upgrade.freelancer');
+  $services=Service::all();
+  return view('User.upgrade.freelancer',compact('services'));
+});
+
+Route::get('/test', function () {
+  return view('User.test');
 });
 
 Auth::routes();
@@ -144,6 +152,11 @@ Route::get('/warned_user', [AdminController::class, 'warning']);
 // Route::get('/refused_provider/{id}', [providerController::class, 'refused_provider']);
 // // Route::get('/approved_demande/{id}', [providerController::class,'approved_demande']);
 // Route::get('/refused_demande/{id}', [providerController::class,'refused_demande']);
+
+// company and Upgrade controllers
+Route::post('/Company_create', [CompanyController::class, 'store']);
+Route::post('/Freelancer_create', [UpgradeController::class, 'store']);
+
 
 Route::get('/events', function () {
   $provider_id = Auth::user()->id;

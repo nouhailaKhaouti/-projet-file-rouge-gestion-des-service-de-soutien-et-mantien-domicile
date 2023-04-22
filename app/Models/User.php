@@ -56,7 +56,7 @@ class User extends Authenticatable
     }
     public function disponibility()
     {
-        return $this->hasOne(Disponibility::class);
+        return $this->hasMany(Disponibility::class);
     }
     public function checkLists()
     {

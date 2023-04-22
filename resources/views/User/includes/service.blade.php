@@ -361,6 +361,7 @@
         <div class="container">
             <h5 class="section-title h1">OUR TEAM</h5>
             <div class="row" id="body">
+                @foreach($providers as $provider)
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-4 ">
                     <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
@@ -368,10 +369,14 @@
                             <div class="frontside rounded-5 ">
                                 <div class="card rounded-5">
                                     <div class="card-body text-center rounded-5 bg-2">
-                                        <p><img class=" img-fluid" src="user/assets/img/p.jpg" alt="card image"></p>
-                                        <h4 class="card-title">Nouhaila khaouti</h4>
-                                        <span class="d-block"><i class="fa-solid fa-wrench"></i> <small class="text-truncate ml-2">Cleaning</small> </span>
-                                        <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
+                                        <p><img class=" img-fluid" src="userimage/$provider->icon" alt="card image"></p>
+                                        <h4 class="card-title">$provider->name</h4>
+                                        <span class="d-block"><i class="fa-solid fa-wrench"></i> <small class="text-truncate ml-2">$provider->service</small> </span>
+                                        <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">
+                                            @foreach($provider->cities as $city)
+                                              $city->label
+                                            @endforeach
+                                        </small> </span>
                                         <ul class="rating list-unstyled" count="100" rating="30">
                                         </ul>
                                     </div>
@@ -380,19 +385,27 @@
                             <div class="backside rounded-5 ">
                                 <div class="card rounded-5 bg-2 ">
                                     <div class="card-body text-center rounded-5 pt-2 bg-2">
-                                        <h4 class="card-title mb-3">Cleaning</h4>
+                                        <h4 class="card-title mb-3">$provider->service</h4>
                                         <button type="button" class="btn btn-outline-dark btn-rounded btn-sm" data-mdb-ripple-color="dark">See profile</button>
-                                        <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
+                                        <p class="card-text">$provider->description</p>
                                         <div class="buttons px-4 mt-0">
-                                            <button class="btn bg_green btn-block rating-submit">Book now</button>
+                                            <button class="btn bg_green btn-block rating-submit" onclick="request(`$provider->cities`,`$provider->disponibility`,`$provider->checkLists`,`$provider->`)">Book now</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- ./Team member -->
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h5 class="section-title h1">OUR TEAM</h5>
+            <div class="row" id="body">
+                @foreach($companies as $company)
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-4 ">
                     <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
@@ -400,10 +413,14 @@
                             <div class="frontside rounded-5 ">
                                 <div class="card rounded-5">
                                     <div class="card-body text-center rounded-5 bg-2">
-                                        <p><img class=" img-fluid" src="user/assets/img/p.jpg" alt="card image"></p>
-                                        <h4 class="card-title">Nouhaila khaouti</h4>
-                                        <span class="d-block"><i class="fa-solid fa-wrench"></i> <small class="text-truncate ml-2">Cleaning</small> </span>
-                                        <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
+                                        <p><img class=" img-fluid" src="userImage/$company->user->icon" alt="card image"></p>
+                                        <h4 class="card-title">$company->name</h4>
+                                        <span class="d-block"><i class="fa-solid fa-wrench"></i> <small class="text-truncate ml-2">$company->service</small> </span>
+                                        <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">
+                                            @foreach($company->user->cities as $city)
+                                              $city->label
+                                            @endforeach
+                                        </small> </span>
                                         <ul class="rating list-unstyled" count="100" rating="30">
                                         </ul>
                                     </div>
@@ -412,51 +429,19 @@
                             <div class="backside rounded-5 ">
                                 <div class="card rounded-5 bg-2 ">
                                     <div class="card-body text-center rounded-5 pt-2 bg-2">
-                                        <h4 class="card-title mb-3">Cleaning</h4>
+                                        <h4 class="card-title mb-3">$company->service</h4>
                                         <button type="button" class="btn btn-outline-dark btn-rounded btn-sm" data-mdb-ripple-color="dark">See profile</button>
-                                        <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
+                                        <p class="card-text">$company->user->description</p>
                                         <div class="buttons px-4 mt-0">
-                                            <button class="btn bg_green btn-block rating-submit">Book now</button>
+                                            <button class="btn bg_green btn-block rating-submit" onclick="request(``)">Book now</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- ./Team member -->
-                <!-- Team member -->
-                <div class="col-xs-12 col-sm-6 col-md-4 ">
-                    <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
-                        <div class="mainflip">
-                            <div class="frontside rounded-5 ">
-                                <div class="card rounded-5">
-                                    <div class="card-body text-center rounded-5 bg-2">
-                                        <p><img class=" img-fluid" src="user/assets/img/p.jpg" alt="card image"></p>
-                                        <h4 class="card-title">Nouhaila khaouti</h4>
-                                        <span class="d-block"><i class="fa-solid fa-wrench"></i> <small class="text-truncate ml-2">Cleaning</small> </span>
-                                        <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
-                                        <ul class="rating list-unstyled" count="43" rating="20">
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="backside rounded-5 ">
-                                <div class="card rounded-5 bg-2 ">
-                                    <div class="card-body text-center rounded-5 pt-2 bg-2">
-                                        <h4 class="card-title mb-3">Cleaning</h4>
-                                        <button type="button" class="btn btn-outline-dark btn-rounded btn-sm" data-mdb-ripple-color="dark">See profile</button>
-                                        <p class="card-text">This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.This is basic card with image on top, title, description and button.</p>
-                                        <div class="buttons px-4 mt-0">
-                                            <button class="btn bg_green btn-block rating-submit">Book now</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ./Team member -->
+                @endforeach
             </div>
         </div>
     </section>

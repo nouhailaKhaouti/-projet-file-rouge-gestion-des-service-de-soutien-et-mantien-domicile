@@ -17,7 +17,7 @@
 <body>
 
     <div class="wrapper">
-        <form action="{{url('')}}">
+        <form action="{{url('Freelancer_create')}}">
             <div id="wizard">
                 <h4></h4>
                 <section>
@@ -36,8 +36,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-holder active">
-                                <select name="service_id" id="service" class="form-control" require>
+                                <select name="service" id="service" class="form-control" require>
                                     <option value="">---Services---</option>
+                                    @foreach($services as $service)
+                                    <option value="{{$service->id}}">{{$service->label}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
