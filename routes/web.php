@@ -30,7 +30,11 @@ Route::get('/', function () {
   return view('User.includes.post');
 });
 Route::get('/service', function () {
-  return view('User.includes.service');
+  $types=Type::all();
+  $cities=City::all();
+  $freelancers=User::role('freelancer')->get();
+  $companies=Company::where('status','Accepted');
+  return view('User.includes.service',compact('cities','types','freelancers','companies'));
 });
 Route::get('/profile', function () {
   return view('User.includes.profile');
@@ -48,8 +52,7 @@ Route::get('/company', function () {
 });
 
 Route::get('/freelancer', function () {
-  $services=Service::all();
-  return view('User.upgrade.freelancer',compact('services'));
+  return view('User.upgrade.freelancer');
 });
 
 Route::get('/test', function () {

@@ -9,10 +9,6 @@
     <link rel="icon" type="image/png" href="admin/assets/img/favicon.png">
     <title>
         Maintenance services
-    </title>
-    <!--     Fonts and icons     -->
-    <!-- Material Icons -->
-
     <!-- CSS Files -->
     <!-- <link id="pagestyle" href="user/assets/css/style.css" rel="stylesheet" /> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -286,12 +282,10 @@
             background-color: #559974;
         }
     </style>
-
 </head>
 
 <body>
-    <form class="row p-4 row-cols-sm-auto g-2 border 
-                 bg-light align-items-center end-0 search-form" action="" method="">
+    <form class="row p-4 row-cols-sm-auto g-2 border bg-light align-items-center end-0 search-form" action="{{url('search')}}" method="POST">
         <div class="col-1">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search by name " name="seach">
@@ -342,6 +336,10 @@
                 <option value="Tiznit">Tiznit</option>
             </select>
         </div>
+        <div class="col-3">
+            <label class="visually-hidden" for="confirmation">
+                confirmation</label>
+        </div>
 
         <div class="col-4">
             <div class="input-group">
@@ -389,7 +387,7 @@
                                         <button type="button" class="btn btn-outline-dark btn-rounded btn-sm" data-mdb-ripple-color="dark">See profile</button>
                                         <p class="card-text">$provider->description</p>
                                         <div class="buttons px-4 mt-0">
-                                            <button class="btn bg_green btn-block rating-submit" onclick="request(`$provider->cities`,`$provider->disponibility`,`$provider->checkLists`,`$provider->`)">Book now</button>
+                                            <button class="btn bg_green btn-block rating-submit" data-bs-toggle="modal" data-bs-target="#request{{$provider->id}}">Book now</button>
                                         </div>
                                     </div>
                                 </div>
@@ -397,6 +395,71 @@
                         </div>
                     </div>
                 <!-- ./Team member -->
+                <!-- modal -->
+                <div class="modal fade bd-example-modal-lg shadow-sm" id="request{{$provider->id}}" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content rounded-3">
+                            <div class="modal-header  bg_green">
+                                <h5 class="modal-title text-white" id="requestLabel">Add New Request</h5>
+                                <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body " style="background-color:#E1EFE8">
+                                <form action="{{url('request_create')}}" class="panel-activity__status d-flex justify-content-between" method="post" enctype="multipart/form-data" id="post-form">
+                                    @csrf
+                                    <img src="user/assets/img/post-modal.png" alt="" height="400" width="400">
+                                    <div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="disonibility">day</label>
+                                            <select name="disonibility" id="disonibility" class="form-select rounder-2" require>
+                                                <option value="">---choose a day---</option>
+                                                @foreach($disonibilitys as $disonibility)
+                                                <option value="{{$disonibility->id}}">{{$disonibility->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="city">city</label>
+                                            <select name="city" id="city" class="form-select rounder-2" require>
+                                                <option value="">---city---</option>
+                                                @foreach($cities as $city)
+                                                <option value="{{$city->id}}">{{$city->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="ckeckList">ckeckList</label>
+                                            <select name="ckeckList[]" id="ckeckList" class="form-select rounder-2" require>
+                                                <option value="">---ckeckList---</option>
+                                                @foreach($ckeckLists as $ckeckList)
+                                                <option value="{{$ckeckList->id}}">{{$ckeckList->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="type">type</label>
+                                            <select name="type[]" id="type" class="form-select rounder-2 js-example-basic-multiple"  multiple="multiple" require>
+                                                <option value="">---type---</option>
+                                                @foreach($types as $type)
+                                                <option value="{{$type->id}}">{{$type->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="adresse">Adresse</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" placeholder="add Your Adresse" class="form-control rounder-2" name="adresse" aria-describedby="add" />
+                                            </div>
+                                        </div>
+                                        <button class="btn bg_green btn-block rating-submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 @endforeach
             </div>
         </div>
@@ -433,7 +496,7 @@
                                         <button type="button" class="btn btn-outline-dark btn-rounded btn-sm" data-mdb-ripple-color="dark">See profile</button>
                                         <p class="card-text">$company->user->description</p>
                                         <div class="buttons px-4 mt-0">
-                                            <button class="btn bg_green btn-block rating-submit" onclick="request(``)">Book now</button>
+                                        <button class="btn bg_green btn-block rating-submit" data-bs-toggle="modal" data-bs-target="#request{{$company->id}}">Book now</button>
                                         </div>
                                     </div>
                                 </div>
@@ -441,6 +504,69 @@
                         </div>
                     </div>
                 <!-- ./Team member -->
+                <div class="modal fade bd-example-modal-lg shadow-sm" id="request{{$company->id}}" tabindex="-1" role="dialog" aria-labelledby="PostLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content rounded-3">
+                            <div class="modal-header  bg_green">
+                                <h5 class="modal-title text-white" id="requestLabel">Add New Request</h5>
+                                <button type="button" class=" btn text-white fw-bold close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body " style="background-color:#E1EFE8">
+                                <form action="{{url('request_create')}}" class="panel-activity__status d-flex justify-content-between" method="post" enctype="multipart/form-data" id="post-form">
+                                    @csrf
+                                    <img src="user/assets/img/post-modal.png" alt="" height="400" width="400">
+                                    <div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="disonibility">day</label>
+                                            <select name="disonibility" id="disonibility" class="form-select rounder-2" require>
+                                                <option value="">---choose a day---</option>
+                                                @foreach($disonibilitys as $disonibility)
+                                                <option value="{{$disonibility->id}}">{{$disonibility->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="city">city</label>
+                                            <select name="city" id="city" class="form-select rounder-2" require>
+                                                <option value="">---city---</option>
+                                                @foreach($cities as $city)
+                                                <option value="{{$city->id}}">{{$city->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="ckeckList">ckeckList</label>
+                                            <select name="ckeckList[]" id="ckeckList" class="form-select rounder-2" require>
+                                                <option value="">---ckeckList---</option>
+                                                @foreach($ckeckLists as $ckeckList)
+                                                <option value="{{$ckeckList->id}}">{{$ckeckList->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="type">type</label>
+                                            <select name="type[]" id="type" class="form-select rounder-2 js-example-basic-multiple"  multiple="multiple" require>
+                                                <option value="">---type---</option>
+                                                @foreach($types as $type)
+                                                <option value="{{$type->id}}">{{$type->label}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="adresse">Adresse</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" placeholder="add Your Adresse" class="form-control rounder-2" name="adresse" aria-describedby="add" />
+                                            </div>
+                                        </div>
+                                        <button class="btn bg_green btn-block rating-submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
         </div>
@@ -492,7 +618,7 @@
         });
     </script>
     <!-- search script -->
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the search form element
             var Form = document.querySelectorAll('.search-form');
@@ -609,7 +735,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
     <!-- rating script -->
     <script>
         const divs = document.querySelectorAll('.rating');

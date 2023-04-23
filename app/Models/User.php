@@ -66,13 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
-    public function users()
-    {
-        return $this->hasMany(Service::class);
-    }
     public function comments()
     {
-        return $this->hasMany(Service::class);
+        return $this->hasMany(Commenter::class);
     }
     public function company()
     {
