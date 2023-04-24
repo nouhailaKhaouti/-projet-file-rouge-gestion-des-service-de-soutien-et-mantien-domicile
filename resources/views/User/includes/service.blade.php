@@ -288,12 +288,12 @@
     <form class="row p-4 row-cols-sm-auto g-2 border bg-light align-items-center end-0 search-form" action="{{url('search')}}" method="POST">
         <div class="col-1">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by name " name="seach">
+                <input type="text" class="form-control" placeholder="Search by name " name="search">
             </div>
         </div>
         <div class="col-3">
             <label class="visually-hidden" for="confirmation">
-                confirmation</label>
+                cities</label>
             <select class="js-example-basic-multiple form-control" name="cities[]" multiple="multiple" placeholder="Select cities">
                 <option value="Agadir">Agadir</option>
                 <option value="Al Hoceima">Al Hoceima</option>
@@ -338,9 +338,8 @@
         </div>
         <div class="col-3">
             <label class="visually-hidden" for="confirmation">
-                confirmation</label>
+                type of provider</label>
         </div>
-
         <div class="col-4">
             <div class="input-group">
                 <select type="text" class="form-control" name="type" placeholder="Type of provider">
@@ -351,7 +350,7 @@
         </div>
         </div>
         <div class="col-5">
-            <button type="submit" class="btn bg_green btn-block rating-submit">
+            <button type="submit" class="btn bg_green btn-block rating-submit" >
                 Search</button>
         </div>
     </form>
@@ -359,6 +358,7 @@
         <div class="container">
             <h5 class="section-title h1">OUR TEAM</h5>
             <div class="row" id="body">
+                @if($providers)
                 @foreach($providers as $provider)
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-4 ">
@@ -461,6 +461,9 @@
                 </div>
                 </div>
                 @endforeach
+            @else
+            <h2> No Provider is available right now</h2>
+            @endif
             </div>
         </div>
     </section>
@@ -468,6 +471,7 @@
         <div class="container">
             <h5 class="section-title h1">OUR TEAM</h5>
             <div class="row" id="body">
+                @if($companies)
                 @foreach($companies as $company)
                 <!-- Team member -->
                 <div class="col-xs-12 col-sm-6 col-md-4 ">
@@ -568,47 +572,12 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+            <h2> No Company is available right now</h2>
+            @endif
             </div>
         </div>
     </section>
-    <div class="container d-flex justify-content-center mt-5">
-        <div class="card1 text-center mb-5">
-            <div class="circle-image">
-                <img src="user/assets/img/p.jpg" width="50">
-            </div>
-            <span class="dot"></span>
-            <span class="name mb-1 fw-500">Bryan Williams</span>
-            <small class="text-black-50">Tata Ace</small>
-            <small class="text-black-50 font-weight-bold">QP09AA9090</small>
-            <div class="location mt-4">
-                <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
-                <span><i class="fa fa-map-marker stop mt-2"></i><small class="text-truncate ml-2">Mandir Road, Mayur vihar, new delhi</small> </span>
-            </div>
-            <div class="rate bg-success py-3 text-white mt-3">
-                <h6 class="mb-0">Rate your driver</h6>
-                <ul class="rating list-unstyled" data-mdb-toggle="rating">
-                    <li>
-                        <i class="far fa-star fa-sm text-primary" title="Bad"></i>
-                    </li>
-                    <li>
-                        <i class="far fa-star fa-sm text-primary" title="Poor"></i>
-                    </li>
-                    <li>
-                        <i class="far fa-star fa-sm text-primary" title="OK"></i>
-                    </li>
-                    <li>
-                        <i class="far fa-star fa-sm text-primary" title="Good"></i>
-                    </li>
-                    <li>
-                        <i class="far fa-star fa-sm text-primary" title="Excellent"></i>
-                    </li>
-                </ul>
-                <div class="buttons px-4 mt-0">
-                    <button class="btn btn-warning btn-block rating-submit">Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.js" integrity="sha512-c3X8oUD7JPhnro+Mz1f3N3GwT7V0SQzlrsgf7VAFPsX9c/7RmB0eQJtVW6eOMQv7YJL1hCj7iM9X9fO7gKKEbQ==" crossorigin="anonymous"></script> <!-- select multi cities script -->

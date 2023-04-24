@@ -274,6 +274,44 @@
             </div>
         </div>
     </section>
+    <div class="container d-flex justify-content-center mt-5">
+        <div class="card1 text-center mb-5">
+            <div class="circle-image">
+                <img src="user/assets/img/p.jpg" width="50">
+            </div>
+            <span class="dot"></span>
+            <span class="name mb-1 fw-500">Bryan Williams</span>
+            <small class="text-black-50">Tata Ace</small>
+            <small class="text-black-50 font-weight-bold">QP09AA9090</small>
+            <div class="location mt-4">
+                <span class="d-block"><i class="fa fa-map-marker start"></i> <small class="text-truncate ml-2">Ganesha Road, preet vihar new delhi</small> </span>
+                <span><i class="fa fa-map-marker stop mt-2"></i><small class="text-truncate ml-2">Mandir Road, Mayur vihar, new delhi</small> </span>
+            </div>
+            <div class="rate bg-success py-3 text-white mt-3">
+                <h6 class="mb-0">Rate your driver</h6>
+                <ul class="rating list-unstyled" data-mdb-toggle="rating">
+                    <li>
+                        <i class="far fa-star fa-sm text-primary" title="Bad"></i>
+                    </li>
+                    <li>
+                        <i class="far fa-star fa-sm text-primary" title="Poor"></i>
+                    </li>
+                    <li>
+                        <i class="far fa-star fa-sm text-primary" title="OK"></i>
+                    </li>
+                    <li>
+                        <i class="far fa-star fa-sm text-primary" title="Good"></i>
+                    </li>
+                    <li>
+                        <i class="far fa-star fa-sm text-primary" title="Excellent"></i>
+                    </li>
+                </ul>
+                <div class="buttons px-4 mt-0">
+                    <button class="btn btn-warning btn-block rating-submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

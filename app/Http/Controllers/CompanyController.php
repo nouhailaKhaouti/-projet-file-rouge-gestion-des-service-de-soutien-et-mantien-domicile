@@ -39,11 +39,11 @@ class CompanyController extends Controller
         $userid = Auth::user()->id;
         $user=User::find($userid);
          $company=new Company();
-         $company->name=$request('name');
+         $company->name=$request>input('name');
          $company->user_id=$userid;
-         $company->website=$request('website');
-         $company->commercialRegisterN=$request('commercialRegisterN');
-         $company->nemploi=$request('nemploi');
+         $company->website=$request->input('website');
+         $company->commercialRegisterN=$request->input('commercialRegisterN');
+         $company->nemploi=$request->input('nemploi');
          if ($request->hasFile('icon')){
             //we create a new name for the image 
             $path = time(). uniqid() . '.' . $request->file('icon')->getClientOriginalExtension();

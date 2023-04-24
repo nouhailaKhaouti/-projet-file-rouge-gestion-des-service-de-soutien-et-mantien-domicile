@@ -211,3 +211,4 @@ Route::post('/like-post', function(Request $request) {
   }
 })->middleware('auth')->name('like-post');
 
+Route::get('/Search', [HomeController::class, 'search']);
