@@ -79,7 +79,19 @@ class CompanyController extends Controller
             array_push($cities, $data->id);
         }
         $user->cities()->attach($cities);
+        $checkLists = $request->input('checkLists');
 
+        foreach ($checkLists as $checkList) {
+            $label = $checkList['name'];
+            $price = $checkList['price'];
+
+            // insert the checklist into the database
+            Checklist::create([
+                'label' => $label,
+                'price' => $price,
+                'user_id' => $userid
+            ]);
+        }
     }
 
     /**

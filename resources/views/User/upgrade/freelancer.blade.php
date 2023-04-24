@@ -47,7 +47,6 @@
         .pill-btn:hover {
             opacity: 1;
         }
-
         .group {
             position: relative;
             border-radius: 20px;
@@ -61,7 +60,7 @@
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
-            justify-content: space-around;
+            justify-content: start;
         }
         .left{
             display: flex;
@@ -244,11 +243,14 @@
                 <section>
                     <div class="form-row flex" id="checkLists-container">
                     </div>
-                    <div class="form-holder">
-                            <div class="avartar-picker">
-                                <input type="text" placeholder="add your own checkListsto" id="checkLists-input" class="form-control rounder-2" name="checkLists" aria-describedby="add" />
+                    <div class="form-row">
+                                <div class="form-holder">
+                                   <input type="text" placeholder="add your own checkListsto" id="checkLists-input" class="form-control rounder-2" name="checkLists" aria-describedby="add" />
+                                </div>
+                                <div class="form-holder">
+                                   <input type="number" placeholder="Price" id="checkLists-price" class="form-control rounder-2" name="checkListsPrice" aria-describedby="add" />
+                                </div>
                                 <button type="button" class="pill-btn" id="add-checkList-btn" id="add">Add</button>
-                            </div>
                     </div>
                 </section>
             </div>
@@ -264,54 +266,65 @@
         });
     </script>
     <script>
-$(document).ready(function() {
-  var postForm = $('#form');
-  var checkListsInput = $('#checkLists-input');
-  var addcheckListBtn = $('#add-checkList-btn');
-  var checkListsContainer = $('#checkLists-container');
-  var checkListsP = [];
+        $(document).ready(function() {
+        var postForm = $('#form');
+        var checkListsInput = $('#checkLists-input');
+        var addcheckListBtn = $('#add-checkList-btn');
+        var checkListsContainer = $('#checkLists-container');
+        var checkListsP = [];
 
-  addcheckListBtn.on('click', function(event) {
-    event.preventDefault();
-    var checkList = checkListsInput.val().trim();
-    if (checkList !== '') {
-      checkListsP.push(checkList);
-      addcheckListElement(checkList);
-      checkListsInput.val('');
-    }
-  });
+        addcheckListBtn.on('click', function(event) {
+        event.preventDefault();
+        var checkList = checkListsInput.val().trim();
+        var checkListPrice = $('#checkLists-price').val().trim();
+        if (checkList !== '' && checkListPrice !== '') {
+            checkListsP.push({name: checkList, price: checkListPrice});
+            addcheckListElement(checkList, checkListPrice);
+            checkListsInput.val('');
+            $('#checkLists-price').val('');
+        } else {
+            alert('Please enter a price for the checklist.');
+        }
+        });
 
-  postForm.on('submit', function(event) {
-    // Add the checkLists as hidden input fields to the form
-    checkListsP.forEach(function(checkList) {
-      var input = $('<input>').attr({
-        type: 'hidden',
-        name: 'checkLists[]',
-        value: checkList
-      });
-      postForm.append(input);
-    });
-  });
+        postForm.on('submit', function(event) {
+        // Add the checkLists as hidden input fields to the form
+        checkListsP.forEach(function(checkList, index) {
+            var nameInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'checkLists[' + index + '][name]',
+            value: checkList.name
+            });
+            var priceInput = $('<input>').attr({
+            type: 'hidden',
+            name: 'checkLists[' + index + '][price]',
+            value: checkList.price
+            });
+            postForm.append(nameInput, priceInput);
+        });
+        });
 
-  // Function to add a checkList element to the DOM
-  function addcheckListElement(checkList) {
-    var checkListElement = $('<div>').addClass('checkList pill-btn mx-1 bg-1').text(checkList);
-    var removeBtn = $('<button>').addClass('remove-btn checkList-btn bg-2 mx-1').text('x');
-    removeBtn.on('click', function(event) {
-      event.preventDefault();
-      removecheckListElement(checkListElement, checkList);
-    });
-    checkListElement.append(removeBtn);
-    checkListsContainer.append(checkListElement);
-  }
-  
-  function removecheckListElement(checkListElement, checkList) {
-    var index = checkListsP.indexOf(checkList);
-    if (index !== -1) {
-      checkListsP.splice(index, 1);
-    }
-    checkListElement.remove();
-  }
-});
+        // Function to add a checkList element to the DOM
+        function addcheckListElement(checkList, checkListPrice) {
+        var checkListElement = $('<div>').addClass('checkList pill-btn mx-1 bg-1').text(checkList);
+        var checkListPriceElement = $('<div>').addClass('checkList-price').text(checkListPrice);
+        var removeBtn = $('<button>').addClass('remove-btn checkList-btn bg-2 mx-1').text('x');
+        removeBtn.on('click', function(event) {
+            event.preventDefault();
+            removecheckListElement(checkListElement, checkList);
+        });
+        checkListElement.append(checkListPriceElement, removeBtn);
+        checkListsContainer.append(checkListElement);
+        }
+
+        
+        function removecheckListElement(checkListElement, checkList) {
+            var index = checkListsP.indexOf(checkList);
+            if (index !== -1) {
+            checkListsP.splice(index, 1);
+            }
+            checkListElement.remove();
+        }
+        });
     </script>
 </body>

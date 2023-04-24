@@ -83,6 +83,19 @@ class UpgradeController extends Controller
                 $data = City::firstOrCreate(['label' =>  strtolower($city)]);
                 array_push($cities, $data->id);
             }
+            $checkLists = $request->input('checkLists');
+
+            foreach ($checkLists as $checkList) {
+                $label = $checkList['name'];
+                $price = $checkList['price'];
+
+                // insert the checklist into the database
+                Checklist::create([
+                    'label' => $label,
+                    'price' => $price,
+                    'user_id' => $userid
+                ]);
+            }
             $user->cities()->attach($cities);
             return redirect()->back()->with('message', 'your request is successfuly send wait patiently for the reply');
         }
