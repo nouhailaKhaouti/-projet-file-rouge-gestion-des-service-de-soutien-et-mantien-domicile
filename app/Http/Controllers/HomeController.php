@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -30,7 +32,7 @@ class HomeController extends Controller
          $search=$request->input('search');
          $cities=$request->input('cities[]');
          $type=$request->input('type');
-         $providers=User::role('provider')->get();
+         $providers=User::role('Provider')->get();
          $companies=Company::where('status','Accepted');
          if($search){
             $providers=$providers->where('name', 'LIKE', '%' . $search . '%');

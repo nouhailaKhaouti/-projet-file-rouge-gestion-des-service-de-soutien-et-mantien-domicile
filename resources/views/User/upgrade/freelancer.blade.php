@@ -78,7 +78,8 @@
 <body>
 
     <div class="wrapper">
-        <form action="{{url('Freelancer_create')}}" id="form">
+        <form action="{{url('Freelancer_create')}}" method="POST"  enctype="multipart/form-data" id="form">
+            @csrf
             <div id="wizard">
                 <h4></h4>
                 <section>
@@ -88,17 +89,20 @@
                                 <img src="https://colorlib.com/etc/bwiz/colorlib-wizard-6/images/avartar.png" alt="">
                             </a>
                             <div class="avartar-picker">
-                                <input type="file" name="file-1[]" id="file-1" class="inputfile" data-multiple-caption="{count} files selected" multiple />
-                                <label for="file-1">
+                                <input type="file" name="image" id="file-1" class="form-controller" data-multiple-caption="{count} files selected" multiple />
+                                <!-- <label for="file-1">
                                     <i class="zmdi zmdi-camera"></i>
                                     <span>Choose Picture</span>
-                                </label>
+                                </label> -->
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-holder active">
                                 <select name="service" id="service" class="form-control" require>
                                     <option value="">---Services---</option>
+                                    @foreach($services as $service)
+                                    <option value="{{$service->id}}">{{$service->label}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -129,44 +133,6 @@
                             <select class="form-control" name="city" placeholder="Select your city">
                                 <option value="*">---Select Your City---</option>
                                 <option value="Agadir">Agadir</option>
-                                <option value="Al Hoceima">Al Hoceima</option>
-                                <option value="Azilal">Azilal</option>
-                                <option value="Beni Mellal">Beni Mellal</option>
-                                <option value="Ben Slimane">Ben Slimane</option>
-                                <option value="Boulemane">Boulemane</option>
-                                <option value="Casablanca">Casablanca</option>
-                                <option value="Chaouen">Chaouen</option>
-                                <option value="El Jadida">El Jadida</option>
-                                <option value="El Kelaa des Sraghna">El Kelaa des Sraghna</option>
-                                <option value="Er Rachidia">Er Rachidia</option>
-                                <option value="Essaouira">Essaouira</option>
-                                <option value="Fes">Fes</option>
-                                <option value="Figuig">Figuig</option>
-                                <option value="Guelmim">Guelmim</option>
-                                <option value="Ifrane">Ifrane</option>
-                                <option value="Kenitra">Kenitra</option>
-                                <option value="Khemisset">Khemisset</option>
-                                <option value="Khenifra">Khenifra</option>
-                                <option value="Khouribga">Khouribga</option>
-                                <option value="Laayoune">Laayoune</option>
-                                <option value="Larache">Larache</option>
-                                <option value="Marrakech">Marrakech</option>
-                                <option value="Meknes">Meknes</option>
-                                <option value="Nador">Nador</option>
-                                <option value="Ouarzazate">Ouarzazate</option>
-                                <option value="Oujda">Oujda</option>
-                                <option value="Rabat-Sale">Rabat-Sale</option>
-                                <option value="Safi">Safi</option>
-                                <option value="Settat">Settat</option>
-                                <option value="Sidi Kacem">Sidi Kacem</option>
-                                <option value="Tangier">Tangier</option>
-                                <option value="Tan-Tan">Tan-Tan</option>
-                                <option value="Taounate">Taounate</option>
-                                <option value="Taroudannt">Taroudannt</option>
-                                <option value="Tata">Tata</option>
-                                <option value="Taza">Taza</option>
-                                <option value="Tetouan">Tetouan</option>
-                                <option value="Tiznit">Tiznit</option>
                             </select>
                         </div>
                     </div>
@@ -175,42 +141,6 @@
                             <option value="Agadir">Agadir</option>
                             <option value="Al Hoceima">Al Hoceima</option>
                             <option value="Azilal">Azilal</option>
-                            <option value="Beni Mellal">Beni Mellal</option>
-                            <option value="Ben Slimane">Ben Slimane</option>
-                            <option value="Boulemane">Boulemane</option>
-                            <option value="Casablanca">Casablanca</option>
-                            <option value="Chaouen">Chaouen</option>
-                            <option value="El Jadida">El Jadida</option>
-                            <option value="El Kelaa des Sraghna">El Kelaa des Sraghna</option>
-                            <option value="Er Rachidia">Er Rachidia</option>
-                            <option value="Essaouira">Essaouira</option>
-                            <option value="Fes">Fes</option>
-                            <option value="Figuig">Figuig</option>
-                            <option value="Guelmim">Guelmim</option>
-                            <option value="Ifrane">Ifrane</option>
-                            <option value="Kenitra">Kenitra</option>
-                            <option value="Khemisset">Khemisset</option>
-                            <option value="Khenifra">Khenifra</option>
-                            <option value="Khouribga">Khouribga</option>
-                            <option value="Laayoune">Laayoune</option>
-                            <option value="Larache">Larache</option>
-                            <option value="Marrakech">Marrakech</option>
-                            <option value="Meknes">Meknes</option>
-                            <option value="Nador">Nador</option>
-                            <option value="Ouarzazate">Ouarzazate</option>
-                            <option value="Oujda">Oujda</option>
-                            <option value="Rabat-Sale">Rabat-Sale</option>
-                            <option value="Safi">Safi</option>
-                            <option value="Settat">Settat</option>
-                            <option value="Sidi Kacem">Sidi Kacem</option>
-                            <option value="Tangier">Tangier</option>
-                            <option value="Tan-Tan">Tan-Tan</option>
-                            <option value="Taounate">Taounate</option>
-                            <option value="Taroudannt">Taroudannt</option>
-                            <option value="Tata">Tata</option>
-                            <option value="Taza">Taza</option>
-                            <option value="Tetouan">Tetouan</option>
-                            <option value="Tiznit">Tiznit</option>
                         </select>
                     </div>
                     <br>
@@ -218,11 +148,11 @@
                     <div class="form-row">
                         <div class="form-holder">
                             <div class="avartar-picker">
-                                    <input type="file" name="cin_file" id="file-1" class="inputfile" />
-                                    <label for="file-1">
+                                    <input type="file" name="cin_file" id="file-1" class="form-control" />
+                                    <!-- <label for="file-1">
                                         <i class="zmdi zmdi-file"></i>
                                         <span>Choose Cin file</span>
-                                    </label>
+                                    </label> -->
                             </div>
                         </div>
                         <div class="form-holder">
@@ -231,11 +161,11 @@
                     </div>
                     <div class="form-holder">
                             <div class="avartar-picker">
-                                    <input type="file" name="certificat" id="file-1" class="inputfile" />
-                                    <label for="file-1">
+                                    <input type="file" name="certificat" id="file-1" class="form-control" />
+                                    <!-- <label for="file-1">
                                         <i class="zmdi zmdi-file"></i>
                                         <span>Choose a certificat if you want</span>
-                                    </label>
+                                    </label> -->
                             </div>
                     </div>
                 </section>
@@ -254,6 +184,7 @@
                     </div>
                 </section>
             </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
     <script src="https://colorlib.com/etc/bwiz/colorlib-wizard-6/js/jquery-3.3.1.min.js"></script>
@@ -306,14 +237,13 @@
 
         // Function to add a checkList element to the DOM
         function addcheckListElement(checkList, checkListPrice) {
-        var checkListElement = $('<div>').addClass('checkList pill-btn mx-1 bg-1').text(checkList);
-        var checkListPriceElement = $('<div>').addClass('checkList-price').text(checkListPrice);
+        var checkListElement = $('<div>').addClass('checkList pill-btn mx-1 bg-1').text(checkList+' '+checkListPrice+'$');
         var removeBtn = $('<button>').addClass('remove-btn checkList-btn bg-2 mx-1').text('x');
         removeBtn.on('click', function(event) {
             event.preventDefault();
             removecheckListElement(checkListElement, checkList);
         });
-        checkListElement.append(checkListPriceElement, removeBtn);
+        checkListElement.append(removeBtn);
         checkListsContainer.append(checkListElement);
         }
 

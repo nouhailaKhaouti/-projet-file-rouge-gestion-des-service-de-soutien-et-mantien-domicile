@@ -10,10 +10,6 @@
     <title>
         Maintenance services
     </title>
-    <!--     Fonts and icons     -->
-    <!-- Material Icons -->
-
-    <!-- CSS Files -->
     <!-- <link id="pagestyle" href="user/assets/css/style.css" rel="stylesheet" /> -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -133,45 +129,54 @@
                 font-size: 7px;
             }
         }
-        .btn-bg-first{
-           background-color: #DDFFBB;
+
+        .btn-bg-first {
+            background-color: #DDFFBB;
         }
-        .btn-bg-second{
+
+        .btn-bg-second {
             background-color: #C7E9B0;
         }
+
         .bg_green {
             background-color: #559974;
         }
 
-        .bg-light-green{
+        .bg-light-green {
             background-color: #E1EFE8;
         }
 
-        .bg-1{
+        .bg-1 {
             background-color: #559974;
+        }
+
+        .rating-submit {
+            border-radius: 15px;
+            color: #fff;
+            height: 49px;
+        }
+
+        .rating-submit:hover {
+            color: #fff;
+        }
+
+        .bg-2 {
+            background-color: #E1EFE8;
+        }
+
+        .rate {
+            border-bottom-right-radius: 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        .buttons {
+            top: 36px;
+            position: relative;
         }
     </style>
 </head>
 
 <body>
-    <!-- <nav class="d-flex justify-content-between bg-tranparent my-5 mx-5">
-        <img src="user/assets/img/icon.png" alt="logo" id="logo" width="50" height="100" style="z-index: 1;" class="ms-4 mt-0 mb-3">
-        <ul class="ul d-flex ">
-            <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
-                Home
-            </li>
-            <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative " style="margin-bottom:20px;">
-                Services
-            </li>
-            <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
-                Posts
-            </li>
-            <li class="text-black me-5 pt-3 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;">
-                About
-            </li>
-            <img src="user/assets/img/p.jpg" class="text-black me-5 text-decoration-none d-inline-block p-relative" style="margin-bottom:20px;" alt="" width="50" height="50" class="full-rounded" id="profile">
-        </ul>
-    </nav> -->
     <section class="">
         <div class="h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -205,6 +210,9 @@
                                     <button class="btn bg_green btn-block rating-submit text-white">Book now</button>
                                 </div>
                                 <div class="px-3">
+                                    <button style="  padding: 12px 16px;" type="button" class="btn  btn-xs btn-primary " data-bs-toggle="modal" data-bs-target="#exampleRModal">
+                                        Review
+                                    </button>
                                     <button class="btn btn-block rating-submit btn-outline-success " data-bs-toggle="modal" data-bs-target="#upgrade">upgrade</button>
                                     <div class="modal modal-lg fade" id="upgrade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -215,13 +223,13 @@
                                                 </div>
                                                 <div class="modal-body bg-light-green">
                                                     <div class="d-flex flex-wrap justify-content-around align-item-around">
-                                                       <a href="{{url('company')}}"> <button class="btn btn-sq-responsive btn-bg-first rounded-pill mb-3 ">
-                                                            As Company
-                                                        </button></a>
+                                                        <a href="{{url('company')}}"> <button class="btn btn-sq-responsive btn-bg-first rounded-pill mb-3 ">
+                                                                As Company
+                                                            </button></a>
 
                                                         <a href="{{url('freelancer')}}"><button class="btn btn-sq-responsive btn-bg-second rounded-pill">
-                                                            As a Freelancer
-                                                        </button></a>
+                                                                As a Freelancer
+                                                            </button></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,49 +240,221 @@
                         </div>
                         <div class="card-body p-4 text-black">
                             <div class="mb-5">
-
                                 <div class="row">
-                                    <div class="col-sm-11 ms-5 mt-5">
-                                        <div class="bg_green text-white rounded-3 text-center w-25 outline-success position-absolute " data-mdb-ripple-color="success" style="z-index: 1;">
-                                            About
-                                        </div>
-                                        <div class="z-index-0 card rounded-5 bg-secondary">
-                                            <div class="card-body ">
-                                                <h5 class="card-title">Special title treatment</h5>
-                                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    <div class="col-lg-8">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Full Name</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">Johnatan Smith</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Email</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">example@example.com</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Phone</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">(097) 234-5678</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Mobile</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">(098) 765-4321</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-sm-3">
+                                                        <p class="mb-0">Address</p>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <p class="lead fw-normal mb-0">Recent photos</p>
-                                <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p>
-                            </div>
-                            <div class="row g-2">
-                                <div class="col mb-2">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp" alt="image 1" class="w-100 rounded-3">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <p class="lead fw-normal mb-0">Recent Posts</p>
+                                    <!-- <p class="mb-0"><a href="#!" class="text-muted">Show all</a></p> -->
                                 </div>
-                                <div class="col mb-2">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(107).webp" alt="image 1" class="w-100 rounded-3">
-                                </div>
-                            </div>
-                            <div class="row g-2">
-                                <div class="col">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(108).webp" alt="image 1" class="w-100 rounded-3">
-                                </div>
-                                <div class="col">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(114).webp" alt="image 1" class="w-100 rounded-3">
-                                </div>
+                                <section>
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-md-10 col-xl-8 text-center">
+                                            <h3 class="mb-4">Testimonials</h3>
+                                            <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet
+                                                numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum
+                                                quisquam eum porro a pariatur veniam.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="col-md-4 mb-5 mb-md-0">
+                                            <div class="d-flex justify-content-center mb-4">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp" class="rounded-circle shadow-1-strong" width="150" height="150" />
+                                            </div>
+                                            <h5 class="mb-3">Maria Smantha</h5>
+                                            <h6 class="text-primary mb-3">Web Developer</h6>
+                                            <p class="px-xl-3">
+                                                <i class="fas fa-quote-left pe-2"></i>Lorem ipsum dolor sit amet, consectetur
+                                                adipisicing elit. Quod eos id officiis hic tenetur quae quaerat ad velit ab hic
+                                                tenetur.
+                                            </p>
+                                            <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star-half-alt fa-sm text-warning"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 mb-5 mb-md-0">
+                                            <div class="d-flex justify-content-center mb-4">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp" class="rounded-circle shadow-1-strong" width="150" height="150" />
+                                            </div>
+                                            <h5 class="mb-3">Lisa Cudrow</h5>
+                                            <h6 class="text-primary mb-3">Graphic Designer</h6>
+                                            <p class="px-xl-3">
+                                                <i class="fas fa-quote-left pe-2"></i>Ut enim ad minima veniam, quis nostrum
+                                                exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid commodi.
+                                            </p>
+                                            <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-4 mb-0">
+                                            <div class="d-flex justify-content-center mb-4">
+                                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp" class="rounded-circle shadow-1-strong" width="150" height="150" />
+                                            </div>
+                                            <h5 class="mb-3">John Smith</h5>
+                                            <h6 class="text-primary mb-3">Marketing Specialist</h6>
+                                            <p class="px-xl-3">
+                                                <i class="fas fa-quote-left pe-2"></i>At vero eos et accusamus et iusto odio
+                                                dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
+                                            </p>
+                                            <ul class="list-unstyled d-flex justify-content-center mb-0">
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="fas fa-star fa-sm text-warning"></i>
+                                                </li>
+                                                <li>
+                                                    <i class="far fa-star fa-sm text-warning"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </section>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
-    <div class="container d-flex justify-content-center mt-5">
+    <div class="modal fade" id="exampleRModal" tabindex="-1" role="dialog" aria-labelledby="exampleRModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleRModalLabel">Review</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="py-2 px-4" action="{{route('review.store')}}" style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
+                        @csrf
+                        <div class="container d-flex justify-content-center mt-5">
+                            <div class="card1 text-center mb-5">
+                                <div class="circle-image">
+                                    <img src="user/assets/img/p.jpg" width="50">
+                                </div>
+                                <span class="dot"></span>
+                                <span class="name mb-1 fw-500">{{$user->name}}</span>
+                                <small class="text-black-50">{{$user->service}}</small>
+                                <small class="text-black-50 font-weight-bold"></small>
+                                <div class="rate bg-success py-3 text-white mt-3">
+                                    <h6 class="mb-0">Rate your service Provider</h6>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="rate">
+                                                <input type="radio" id="star5" class="rate" name="rating" value="5" />
+                                                <label for="star5" title="text">5 stars</label>
+                                                <input type="radio" checked id="star4" class="rate" name="rating" value="4" />
+                                                <label for="star4" title="text">4 stars</label>
+                                                <input type="radio" id="star3" class="rate" name="rating" value="3" />
+                                                <label for="star3" title="text">3 stars</label>
+                                                <input type="radio" id="star2" class="rate" name="rating" value="2">
+                                                <label for="star2" title="text">2 stars</label>
+                                                <input type="radio" id="star1" class="rate" name="rating" value="1" />
+                                                <label for="star1" title="text">1 star</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input placeholder="Write a comment" type="text" name="description" class="rounded-3" style="background-color:#F0F4F2">
+                                    <div class="buttons px-4 mt-0">
+                                        <button class="btn btn-warning btn-block rating-submit">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="provider_id" value="{{$user->id}}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="container d-flex justify-content-center mt-5">
         <div class="card1 text-center mb-5">
             <div class="circle-image">
                 <img src="user/assets/img/p.jpg" width="50">
@@ -311,7 +491,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
@@ -329,7 +509,7 @@
             for (let i = 0; i < rate; i++) {
                 div.innerHTML += starsF;
             }
-            for (let i = 0; i < 5 - rate; i++) {
+            for (let i = 0; i < 5 - rate - 1; i++) {
                 div.innerHTML += starsE;
             }
         });

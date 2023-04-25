@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifyUpgrade;
+use App\Models\CheckList;
 use App\Models\City;
 use App\Models\Upgrade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class UpgradeController extends Controller
 {
@@ -23,10 +27,11 @@ class UpgradeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function request_demande($id)
     {
         //
-
+        $upgrade=Upgrade::find($id);
+        return view('Admin.Upgrade.request_demande',compact('upgrade'));
     }
 
     public function download_cin($id)
@@ -51,18 +56,15 @@ class UpgradeController extends Controller
     public function store(Request $request)
     {
         //
-
         $userid = Auth::user()->id;
         $user=User::find($userid);
-
-
         $Upgrade = Upgrade::where('user_id', $userid)->get();
         if (is_countable($Upgrade) && count($Upgrade) == '0') {
-            if ($request->has('cin_file')) {
+            if ($request->hasFile('cin_file')) {
                 $cin_file = $request->file('cin_file')->getClientOriginalName();
                 $request->cin_file->move('cin_file', $cin_file);
             }
-            if ($request->has('certificat')) {
+            if ($request->hasFile('certificat')) {
                 $certificat = $request->file('certificat')->getClientOriginalName();
                 $request->certificat->move('certificat', $certificat);
             }
@@ -70,19 +72,32 @@ class UpgradeController extends Controller
             $provider->cin = $request->cin;
             $provider->cin_file = $cin_file;
             $provider->certificat = $certificat;
-            $provider->service = $request->input('service');
             $provider->user_id=$userid;
             $provider->save();
+            $user->service_id = $request->input('service');
+            $user->phone=$request->input('phone');
+            $user->description=$request->input('description');
             $user->adresse=$request->input('adresse');
             $user->city=$request->input('city');
             $user->country=$request->input('country');
             $user->postal_code=$request->input('postal_code');
+            if ($request->hasFile('image')) {
+                    //we create a new name for the image 
+                    $path = time() . uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+                    //and after we move it to an other file called doctorimage that will be created automaticly ones we upload the image 
+                    $request->file('image')->move('Userimage', $path);
+                    // dd($path);
+                    $user->icon=$path;
+                    // dd($img);
+            }
             $user->update();
             $cities = array();
             foreach ($request->input('cities') as $city) {
                 $data = City::firstOrCreate(['label' =>  strtolower($city)]);
                 array_push($cities, $data->id);
             }
+            $user->cities()->attach($cities);
+            
             $checkLists = $request->input('checkLists');
 
             foreach ($checkLists as $checkList) {
@@ -90,44 +105,54 @@ class UpgradeController extends Controller
                 $price = $checkList['price'];
 
                 // insert the checklist into the database
-                Checklist::create([
-                    'label' => $label,
-                    'price' => $price,
+                CheckList::create([
+                    'title' => $label,
+                    'prix' => $price,
                     'user_id' => $userid
                 ]);
             }
-            $user->cities()->attach($cities);
-            return redirect()->back()->with('message', 'your request is successfuly send wait patiently for the reply');
+            return redirect()->route('profile')->with('message', 'your request is successfuly send wait patiently for the reply');
+        }else{
+            return redirect()->route('profile')->with('message', 'you already sended a request before');
         }
     }
-    public function approved_Upgrade($id)
+    public function approved_provider($id)
     {
         $Upgrade = Upgrade::find($id);
         $Upgrade->status = 'accepted';
         $Upgrade->save();
         $user=User::find($Upgrade->user_id);
-        $user->role="Provider";
+        $role_id=3;
+        $rolesId=explode(',',$role_id);
+        $role=Role::where('id',$rolesId)->get();
+        $user->syncRoles($role);
         $status=$Upgrade->status;
-        $name=auth()->user()->username;
-        // Mail::to($Upgrade->user->email)->send(new NotifyUpgrade( $name, $status));
+        $name = auth()->user()->name;
+        $message="the Admin has updated your request for Upgrade the ".optional($Upgrade->updated_at)->format('d/m/Y');
+        $subject='Your upgrade status has been updated';
+        Mail::to($Upgrade->user->email)->send(new NotifyUpgrade( $name, $status,$message,$subject));
         return redirect()->back();
     }
-    public function refused_Upgrade($id)
+    public function refused_provider($id)
     {
         $Upgrade = Upgrade::find($id);
         $Upgrade->status = 'refused';
         $Upgrade->save();
         $status=$Upgrade->status;
-        $name=auth()->user()->username;
-        // Mail::to($Upgrade->user->email)->send(new NotifyUpgrade( $name, $status));
+        $name = auth()->user()->name;
+        $message="the Admin has updated your request for Upgrade the ".optional($Upgrade->updated_at)->format('d/m/Y');
+        $subject='Your upgrade status has been updated';
+        Mail::to($Upgrade->user->email)->send(new NotifyUpgrade( $name, $status,$message,$subject));
         return redirect()->back();
     }
     /**
      * Display the specified resource.
      */
-    public function show(Upgrade $upgrade)
+    public function Provider()
     {
         //
+        $users=User::role('Provider')->get();
+        return view('Admin.tables.Providers',compact('users'));
     }
 
     /**

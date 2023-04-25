@@ -19,6 +19,10 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Manage providers users
                         </a>
+                        <a class="nav-link" href="{{url('Company')}}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Manage providers users
+                        </a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseanimale" aria-expanded="false" aria-controls="collapseanimale">

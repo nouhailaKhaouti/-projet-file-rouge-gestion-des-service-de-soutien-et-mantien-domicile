@@ -28,7 +28,7 @@
             <tbody>
                 @foreach($upgrades as $upgrade)
                 <tr>
-                    <td>{{$upgrade->user->name}} {{$upgrade->user->Prenom}}</td>
+                    <td>{{$upgrade->user->name}} </td>
                     <td>{{$upgrade->user->email}}</td>
                     <td>{{$upgrade->cin}}</td>
                     <td>{{$upgrade->user->warning}}</td>

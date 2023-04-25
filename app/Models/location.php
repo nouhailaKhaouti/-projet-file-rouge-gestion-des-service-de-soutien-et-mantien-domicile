@@ -9,10 +9,12 @@ class location extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'title',
         'county',
-        'ville',
-        'rue',
+        'city',
+        'street',
         'appartement',
+        'company_id'
     ];
     public function company()
     {

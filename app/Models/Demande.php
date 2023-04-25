@@ -35,9 +35,13 @@ class Demande extends Model
     {
         return $this->belongsTo(Service::class);
     }
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
     public function CheckLists()
     {
-        return $this->belongsToMany(CheckList::class,'checkLists_demandes', 'demande_id', 'checkList_id');
+        return $this->belongsToMany(CheckList::class,'check_lists_demandes', 'demande_id', 'check_list_id');
     }
 
 }

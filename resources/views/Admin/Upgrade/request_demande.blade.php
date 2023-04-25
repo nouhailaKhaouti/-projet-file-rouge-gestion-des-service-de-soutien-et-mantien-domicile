@@ -1,10 +1,10 @@
-@include('admin.head')
+@include('admin.include.head')
 
 <body class="sb-nav-fixed">
-    @include('admin.nav')
+    @include('admin.include.nav')
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
-            @include('admin.nav_side')
+            @include('admin.include.nav_side')
             <main>
             <br>
                     <br>
@@ -18,7 +18,7 @@
                         <br>
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0"><strong> {{$upgrade->user->name}} {{$upgrade->user->Prenom}}</strong></h3>
+                                    <h3 class="mb-0"><strong> {{$upgrade->user->name}} </strong></h3>
                                 </div>
                             </div>
                             <br>
@@ -60,10 +60,10 @@
                     </div>
                 </div>
             </main>
-            @include('admin.footer')
+            @include('admin.include.footer')
         </div>
     </div>
-    @include('admin.script')
+    @include('admin.include.script')
 </body>
 
 </html>

@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Email;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
     //
+    public function index(){
+        $users=User::all();
+        return view('Admin.home', compact('users'));
+    }
     public function show_user_denied()
     {  
         $acces='denied';
@@ -56,7 +62,7 @@ class AdminController extends Controller
           'subject' => $request->subject, 
           'message'=> $request->message ,
            );
-        //   Mail::to($request->email)->send(new Email($data));
+        Mail::to($request->email)->send(new Email($data));
           return back()->with('success', 'Sent Successfully !');
       }
 }

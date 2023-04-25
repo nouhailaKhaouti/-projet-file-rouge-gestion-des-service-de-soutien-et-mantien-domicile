@@ -17,5 +17,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([TagSeeder::class]);
         $this->call([CategorySeeder::class]);
+        $this->call([TypeSeeder::class]);
+        $this->call([ServicesSeeder::class]);
+        $this->call([PermissionSedeers::class]);
+        $this->call([RoleSedeers::class]);
     }
 }

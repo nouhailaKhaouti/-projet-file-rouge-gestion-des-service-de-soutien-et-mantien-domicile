@@ -10,6 +10,7 @@ class Telephone extends Model
     use HasFactory;
     protected $fillable = [
         'label',
+        'company_id'
     ];
     public function company()
     {

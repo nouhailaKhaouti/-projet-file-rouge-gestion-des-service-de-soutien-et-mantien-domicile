@@ -18,14 +18,13 @@ return new class extends Migration
             $table->string('commercialRegisterN');
             $table->string('icon');
             $table->string('nemploi');
-            $table->string('service');
             $table->string('status')->default('InProgress');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
             ->references('id')->on('users')
             ->onDelete('cascade');
-            $table->unsignedBigInteger('service_id');
-            $table->foreign('service_id')
+            $table->unsignedBigInteger('service');
+            $table->foreign('service')
             ->references('id')->on('services')
             ->onDelete('cascade');
             $table->timestamps();

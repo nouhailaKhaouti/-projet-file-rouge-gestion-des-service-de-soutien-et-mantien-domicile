@@ -7,7 +7,7 @@
             @include('admin.include.nav_side')
             <main>
                 <div class="container-fluid px-4">
-                    @include('admin.table.user_table')
+                    @include('admin.tables.user_table')
                 </div>
             </main>
             @include('admin.include.footer')

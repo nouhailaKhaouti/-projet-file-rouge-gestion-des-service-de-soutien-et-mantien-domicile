@@ -17,9 +17,7 @@
                     <textarea name="message" placeholder="tape here what you want to say..." class="form-control"></textarea>
                     <input type="hidden" name="email" value="{{$user->email}}">
                     <div style="padding: 15px;">
-
                         <button type="submit" class="btn btn-sm  btn-outline-primary">submit</button>
-
                     </div>
                 </form>
             </div>

@@ -1,16 +1,22 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssignRoleAndPermission;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommenterController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\postController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UpgradeController;
+use App\Models\City;
+use App\Models\Company;
 use App\Models\Demande;
 use App\Models\LikePost;
 use App\Models\Post;
 use App\Models\Service;
+use App\Models\Type;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +44,7 @@ Route::get('/service', function () {
 });
 Route::get('/profile', function () {
   return view('User.includes.profile');
-});
+})->name('profile');
 Route::get('/home', function () {
   return view('User.home');
 });
@@ -52,7 +58,8 @@ Route::get('/company', function () {
 });
 
 Route::get('/freelancer', function () {
-  return view('User.upgrade.freelancer');
+  $services=Service::all();
+  return view('User.upgrade.freelancer',compact('services'));
 });
 
 Route::get('/test', function () {
@@ -90,21 +97,6 @@ Route::post('/comment_create', [CommenterController::class, 'store']);
 Route::delete('/delete_comments/{id}', [CommenterController::class, 'destroy']);
 Route::post('/comment_update/{id}', [CommenterController::class, 'update']);
 
-////like controller
-
-// Route::post('save-likedislike', 'likeController@save_likedislike');
-// Route::get('/post/{post}/like/', [likeController::class, 'likepl']);
-// Route::get('/post/{post}/dislike/', [likeController::class, 'dislikepl']);
-// Route::post('/post/{id}/act', [likeController::class, 'actOnPost']);
-
-//provider Controller
-
-// Route::post('/create_request', [UpgradeController::class, 'store']);
-// Route::post('/demande', [UpgradeController::class,'demande']);
-// Route::post('/create_provider', [UpgradeController::class,'create_provider'])->middleware(['provider']);
-// Route::post('/update_provider/{id}', [UpgradeController::class,'update_provider'])->middleware(['provider']);
-
-
 //tag controller 
 
 Route::get('/tag', [TagController::class, 'index']);
@@ -119,21 +111,15 @@ Route::post('/category_create', [CategoryController::class, 'store']);
 Route::post('/category_update/{id}', [CategoryController::class, 'update']);
 Route::get('/category_delete/{id}', [CategoryController::class, 'destroy']);
 
-// // add comment
-// Route::post('comment/add', [CommentController::class, 'store']);
-// // delete comment
-// Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
-
-
 #Manage Review
 // Route::post('/review-store',[ProfileController::class, 'reviewstore'])->name('review.store');
-
-Route::post('/warning/{id}', [AdminController::class, 'warningemail']);
 
 
 
 ////admin controller
 
+Route::get('/Admin', [AdminController::class, 'index']);
+Route::post('/warning/{id}', [AdminController::class, 'warningemail']);
 Route::get('/acces_approved/{id}', [AdminController::class, 'acces_approved']);
 Route::get('/acces_denied/{id}', [AdminController::class, 'acces_denied']);
 Route::get('/approved', [AdminController::class, 'show_user_approved']);
@@ -141,24 +127,33 @@ Route::get('/denied', [AdminController::class, 'show_user_denied']);
 Route::get('/warned_user', [AdminController::class, 'warning']);
 
 
-
-
 //provider controller
 
-// Route::get('/provider', [providerController::class, 'provider']);
-// Route::get('/download_cin/{id}', [UpgradeController::class, 'download_cin']);
-// Route::get('/download_certificat/{id}', [UpgradeController::class, 'download_certificat']);
-// Route::get('/request', [UpgradeController::class, 'request']);
-// // Route::get('/change_role/{id}',[UpgradeController::class,'change_role']);
-// Route::get('/request_demande/{id}', [UpgradeController::class, 'request_demande']);
-// Route::get('/approved_provider/{id}', [providerController::class, 'approved_provider']);
-// Route::get('/refused_provider/{id}', [providerController::class, 'refused_provider']);
-// // Route::get('/approved_demande/{id}', [providerController::class,'approved_demande']);
-// Route::get('/refused_demande/{id}', [providerController::class,'refused_demande']);
 
-// company and Upgrade controllers
+
+// // Route::get('/change_role/{}id',[UpgradeController::class,'change_role']);
+
+
+
+// company controllers
 Route::post('/Company_create', [CompanyController::class, 'store']);
+Route::get('/Company_dashboard', [CompanyController::class, 'Company_table']);
+Route::get('/approved_company/{id}', [CompanyController::class, 'approved_Company']);
+Route::get('/refused_company/{id}', [CompanyController::class, 'refused_Company']);
+Route::get('/Company', [CompanyController::class, 'Company']);
+
+// Upgrade controllers
 Route::post('/Freelancer_create', [UpgradeController::class, 'store']);
+Route::get('/approved_provider/{id}', [UpgradeController::class, 'approved_provider']);
+Route::get('/refused_provider/{id}', [UpgradeController::class, 'refused_provider']);
+Route::get('/download_cin/{id}', [UpgradeController::class, 'download_cin']);
+Route::get('/download_certificat/{id}', [UpgradeController::class, 'download_certificat']);
+Route::get('/request_demande/{id}', [UpgradeController::class, 'request_demande']);
+Route::get('/upgrade_dashboard', [UpgradeController::class, 'index']);
+Route::get('/Provider', [UpgradeController::class, 'Provider']);
+Route::get('/approved_demande/{id}', [UpgradeController::class,'approved_demande']);
+Route::get('/refused_demande/{id}', [UpgradeController::class,'refused_demande']);
+
 
 
 Route::get('/events', function () {
@@ -212,3 +207,7 @@ Route::post('/like-post', function(Request $request) {
 })->middleware('auth')->name('like-post');
 
 Route::get('/Search', [HomeController::class, 'search']);
+Route::post('assignRole/{id}',[AssignRoleAndPermission::class,'assignRole']);
+Route::post('assignPermissionToRoles/{id}',[AssignRoleAndPermission::class,'assignPermissionToRoles']);
+Route::get('userWithRoleAndPermission/{id}',[AssignRoleAndPermission::class,'userWithRoleAndPermission']);
+Route::delete('removeRoleToUser/{id}',[AssignRoleAndPermission::class,'removeRoleToUser']);

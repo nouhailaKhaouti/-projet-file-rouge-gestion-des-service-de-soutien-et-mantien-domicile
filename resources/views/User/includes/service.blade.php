@@ -213,50 +213,6 @@
             border-bottom-right-radius: 12px;
             border-bottom-left-radius: 12px;
         }
-
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-        }
-
-        .rating>input {
-            display: none;
-        }
-
-        .rating>label {
-            position: relative;
-            width: 1em;
-            font-size: 30px;
-            font-weight: 300;
-            color: #000;
-            cursor: pointer;
-        }
-
-        .rating>label::before {
-            content: "\2605";
-            position: absolute;
-            opacity: 0;
-        }
-
-        .rating>label:hover:before,
-        .rating>label:hover~label:before {
-            opacity: 1 !important;
-        }
-
-        .rating>input:checked~label:before {
-            opacity: 1;
-        }
-
-        .rating:hover>input:checked~label:before {
-            opacity: 0.4;
-        }
-
-        .rating>input:checked+label {
-            color: #FFD600;
-        }
-
-
         .buttons {
             top: 36px;
             position: relative;

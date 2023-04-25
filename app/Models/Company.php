@@ -16,6 +16,7 @@ class Company extends Model
         'status',
         'webSite',
         'icon',
+        'service'
     ];
     public function user()
     {

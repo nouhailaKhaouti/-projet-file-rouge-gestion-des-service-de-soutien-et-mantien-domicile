@@ -22,12 +22,12 @@
                 </tr>
             </tfoot>
             <tbody>
-                @foreach($categorys as $category)
+                @foreach($categories as $category)
                 <tr>
                     <td scope="row">{{ $loop->iteration }}</td>
-                    <td>{{$category->libelle}}</td>
+                    <td>{{$category->label}}</td>
                     <td><a class="btn btn-sm  btn-outline-danger" onclick="return confirm('are you sure ,you want to delete this category ')" href="{{url('category_delete',$category->id)}}">delete</a></td>
-                    <td>@include('admin.category_update')</td>
+                    <td>@include('admin.category.category_update')</td>
                 </tr>
                 @endforeach
             </tbody>

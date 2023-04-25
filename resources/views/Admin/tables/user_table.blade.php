@@ -7,33 +7,38 @@
         <table id="datatablesSimple">
             <thead>
                 <tr>
+                    <th>Icon</th>
                     <th>User Name</th>
                     <th>Email</th>
                     <th>phone</th>
                     <th>role</th>
                     <th>N° warning</th>
                     <th>acces denied</th>
-                    <th>send email</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
+                    <th>Icon</th>
                     <th>User Name</th>
                     <th>Email</th>
                     <th>phone</th>
                     <th>role</th>
                     <th>N° warning</th>
                     <th>acces denied</th>
-                    <th>send email</th>
                 </tr>
             </tfoot>
             <tbody>
                 @foreach($users as $user)
                 <tr>
-                    <td>{{$user->username}}</td>
+                    <td>
+                        <div class="ratio ratio-1x1 rounded-circle overflow-hidden">
+                            <img src="Companyimage/{{$user->icon}}" class="card-img-top img-cover" alt="Raeesh" height="30" width="30">
+                        </div>
+                    </td>
+                    <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->phone}}</td>
-                    <td>{{$user->role}}</td>
+                    <td>@foreach ($user->roles as $role) {{ $role->name }} @endforeach </td>
                     <td>{{$user->warning}}</td>
                     <td>
                     @if($user->access=='approved')
@@ -42,9 +47,6 @@
                     <a class="btn btn-sm  btn-outline-primary" href="{{url('acces_approved',$user->id)}}">approved</a>
                     @endif
                     @include('admin.tables.warning_email') 
-                    </td>
-                    <td>
-                        @include('admin.tables.sendemail')                       
                     </td>
                 </tr>
                 @endforeach
